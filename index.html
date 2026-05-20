@@ -1,0 +1,110 @@
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<style>
+#mbw{position:fixed!important;bottom:100px!important;right:28px!important;width:360px;max-height:580px;background:#fff;border-radius:20px;box-shadow:0 12px 50px rgba(0,0,0,0.15);display:flex;flex-direction:column;overflow:hidden;z-index:99998!important;opacity:0;transform:translateY(20px) scale(0.95);pointer-events:none;transition:all .3s cubic-bezier(.34,1.56,.64,1)}
+#mbw.on{opacity:1;transform:translateY(0) scale(1);pointer-events:all}
+#mbb{position:fixed!important;bottom:28px!important;right:28px!important;width:58px;height:58px;background:#5a6472;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(90,100,114,.4);z-index:99999!important;transition:all .3s}
+#mbb:hover{background:#6e7a8a;transform:scale(1.08)}
+#mbb svg{width:26px;height:26px;fill:#fff}
+.mbh{background:linear-gradient(135deg,#3a4048,#5a6472,#6e7a8a);padding:16px 18px;display:flex;align-items:center;gap:10px;flex-shrink:0}
+.mbha{width:38px;height:38px;background:rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center}
+.mbha svg{width:20px;height:20px;fill:#fff}
+.mbhi{flex:1}
+.mbhn{color:#fff;font-size:15px;font-weight:600;font-family:'DM Sans',sans-serif}
+.mbhs{color:rgba(255,255,255,.8);font-size:11px;display:flex;align-items:center;gap:4px;margin-top:2px;font-family:'DM Sans',sans-serif}
+.mbsd{width:6px;height:6px;background:#4fffb0;border-radius:50%;animation:mbp 2s infinite}
+@keyframes mbp{0%,100%{opacity:1}50%{opacity:.5}}
+.mbx{background:rgba(255,255,255,.15);border:none;color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:15px}
+.mbrst{background:rgba(255,255,255,.1);border:none;color:rgba(255,255,255,.8);width:26px;height:26px;border-radius:50%;cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center}
+.mbrst:hover{background:rgba(255,255,255,.25);color:#fff}
+.mbm{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;max-height:300px;scroll-behavior:smooth}
+.mbm::-webkit-scrollbar{width:3px}
+.mbm::-webkit-scrollbar-thumb{background:#dde0e4;border-radius:3px}
+.msg{display:flex;gap:7px;animation:mbf .3s ease}
+@keyframes mbf{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.msg.u{flex-direction:row-reverse}
+.mba{width:26px;height:26px;background:#5a6472;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.mba svg{width:13px;height:13px;fill:#fff}
+.mbt{max-width:80%;padding:10px 14px;border-radius:14px;font-size:13px;line-height:1.5;color:#2a2e33;font-family:'DM Sans',sans-serif}
+.msg.b .mbt{background:#f4f5f6;border-bottom-left-radius:3px}
+.msg.u .mbt{background:#5a6472;color:#fff;border-bottom-right-radius:3px}
+.mbtd{background:#f4f5f6;padding:10px 14px;border-radius:14px;border-bottom-left-radius:3px;display:flex;gap:4px;align-items:center}
+.mbd{width:6px;height:6px;background:#5a6472;border-radius:50%;animation:mbb 1.2s infinite;opacity:.6}
+.mbd:nth-child(2){animation-delay:.2s}.mbd:nth-child(3){animation-delay:.4s}
+@keyframes mbb{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px);opacity:1}}
+.mbqr{display:flex;flex-wrap:wrap;gap:6px;padding:0 14px 10px;flex-shrink:0}
+.mbqb{background:#fff;border:1.5px solid #5a6472;color:#5a6472;padding:5px 11px;border-radius:18px;font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;font-weight:500}
+.mbqb:hover{background:#5a6472;color:#fff}
+.mbia{padding:12px 14px;border-top:1px solid #dde0e4;display:flex;gap:8px;align-items:flex-end;background:#fff;flex-shrink:0}
+.mbta{flex:1;border:1.5px solid #dde0e4;border-radius:20px;padding:9px 14px;font-family:'DM Sans',sans-serif;font-size:13px;outline:none;resize:none;max-height:80px;background:#f4f5f6}
+.mbta:focus{border-color:#5a6472;background:#fff}
+.mbsb{width:38px;height:38px;background:#5a6472;border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.mbsb:hover{background:#6e7a8a}
+.mbsb:disabled{background:#dde0e4;cursor:not-allowed}
+.mbsb svg{width:16px;height:16px;fill:#fff;margin-left:2px}
+#mbff{display:none;flex-direction:column;padding:14px;gap:8px;border-top:1px solid #dde0e4;background:#f4f5f6;flex-shrink:0}
+#mbff.on{display:flex}
+.mbft{font-size:13px;font-weight:600;color:#2a2e33;font-family:'DM Sans',sans-serif}
+.mbfs{font-size:11px;color:#7a8490;font-family:'DM Sans',sans-serif}
+.mbfr{display:flex;gap:7px}
+.mbfl{flex:1}
+.mbfl input,.mbfl select{width:100%;border:1.5px solid #dde0e4;border-radius:8px;padding:8px 10px;font-family:'DM Sans',sans-serif;font-size:12px;color:#2a2e33;background:#fff;outline:none}
+.mbfl input:focus,.mbfl select:focus{border-color:#5a6472}
+.mbfl input::placeholder{color:#7a8490}
+.mbstb{background:#5a6472;color:#fff;border:none;border-radius:8px;padding:10px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;width:100%}
+.mbstb:hover{background:#6e7a8a}
+.mbstb:disabled{background:#dde0e4;cursor:not-allowed}
+.mbfe{font-size:11px;color:#c0392b;font-family:'DM Sans',sans-serif}
+.mbdn{text-align:center;padding:7px;font-size:10px;color:#7a8490;background:#f4f5f6;border-top:1px solid #dde0e4;flex-shrink:0;font-family:'DM Sans',sans-serif}
+</style>
+
+<button id="mbb" onclick="mbT()"><svg viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2.546 21.2a.75.75 0 00.958.898l3.837-1.4A9.953 9.953 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg></button>
+
+<div id="mbw">
+  <div class="mbh">
+    <div class="mbha"><svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 110 10A5 5 0 0112 2zm0 12c5.33 0 8 2.67 8 4v2H4v-2c0-1.33 2.67-4 8-4z"/></svg></div>
+    <div class="mbhi"><div class="mbhn">Mobilitybase</div><div class="mbhs"><span class="mbsd"></span>Available now</div></div>
+    <button class="mbrst" onclick="mbReset()" title="Restart chat">↺</button><button class="mbx" onclick="mbT()">✕</button>
+  </div>
+  <div class="mbm" id="mbmsg">
+    <div class="msg b"><div class="mba"><svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 110 10A5 5 0 0112 2zm0 12c5.33 0 8 2.67 8 4v2H4v-2c0-1.33 2.67-4 8-4z"/></svg></div><div class="mbt">Welcome to Mobilitybase — your local stairlift and home lift specialists covering Kent, London and the South East. How can we help you today?</div></div>
+  </div>
+  <div class="mbqr" id="mbqr">
+    <button class="mbqb" onclick="mbQ('How much is a stairlift?')">Stairlift prices</button>
+    <button class="mbqb" onclick="mbQ('How much is a home lift?')">Home lift prices</button>
+    <button class="mbqb" onclick="mbQ('Do you cover my area?')">Coverage</button>
+    <button class="mbqb" onclick="mbQ('Book a free survey')">Free survey</button>
+  </div>
+  <div id="mbff">
+    <div class="mbft">Get a free survey or callback</div>
+    <div class="mbfs">Leave your details and we'll be in touch.</div>
+    <div class="mbfr"><div class="mbfl"><input type="text" id="mbn" placeholder="Your name"/></div><div class="mbfl"><input type="text" id="mbpc" placeholder="Postcode"/></div></div>
+    <div class="mbfr"><div class="mbfl"><input type="tel" id="mbph" placeholder="Phone number"/></div><div class="mbfl"><input type="email" id="mbe" placeholder="Email (optional)"/></div></div>
+    <div class="mbfl"><select id="mbenq"><option value="">What are you enquiring about?</option><option>Straight stairlift</option><option>Curved stairlift</option><option>Home lift</option><option>Platform lift</option><option>Ceiling hoist</option><option>Servicing / repair</option><option>Stairlift removal</option><option>Other</option></select></div>
+    <div class="mbfe" id="mbferr"></div>
+    <button class="mbstb" id="mbsub" onclick="mbSub()">Send my details →</button>
+  </div>
+  <div class="mbia"><textarea class="mbta" id="mbinp" placeholder="Type your message..." rows="1" onkeydown="mbK(event)" oninput="mbR(this)"></textarea><button class="mbsb" id="mbsnd" onclick="mbSend()"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button></div>
+  <div class="mbdn">Powered by Mobilitybase AI</div>
+</div>
+
+<script>
+(function(){
+const EK='bpfAYzM-hUEj9nKae',ES='service_y4wwcjf',ET='template_tn5y9mm';
+emailjs.init(EK);
+const SP=`You are an assistant for Mobilitybase, a family-run mobility lift company in Kent covering Kent, London and South East England. We supply stairlifts, home lifts, platform lifts, ceiling hoists, servicing, repairs, LOLER inspections and removals. Brands: Handicare, Stiltz, Cibes, Access BDD, Pollock, Wessex. Phone: 0208 936 3060. Email: info@mobilitybase.co.uk. Pricing (most pay no VAT): straight stairlifts from £2,200, curved from £4,250 recon or £5,250 new, Pollock Eco from £17,000, Stiltz Duo Plus £17,950, Trio Plus £18,950, Pollock Residential £18,750, platform lifts from £11,500, hoists from £2,250. Free survey then written quote. Lead times: straight 2-3wk, curved 3-6wk, home lifts 8-10wk. 12 month warranty. Service contracts available. Domestic serviced annually, commercial platform lifts 6-monthly or quarterly. We service all makes. Areas: Kent, Greater London, South East including Maidstone, Tonbridge, Tunbridge Wells, Sevenoaks, Dartford, Gravesend, Medway, Canterbury, Folkestone, Ashford, Sittingbourne. Rules: friendly professional UK English, short answers, no emojis, never ask postcode, no links, only answer what asked, never mention competitors. After 1-2 questions invite them to fill in the short form below for a callback.`;
+let hist=[],loading=false,count=0,shown=false;
+window.mbT=()=>document.getElementById('mbw').classList.toggle('on');
+window.mbR=el=>{el.style.height='auto';el.style.height=Math.min(el.scrollHeight,80)+'px'};
+window.mbK=e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();mbSend()}};
+window.mbQ=t=>{document.getElementById('mbinp').value=t;document.getElementById('mbqr').style.display='none';mbSend()};
+function mbAdd(t,r){const m=document.getElementById('mbmsg'),d=document.createElement('div');d.className=`msg ${r}`;d.innerHTML=r==='b'?`<div class="mba"><svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 110 10A5 5 0 0112 2zm0 12c5.33 0 8 2.67 8 4v2H4v-2c0-1.33 2.67-4 8-4z"/></svg></div><div class="mbt">${t}</div>`:`<div class="mbt">${t}</div>`;m.appendChild(d);m.scrollTop=m.scrollHeight}
+function mbTy(){const m=document.getElementById('mbmsg'),d=document.createElement('div');d.className='msg b';d.id='mbty';d.innerHTML='<div class="mba"><svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 110 10A5 5 0 0112 2zm0 12c5.33 0 8 2.67 8 4v2H4v-2c0-1.33 2.67-4 8-4z"/></svg></div><div class="mbtd"><div class="mbd"></div><div class="mbd"></div><div class="mbd"></div></div>';m.appendChild(d);m.scrollTop=m.scrollHeight}
+function mbRmTy(){const t=document.getElementById('mbty');if(t)t.remove()}
+function mbForm(){if(shown)return;shown=true;document.getElementById('mbff').classList.add('on')}
+window.mbSend=async function(){if(loading)return;const inp=document.getElementById('mbinp'),t=inp.value.trim();if(!t)return;inp.value='';inp.style.height='auto';mbAdd(t,'u');hist.push({role:'user',content:t});count++;loading=true;document.getElementById('mbsnd').disabled=true;mbTy();try{const r=await fetch('https://mobilitybase-chat.service-0e4.workers.dev',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:800,system:SP,messages:hist})});const d=await r.json();const rep=d.content?.[0]?.text||"Sorry, please call us on 0208 936 3060.";mbRmTy();mbAdd(rep,'b');hist.push({role:'assistant',content:rep});if(count>=2)mbForm()}catch(e){mbRmTy();mbAdd("Sorry, something went wrong. Please call us on 0208 936 3060.",'b')}loading=false;document.getElementById('mbsnd').disabled=false};
+window.mbSub=async function(){const n=document.getElementById('mbn').value.trim(),ph=document.getElementById('mbph').value.trim(),em=document.getElementById('mbe').value.trim(),pc=document.getElementById('mbpc').value.trim(),enq=document.getElementById('mbenq').value,err=document.getElementById('mbferr');if(!n||!ph||!pc||!enq){err.textContent='Please fill in name, phone, postcode and enquiry type.';return}err.textContent='';const btn=document.getElementById('mbsub');btn.disabled=true;btn.textContent='Sending...';const cs=hist.map(m=>`${m.role==='user'?'Visitor':'Bot'}: ${m.content}`).join('\n');try{await emailjs.send(ES,ET,{to_email:'service@mobilitybase.co.uk',from_name:n,phone:ph,email:em||'Not provided',postcode:pc,enquiry_type:enq,chat_summary:cs,submitted_at:new Date().toLocaleString('en-GB')});document.getElementById('mbff').innerHTML=`<div style="text-align:center;padding:14px;color:#5a6472;font-weight:600;font-family:'DM Sans',sans-serif">Thanks ${n}! We'll be in touch shortly.<br><span style="font-weight:400;font-size:12px;color:#7a8490">Or call us on 0208 936 3060</span></div>`;mbAdd(`Thanks ${n}! We have your details and will call you back soon.`,'b')}catch(e){btn.disabled=false;btn.textContent='Send my details →';err.textContent='Something went wrong. Please call 0208 936 3060.'}};
+window.mbReset=function(){hist=[];count=0;shown=false;loading=false;document.getElementById("mbmsg").innerHTML='<div class="msg b"><div class="mba"><svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 110 10A5 5 0 0112 2zm0 12c5.33 0 8 2.67 8 4v2H4v-2c0-1.33 2.67-4 8-4z"/></svg></div><div class="mbt">Welcome to Mobilitybase — your local stairlift and home lift specialists covering Kent, London and the South East. How can we help you today?</div></div>';document.getElementById("mbqr").style.display="flex";document.getElementById("mbff").classList.remove("on");shown=false};
+setTimeout(()=>mbT(),800);
+})();
+</script>
