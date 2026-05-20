@@ -1,6 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mobilitybase Chat</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
+html,body{margin:0;padding:0;background:transparent;overflow:hidden}
 #mbw{position:fixed!important;bottom:100px!important;right:28px!important;width:360px;max-height:580px;background:#fff;border-radius:20px;box-shadow:0 12px 50px rgba(0,0,0,0.15);display:flex;flex-direction:column;overflow:hidden;z-index:99998!important;opacity:0;transform:translateY(20px) scale(0.95);pointer-events:none;transition:all .3s cubic-bezier(.34,1.56,.64,1)}
 #mbw.on{opacity:1;transform:translateY(0) scale(1);pointer-events:all}
 #mbb{position:fixed!important;bottom:28px!important;right:28px!important;width:58px;height:58px;background:#5a6472;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(90,100,114,.4);z-index:99999!important;transition:all .3s}
@@ -57,9 +64,9 @@
 .mbfe{font-size:11px;color:#c0392b;font-family:'DM Sans',sans-serif}
 .mbdn{text-align:center;padding:7px;font-size:10px;color:#7a8490;background:#f4f5f6;border-top:1px solid #dde0e4;flex-shrink:0;font-family:'DM Sans',sans-serif}
 </style>
-
+</head>
+<body>
 <button id="mbb" onclick="mbT()"><svg viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2.546 21.2a.75.75 0 00.958.898l3.837-1.4A9.953 9.953 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg></button>
-
 <div id="mbw">
   <div class="mbh">
     <div class="mbha"><svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 110 10A5 5 0 0112 2zm0 12c5.33 0 8 2.67 8 4v2H4v-2c0-1.33 2.67-4 8-4z"/></svg></div>
@@ -87,7 +94,6 @@
   <div class="mbia"><textarea class="mbta" id="mbinp" placeholder="Type your message..." rows="1" onkeydown="mbK(event)" oninput="mbR(this)"></textarea><button class="mbsb" id="mbsnd" onclick="mbSend()"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button></div>
   <div class="mbdn">Powered by Mobilitybase AI</div>
 </div>
-
 <script>
 (function(){
 const EK='bpfAYzM-hUEj9nKae',ES='service_y4wwcjf',ET='template_tn5y9mm';
@@ -108,3 +114,5 @@ window.mbReset=function(){hist=[];count=0;shown=false;loading=false;document.get
 setTimeout(()=>mbT(),800);
 })();
 </script>
+</body>
+</html>
