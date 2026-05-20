@@ -8,6 +8,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
 html,body{margin:0;padding:0;background:transparent;overflow:hidden}
+@media(max-width:480px){#mbw{width:calc(100vw - 16px)!important;right:8px!important;bottom:80px!important;max-height:calc(100vh - 100px)!important}#mbb{right:12px!important;bottom:12px!important}}
 #mbw{position:fixed!important;bottom:100px!important;right:28px!important;width:360px;max-height:580px;background:#fff;border-radius:20px;box-shadow:0 12px 50px rgba(0,0,0,0.15);display:flex;flex-direction:column;overflow:hidden;z-index:99998!important;opacity:0;transform:translateY(20px) scale(0.95);pointer-events:none;transition:all .3s cubic-bezier(.34,1.56,.64,1)}
 #mbw.on{opacity:1;transform:translateY(0) scale(1);pointer-events:all}
 #mbb{position:fixed!important;bottom:28px!important;right:28px!important;width:58px;height:58px;background:#5a6472;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(90,100,114,.4);z-index:99999!important;transition:all .3s}
