@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vehicle Dashboard — Mobilitybase</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:#f0f2f5;color:#2a2e33;min-height:100vh}
+
+/* Header */
+.hdr{background:linear-gradient(135deg,#3a4048,#5a6472);padding:0 24px;height:62px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(0,0,0,.15)}
+.hdr-brand{display:flex;align-items:center;gap:10px;color:#fff;font-weight:700;font-size:17px}
+.hdr-brand svg{width:28px;height:28px;fill:#fff;opacity:.9}
+.hdr-sep{color:rgba(255,255,255,.25);margin:0 6px}
+.hdr-sub{color:rgba(255,255,255,.65);font-size:13px;font-weight:400}
+.btn-add-hdr{background:rgba(255,255,255,.15);color:#fff;border:1.5px solid rgba(255,255,255,.3);border-radius:9px;padding:8px 16px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px}
+.btn-add-hdr:hover{background:rgba(255,255,255,.25)}
+.btn-add-hdr svg{width:15px;height:15px;fill:#fff}
+
+/* Main */
+.main{max-width:1200px;margin:0 auto;padding:28px 20px}
+
+/* Stats */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:26px}
+.stat{background:#fff;border-radius:12px;padding:18px 20px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.stat-val{font-size:34px;font-weight:700;line-height:1}
+.stat-lbl{font-size:12px;color:#7a8490;margin-top:3px;font-weight:500}
+.s-blue .stat-val{color:#5a6472}
+.s-green .stat-val{color:#27ae60}
+.s-amber .stat-val{color:#e67e22}
+.s-red .stat-val{color:#e74c3c}
+
+/* Toolbar */
+.toolbar{display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+.search-wrap{flex:1;min-width:200px;position:relative}
+.search-wrap svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;fill:#7a8490}
+.search-wrap input{width:100%;border:1.5px solid #dde0e4;border-radius:10px;padding:10px 14px 10px 38px;font-family:'DM Sans',sans-serif;font-size:14px;outline:none;background:#fff;color:#2a2e33}
+.search-wrap input:focus{border-color:#5a6472}
+.btn-add{background:#5a6472;color:#fff;border:none;border-radius:10px;padding:10px 20px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:7px;white-space:nowrap}
+.btn-add:hover{background:#3a4048}
+.btn-add svg{width:16px;height:16px;fill:#fff}
+
+/* Sort */
+.sort-wrap{display:flex;align-items:center;gap:7px;font-size:13px;color:#7a8490}
+.sort-wrap select{border:1.5px solid #dde0e4;border-radius:8px;padding:8px 10px;font-family:'DM Sans',sans-serif;font-size:13px;outline:none;background:#fff;color:#2a2e33;cursor:pointer}
+
+/* Grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+
+/* Card */
+.card{background:#fff;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,.06);overflow:hidden;border:2px solid transparent;transition:box-shadow .2s,transform .2s}
+.card:hover{box-shadow:0 6px 24px rgba(0,0,0,.1);transform:translateY(-2px)}
+.card.c-legal{border-color:#d4edda}
+.card.c-warn{border-color:#fdefc3}
+.card.c-bad{border-color:#fde8e8}
+
+.card-top{padding:16px 16px 12px;border-bottom:1px solid #f0f2f5;display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.plate{background:#f7c948;color:#000;font-weight:700;font-size:18px;letter-spacing:2px;padding:5px 12px;border-radius:5px;border:2px solid #222;line-height:1.3;white-space:nowrap}
+.v-name{font-size:15px;font-weight:600;margin-top:8px}
+.v-sub{font-size:12px;color:#7a8490;margin-top:2px}
+.badge{font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.4px;white-space:nowrap}
+.badge.b-legal{background:#e8f8ee;color:#1a7a3a}
+.badge.b-warn{background:#fef3e2;color:#b7590a}
+.badge.b-bad{background:#fde8e8;color:#c0392b}
+
+.card-mid{padding:10px 16px 2px}
+.srow{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #f0f2f5}
+.srow:last-of-type{border-bottom:none}
+.sico{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sico.ok{background:#e8f8ee}.sico.ok svg{fill:#27ae60}
+.sico.wn{background:#fef3e2}.sico.wn svg{fill:#e67e22}
+.sico.bd{background:#fde8e8}.sico.bd svg{fill:#e74c3c}
+.sico svg{width:14px;height:14px}
+.s-label{font-size:11px;font-weight:600;color:#7a8490;text-transform:uppercase;letter-spacing:.4px}
+.s-date{font-size:13px;font-weight:600;margin-top:1px}
+.s-days{font-size:11px;margin-top:1px}
+.s-days.ok{color:#27ae60}.s-days.wn{color:#e67e22}.s-days.bd{color:#e74c3c}
+
+.card-bot{padding:10px 16px 14px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.v-notes{font-size:12px;color:#7a8490;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.card-acts{display:flex;gap:6px;flex-shrink:0}
+.ico-btn{background:#f4f5f6;border:none;border-radius:7px;width:30px;height:30px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s}
+.ico-btn:hover{background:#dde0e4}
+.ico-btn svg{width:14px;height:14px;fill:#5a6472}
+.ico-btn.del:hover{background:#fde8e8}.ico-btn.del:hover svg{fill:#e74c3c}
+
+/* Empty */
+.empty{text-align:center;padding:70px 20px;grid-column:1/-1}
+.empty svg{width:52px;height:52px;fill:#dde0e4;margin-bottom:12px}
+.empty h3{font-size:17px;font-weight:600;color:#5a6472;margin-bottom:6px}
+.empty p{font-size:14px;color:#7a8490}
+
+/* Modal overlay */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1000;display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;pointer-events:none;transition:opacity .2s}
+.overlay.on{opacity:1;pointer-events:all}
+.modal{background:#fff;border-radius:16px;width:100%;max-width:480px;max-height:92vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.2);transform:translateY(20px);transition:transform .25s}
+.overlay.on .modal{transform:translateY(0)}
+.modal-hdr{padding:20px 24px 16px;border-bottom:1px solid #f0f2f5;display:flex;align-items:center;justify-content:space-between}
+.modal-title{font-size:17px;font-weight:700}
+.modal-close{background:#f4f5f6;border:none;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;color:#5a6472}
+.modal-close:hover{background:#dde0e4}
+.modal-body{padding:20px 24px;display:flex;flex-direction:column;gap:14px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fg{display:flex;flex-direction:column;gap:5px}
+.fg label{font-size:12px;font-weight:600;color:#5a6472}
+.fg input,.fg select{border:1.5px solid #dde0e4;border-radius:8px;padding:9px 12px;font-family:'DM Sans',sans-serif;font-size:14px;outline:none;color:#2a2e33;background:#fff;width:100%}
+.fg input:focus,.fg select:focus{border-color:#5a6472}
+.ferr{font-size:12px;color:#e74c3c}
+.modal-ftr{padding:16px 24px 20px;border-top:1px solid #f0f2f5;display:flex;gap:10px;justify-content:flex-end}
+.btn-cancel{background:#f4f5f6;color:#5a6472;border:none;border-radius:8px;padding:10px 20px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer}
+.btn-cancel:hover{background:#dde0e4}
+.btn-save{background:#5a6472;color:#fff;border:none;border-radius:8px;padding:10px 22px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer}
+.btn-save:hover{background:#3a4048}
+
+@media(max-width:600px){
+  .stats{grid-template-columns:1fr 1fr}
+  .frow{grid-template-columns:1fr}
+  .hdr-sub{display:none}
+  .hdr-sep{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-brand">
+    <svg viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
+    Mobilitybase
+    <span class="hdr-sep">|</span>
+    <span class="hdr-sub">Vehicle MOT &amp; Tax Dashboard</span>
+  </div>
+  <button class="btn-add-hdr" onclick="openModal()">
+    <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+    Add Vehicle
+  </button>
+</div>
+
+<div class="main">
+  <div class="stats" id="stats"></div>
+
+  <div class="toolbar">
+    <div class="search-wrap">
+      <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+      <input type="text" id="q" placeholder="Search registration, make or model..." oninput="render()">
+    </div>
+    <div class="sort-wrap">
+      Sort:
+      <select id="sortBy" onchange="render()">
+        <option value="status">Status</option>
+        <option value="reg">Registration</option>
+        <option value="make">Make</option>
+        <option value="mot">MOT expiry</option>
+        <option value="tax">Tax expiry</option>
+      </select>
+    </div>
+    <button class="btn-add" onclick="openModal()">
+      <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+      Add Vehicle
+    </button>
+  </div>
+
+  <div class="grid" id="grid"></div>
+</div>
+
+<!-- Add / Edit Modal -->
+<div class="overlay" id="overlay" onclick="bgClose(event)">
+  <div class="modal">
+    <div class="modal-hdr">
+      <span class="modal-title" id="mTitle">Add Vehicle</span>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="fg">
+        <label>Registration Plate *</label>
+        <input id="fReg" type="text" placeholder="e.g. AB12 CDE" style="text-transform:uppercase;font-weight:700;letter-spacing:2px;font-size:16px">
+      </div>
+      <div class="frow">
+        <div class="fg"><label>Make *</label><input id="fMake" type="text" placeholder="e.g. Ford"></div>
+        <div class="fg"><label>Model *</label><input id="fModel" type="text" placeholder="e.g. Transit"></div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label>Colour</label><input id="fColour" type="text" placeholder="e.g. White"></div>
+        <div class="fg"><label>Year</label><input id="fYear" type="number" placeholder="e.g. 2020" min="1960" max="2030"></div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label>MOT Expiry Date</label><input id="fMot" type="date"></div>
+        <div class="fg"><label>Tax Expiry Date</label><input id="fTax" type="date"></div>
+      </div>
+      <div class="fg"><label>Notes (optional)</label><input id="fNotes" type="text" placeholder="e.g. Assigned to John, serviced March"></div>
+      <div class="ferr" id="fErr"></div>
+    </div>
+    <div class="modal-ftr">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-save" onclick="saveVehicle()">Save Vehicle</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const SK = 'mb_fleet_v1';
+let fleet = [];
+let editId = null;
+
+function load() {
+  try { fleet = JSON.parse(localStorage.getItem(SK) || '[]'); } catch(e) { fleet = []; }
+}
+
+function save() {
+  localStorage.setItem(SK, JSON.stringify(fleet));
+}
+
+function daysUntil(ds) {
+  if (!ds) return null;
+  const t = new Date(); t.setHours(0,0,0,0);
+  return Math.round((new Date(ds) - t) / 86400000);
+}
+
+function fmtDate(ds) {
+  if (!ds) return 'Not set';
+  return new Date(ds).toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
+}
+
+function statusOf(days) {
+  if (days === null) return { cls:'bd', icon:'x', txt:'Not recorded' };
+  if (days < 0)  return { cls:'bd', icon:'x', txt:`Expired ${Math.abs(days)} day${Math.abs(days)===1?'':'s'} ago` };
+  if (days <= 30) return { cls:'wn', icon:'!', txt:`Expires in ${days} day${days===1?'':'s'}` };
+  return { cls:'ok', icon:'✓', txt:`${days} days remaining` };
+}
+
+function legalOf(mDays, tDays) {
+  if ((mDays === null || mDays < 0) || (tDays === null || tDays < 0)) return 'bad';
+  if (mDays <= 30 || tDays <= 30) return 'warn';
+  return 'legal';
+}
+
+const ICONS = {
+  '✓': `<svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>`,
+  '!': `<svg viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>`,
+  'x': `<svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>`
+};
+
+const EDIT_SVG = `<svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>`;
+const DEL_SVG  = `<svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>`;
+const CAR_SVG  = `<svg viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>`;
+
+function sortFleet(arr) {
+  const s = document.getElementById('sortBy')?.value || 'status';
+  const order = { bad:0, warn:1, legal:2 };
+  return [...arr].sort((a, b) => {
+    if (s === 'status') {
+      const la = legalOf(daysUntil(a.motExpiry), daysUntil(a.taxExpiry));
+      const lb = legalOf(daysUntil(b.motExpiry), daysUntil(b.taxExpiry));
+      return (order[la] ?? 3) - (order[lb] ?? 3);
+    }
+    if (s === 'reg')  return a.registration.localeCompare(b.registration);
+    if (s === 'make') return a.make.localeCompare(b.make);
+    if (s === 'mot')  return (a.motExpiry||'9999') < (b.motExpiry||'9999') ? -1 : 1;
+    if (s === 'tax')  return (a.taxExpiry||'9999') < (b.taxExpiry||'9999') ? -1 : 1;
+    return 0;
+  });
+}
+
+function render() {
+  const q = (document.getElementById('q')?.value || '').toLowerCase();
+  const filtered = sortFleet(fleet.filter(v =>
+    v.registration.toLowerCase().includes(q) ||
+    v.make.toLowerCase().includes(q) ||
+    v.model.toLowerCase().includes(q) ||
+    (v.notes||'').toLowerCase().includes(q)
+  ));
+
+  const total   = fleet.length;
+  const legal   = fleet.filter(v => legalOf(daysUntil(v.motExpiry), daysUntil(v.taxExpiry)) === 'legal').length;
+  const warn    = fleet.filter(v => legalOf(daysUntil(v.motExpiry), daysUntil(v.taxExpiry)) === 'warn').length;
+  const bad     = fleet.filter(v => legalOf(daysUntil(v.motExpiry), daysUntil(v.taxExpiry)) === 'bad').length;
+
+  document.getElementById('stats').innerHTML =
+    `<div class="stat s-blue"><div class="stat-val">${total}</div><div class="stat-lbl">Total Vehicles</div></div>` +
+    `<div class="stat s-green"><div class="stat-val">${legal}</div><div class="stat-lbl">Fully Legal</div></div>` +
+    `<div class="stat s-amber"><div class="stat-val">${warn}</div><div class="stat-lbl">Expiring Soon</div></div>` +
+    `<div class="stat s-red"><div class="stat-val">${bad}</div><div class="stat-lbl">Needs Attention</div></div>`;
+
+  const grid = document.getElementById('grid');
+
+  if (filtered.length === 0) {
+    grid.innerHTML = `<div class="empty">
+      ${CAR_SVG}
+      <h3>${fleet.length === 0 ? 'No vehicles yet' : 'No results found'}</h3>
+      <p>${fleet.length === 0 ? 'Click "Add Vehicle" to add your first vehicle.' : 'Try a different search term.'}</p>
+    </div>`;
+    return;
+  }
+
+  grid.innerHTML = filtered.map(v => {
+    const md = daysUntil(v.motExpiry), td = daysUntil(v.taxExpiry);
+    const ms = statusOf(md), ts = statusOf(td);
+    const ls = legalOf(md, td);
+    const bCls = ls==='legal'?'b-legal':ls==='warn'?'b-warn':'b-bad';
+    const cCls = ls==='legal'?'c-legal':ls==='warn'?'c-warn':'c-bad';
+    const bTxt = ls==='legal'?'Legal':ls==='warn'?'Expiring Soon':'Action Required';
+
+    return `<div class="card ${cCls}">
+      <div class="card-top">
+        <div>
+          <div class="plate">${v.registration}</div>
+          <div class="v-name">${v.make} ${v.model}</div>
+          <div class="v-sub">${[v.colour, v.year].filter(Boolean).join(' · ')}</div>
+        </div>
+        <span class="badge ${bCls}">${bTxt}</span>
+      </div>
+      <div class="card-mid">
+        <div class="srow">
+          <div class="sico ${ms.cls}">${ICONS[ms.icon]}</div>
+          <div>
+            <div class="s-label">MOT</div>
+            <div class="s-date">${fmtDate(v.motExpiry)}</div>
+            <div class="s-days ${ms.cls}">${ms.txt}</div>
+          </div>
+        </div>
+        <div class="srow">
+          <div class="sico ${ts.cls}">${ICONS[ts.icon]}</div>
+          <div>
+            <div class="s-label">Vehicle Tax</div>
+            <div class="s-date">${fmtDate(v.taxExpiry)}</div>
+            <div class="s-days ${ts.cls}">${ts.txt}</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-bot">
+        <span class="v-notes">${v.notes || ''}</span>
+        <div class="card-acts">
+          <button class="ico-btn" onclick="openModal('${v.id}')" title="Edit">${EDIT_SVG}</button>
+          <button class="ico-btn del" onclick="delVehicle('${v.id}')" title="Delete">${DEL_SVG}</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function openModal(id) {
+  editId = id || null;
+  document.getElementById('mTitle').textContent = id ? 'Edit Vehicle' : 'Add Vehicle';
+  document.getElementById('fErr').textContent = '';
+  const fields = ['fReg','fMake','fModel','fColour','fYear','fMot','fTax','fNotes'];
+  if (id) {
+    const v = fleet.find(x => x.id === id);
+    if (v) {
+      document.getElementById('fReg').value    = v.registration;
+      document.getElementById('fMake').value   = v.make;
+      document.getElementById('fModel').value  = v.model;
+      document.getElementById('fColour').value = v.colour || '';
+      document.getElementById('fYear').value   = v.year || '';
+      document.getElementById('fMot').value    = v.motExpiry || '';
+      document.getElementById('fTax').value    = v.taxExpiry || '';
+      document.getElementById('fNotes').value  = v.notes || '';
+    }
+  } else {
+    fields.forEach(f => document.getElementById(f).value = '');
+  }
+  document.getElementById('overlay').classList.add('on');
+  setTimeout(() => document.getElementById('fReg').focus(), 120);
+}
+
+function closeModal() {
+  document.getElementById('overlay').classList.remove('on');
+  editId = null;
+}
+
+function bgClose(e) {
+  if (e.target === document.getElementById('overlay')) closeModal();
+}
+
+function saveVehicle() {
+  const reg   = document.getElementById('fReg').value.trim().toUpperCase().replace(/\s+/g,' ');
+  const make  = document.getElementById('fMake').value.trim();
+  const model = document.getElementById('fModel').value.trim();
+  const err   = document.getElementById('fErr');
+
+  if (!reg || !make || !model) {
+    err.textContent = 'Registration, make and model are required.';
+    return;
+  }
+
+  const data = {
+    id:           editId || Date.now().toString(),
+    registration: reg,
+    make,
+    model,
+    colour:       document.getElementById('fColour').value.trim(),
+    year:         document.getElementById('fYear').value || '',
+    motExpiry:    document.getElementById('fMot').value,
+    taxExpiry:    document.getElementById('fTax').value,
+    notes:        document.getElementById('fNotes').value.trim()
+  };
+
+  if (editId) {
+    fleet = fleet.map(v => v.id === editId ? data : v);
+  } else {
+    fleet.push(data);
+  }
+
+  save();
+  render();
+  closeModal();
+}
+
+function delVehicle(id) {
+  const v = fleet.find(x => x.id === id);
+  if (!v) return;
+  if (!confirm(`Remove ${v.registration} — ${v.make} ${v.model} from the dashboard?`)) return;
+  fleet = fleet.filter(x => x.id !== id);
+  save();
+  render();
+}
+
+load();
+render();
+</script>
+</body>
+</html>
