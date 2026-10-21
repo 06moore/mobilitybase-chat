@@ -203,8 +203,16 @@ const SK = 'mb_fleet_v1';
 let fleet = [];
 let editId = null;
 
+const SEED = [
+  { id:'1', registration:'YS18 YZH', make:'Ford',    model:'Transit Courier',    colour:'White', year:'2018', motExpiry:'2027-06-27', taxExpiry:'2027-08-01', notes:'' },
+  { id:'2', registration:'CF74 MWZ', make:'Citroen', model:'Dispatch Enterprise', colour:'White', year:'2024', motExpiry:'2027-12-30', taxExpiry:'2027-03-01', notes:'' },
+  { id:'3', registration:'NU68 MYS', make:'Peugeot', model:'Partner',             colour:'White', year:'2018', motExpiry:'2027-09-23', taxExpiry:'2027-09-01', notes:'' },
+  { id:'4', registration:'AX68 XSM', make:'Jaguar',  model:'E-Pace',              colour:'Black', year:'2019', motExpiry:'2027-05-07', taxExpiry:'2027-05-01', notes:'' }
+];
+
 function load() {
   try { fleet = JSON.parse(localStorage.getItem(SK) || '[]'); } catch(e) { fleet = []; }
+  if (fleet.length === 0) { fleet = SEED; save(); }
 }
 
 function save() {
