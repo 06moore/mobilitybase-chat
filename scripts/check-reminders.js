@@ -61,13 +61,17 @@ async function main() {
     const motDays = daysUntil(v.motExpiry);
     const taxDays = daysUntil(v.taxExpiry);
 
-    if (inWindow(motDays, 30)) {
+    if (motDays === 0) {
+      reminders.push(`${label}\n  MOT expires TODAY — please update the new expiry date in the dashboard once it has passed its MOT.`);
+    } else if (inWindow(motDays, 30)) {
       reminders.push(`${label}\n  MOT expires ${formatDate(v.motExpiry)} (approx. 1 month)`);
     } else if (inWindow(motDays, 14)) {
       reminders.push(`${label}\n  MOT expires ${formatDate(v.motExpiry)} (approx. 2 weeks)`);
     }
 
-    if (inWindow(taxDays, 30)) {
+    if (taxDays === 0) {
+      reminders.push(`${label}\n  Vehicle tax expires TODAY — please renew as soon as possible.`);
+    } else if (inWindow(taxDays, 30)) {
       reminders.push(`${label}\n  Tax expires ${formatDate(v.taxExpiry)} (approx. 1 month)`);
     } else if (inWindow(taxDays, 14)) {
       reminders.push(`${label}\n  Tax expires ${formatDate(v.taxExpiry)} (approx. 2 weeks)`);
