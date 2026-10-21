@@ -18,6 +18,23 @@ body{font-family:'DM Sans',sans-serif;background:#f0f2f5;color:#2a2e33;min-heigh
 .btn-add-hdr{background:rgba(255,255,255,.15);color:#fff;border:1.5px solid rgba(255,255,255,.3);border-radius:9px;padding:8px 16px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px}
 .btn-add-hdr:hover{background:rgba(255,255,255,.25)}
 .btn-add-hdr svg{width:15px;height:15px;fill:#fff}
+.hdr-right{display:flex;align-items:center;gap:10px}
+.sync-status{display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,.7)}
+.sync-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.3);flex-shrink:0}
+.sync-dot.ok{background:#27ae60}.sync-dot.busy{background:#f0a500}.sync-dot.err{background:#e74c3c}
+.btn-settings{background:rgba(255,255,255,.15);color:#fff;border:1.5px solid rgba(255,255,255,.3);border-radius:9px;width:38px;height:38px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+.btn-settings:hover{background:rgba(255,255,255,.25)}
+.btn-settings svg{width:18px;height:18px;fill:#fff}
+.settings-note{font-size:13px;color:#7a8490;line-height:1.6;background:#f8f9fa;border-radius:8px;padding:12px 14px}
+.settings-note a{color:#5a6472}
+.token-row{display:flex;gap:8px;align-items:stretch}
+.token-row input{flex:1}
+.token-status{font-size:13px;min-height:18px;margin-top:2px}
+.token-status.ok{color:#27ae60}.token-status.err{color:#e74c3c}
+.btn-test{background:#f4f5f6;color:#5a6472;border:1.5px solid #dde0e4;border-radius:8px;padding:9px 14px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap}
+.btn-test:hover{background:#dde0e4}
+.btn-clear{background:#fde8e8;color:#c0392b;border:1.5px solid #fcc;border-radius:8px;padding:10px 18px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer}
+.btn-clear:hover{background:#f9caca}
 
 /* Main */
 .main{max-width:1200px;margin:0 auto;padding:28px 20px}
@@ -131,10 +148,19 @@ body{font-family:'DM Sans',sans-serif;background:#f0f2f5;color:#2a2e33;min-heigh
     <span class="hdr-sep">|</span>
     <span class="hdr-sub">Vehicle MOT &amp; Tax Dashboard</span>
   </div>
-  <button class="btn-add-hdr" onclick="openModal()">
-    <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-    Add Vehicle
-  </button>
+  <div class="hdr-right">
+    <div class="sync-status" id="syncStatus" style="display:none">
+      <div class="sync-dot" id="syncDot"></div>
+      <span id="syncMsg"></span>
+    </div>
+    <button class="btn-settings" onclick="openSettings()" title="GitHub Sync Settings">
+      <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+    </button>
+    <button class="btn-add-hdr" onclick="openModal()">
+      <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+      Add Vehicle
+    </button>
+  </div>
 </div>
 
 <div class="main">
@@ -162,6 +188,31 @@ body{font-family:'DM Sans',sans-serif;background:#f0f2f5;color:#2a2e33;min-heigh
   </div>
 
   <div class="grid" id="grid"></div>
+</div>
+
+<!-- Settings Modal -->
+<div class="overlay" id="settingsOverlay" onclick="bgCloseSettings(event)">
+  <div class="modal">
+    <div class="modal-hdr">
+      <span class="modal-title">GitHub Sync Settings</span>
+      <button class="modal-close" onclick="closeSettings()">✕</button>
+    </div>
+    <div class="modal-body">
+      <p class="settings-note">Connect to GitHub so that adding or removing vehicles here automatically updates <strong>vehicles.json</strong> in the repo — keeping the daily email reminders in sync.<br><br>You need a GitHub <strong>Personal Access Token</strong> with <em>Contents: Read &amp; Write</em> access to the <code>06moore/mobilitybase-chat</code> repo. <a href="https://github.com/settings/tokens?type=beta" target="_blank" rel="noopener">Create one on GitHub →</a></p>
+      <div class="fg">
+        <label>Personal Access Token</label>
+        <div class="token-row">
+          <input id="ghToken" type="password" placeholder="github_pat_...">
+          <button class="btn-test" onclick="testAndSaveToken()">Test &amp; Save</button>
+        </div>
+        <div class="token-status" id="tokenStatus"></div>
+      </div>
+    </div>
+    <div class="modal-ftr">
+      <button class="btn-clear" id="btnClear" onclick="clearToken()" style="margin-right:auto;display:none">Remove Token</button>
+      <button class="btn-cancel" onclick="closeSettings()">Close</button>
+    </div>
+  </div>
 </div>
 
 <!-- Add / Edit Modal -->
@@ -200,8 +251,128 @@ body{font-family:'DM Sans',sans-serif;background:#f0f2f5;color:#2a2e33;min-heigh
 
 <script>
 const SK = 'mb_fleet_v1';
+const GH_TOKEN_KEY = 'mb_gh_token';
+const GH_OWNER = '06moore';
+const GH_REPO  = 'mobilitybase-chat';
+const GH_FILE  = 'vehicles.json';
 let fleet = [];
 let editId = null;
+let ghSha = null;
+
+function setSyncStatus(state, msg) {
+  const wrap = document.getElementById('syncStatus');
+  const dot  = document.getElementById('syncDot');
+  const txt  = document.getElementById('syncMsg');
+  wrap.style.display = 'flex';
+  dot.className = 'sync-dot ' + (state || '');
+  txt.textContent = msg || '';
+}
+
+async function ghGet(token) {
+  const r = await fetch(
+    `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE}`,
+    { headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json' } }
+  );
+  if (!r.ok) throw new Error(`GitHub ${r.status}`);
+  const j = await r.json();
+  return { content: JSON.parse(atob(j.content.replace(/\n/g,''))), sha: j.sha };
+}
+
+async function ghPut(token, data, sha) {
+  const body = JSON.stringify(data, null, 2);
+  const r = await fetch(
+    `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE}`,
+    {
+      method: 'PUT',
+      headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: 'Update fleet via dashboard', content: btoa(unescape(encodeURIComponent(body))), sha })
+    }
+  );
+  if (!r.ok) { const e = await r.json(); throw new Error(e.message || `GitHub ${r.status}`); }
+  const j = await r.json();
+  return j.content.sha;
+}
+
+async function syncToGitHub() {
+  const token = localStorage.getItem(GH_TOKEN_KEY);
+  if (!token) return;
+  setSyncStatus('busy', 'Syncing…');
+  try {
+    if (!ghSha) {
+      const got = await ghGet(token);
+      ghSha = got.sha;
+    }
+    ghSha = await ghPut(token, fleet, ghSha);
+    setSyncStatus('ok', 'Synced');
+    setTimeout(() => setSyncStatus('ok', 'Synced to GitHub'), 0);
+  } catch(e) {
+    setSyncStatus('err', 'Sync failed');
+    console.error('GitHub sync error:', e.message);
+  }
+}
+
+async function loadFromGitHub() {
+  const token = localStorage.getItem(GH_TOKEN_KEY);
+  if (!token) return;
+  setSyncStatus('busy', 'Loading…');
+  try {
+    const got = await ghGet(token);
+    ghSha = got.sha;
+    fleet = got.content;
+    save();
+    render();
+    setSyncStatus('ok', 'Synced to GitHub');
+  } catch(e) {
+    setSyncStatus('err', 'Sync failed');
+    console.error('GitHub load error:', e.message);
+  }
+}
+
+function openSettings() {
+  const token = localStorage.getItem(GH_TOKEN_KEY);
+  document.getElementById('ghToken').value = token ? '••••••••••••••••' : '';
+  document.getElementById('tokenStatus').textContent = token ? '✓ Token saved' : '';
+  document.getElementById('tokenStatus').className = 'token-status' + (token ? ' ok' : '');
+  document.getElementById('btnClear').style.display = token ? 'inline-flex' : 'none';
+  document.getElementById('settingsOverlay').classList.add('on');
+}
+
+function closeSettings() {
+  document.getElementById('settingsOverlay').classList.remove('on');
+}
+
+function bgCloseSettings(e) {
+  if (e.target === document.getElementById('settingsOverlay')) closeSettings();
+}
+
+async function testAndSaveToken() {
+  const val = document.getElementById('ghToken').value.trim();
+  const status = document.getElementById('tokenStatus');
+  if (!val || val.startsWith('•')) { status.textContent = 'Enter a new token first.'; status.className = 'token-status err'; return; }
+  status.textContent = 'Testing…'; status.className = 'token-status';
+  try {
+    const got = await ghGet(val);
+    ghSha = got.sha;
+    localStorage.setItem(GH_TOKEN_KEY, val);
+    status.textContent = '✓ Connected! Token saved.'; status.className = 'token-status ok';
+    document.getElementById('btnClear').style.display = 'inline-flex';
+    setSyncStatus('ok', 'Synced to GitHub');
+    fleet = got.content; save(); render();
+  } catch(e) {
+    status.textContent = '✗ Failed: ' + e.message; status.className = 'token-status err';
+  }
+}
+
+function clearToken() {
+  if (!confirm('Remove the saved GitHub token? Vehicles will no longer sync automatically.')) return;
+  localStorage.removeItem(GH_TOKEN_KEY);
+  ghSha = null;
+  document.getElementById('ghToken').value = '';
+  document.getElementById('tokenStatus').textContent = 'Token removed.';
+  document.getElementById('tokenStatus').className = 'token-status';
+  document.getElementById('btnClear').style.display = 'none';
+  document.getElementById('syncStatus').style.display = 'none';
+}
 
 const SEED = [
   { id:'1', registration:'YS18 YZH', make:'Ford',    model:'Transit Courier',    colour:'White', year:'2018', motExpiry:'2027-06-27', taxExpiry:'2027-08-01', notes:'' },
@@ -412,6 +583,7 @@ function saveVehicle() {
   save();
   render();
   closeModal();
+  syncToGitHub();
 }
 
 function delVehicle(id) {
@@ -421,10 +593,12 @@ function delVehicle(id) {
   fleet = fleet.filter(x => x.id !== id);
   save();
   render();
+  syncToGitHub();
 }
 
 load();
 render();
+loadFromGitHub();
 </script>
 </body>
 </html>
