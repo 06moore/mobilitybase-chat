@@ -1,0 +1,23 @@
+name: Vehicle MOT & Tax Reminders
+
+on:
+  schedule:
+    - cron: '0 8 * * *'   # runs daily at 8am UTC (9am BST in summer)
+  workflow_dispatch:        # allows manual trigger from GitHub for testing
+
+jobs:
+  check-reminders:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Check vehicle expiry dates and send reminders
+        env:
+          EMAILJS_PRIVATE_KEY: ${{ secrets.EMAILJS_PRIVATE_KEY }}
+          EMAILJS_TEMPLATE_ID: ${{ secrets.EMAILJS_TEMPLATE_ID }}
+          TO_EMAIL: ${{ secrets.TO_EMAIL }}
+        run: node scripts/check-reminders.js
