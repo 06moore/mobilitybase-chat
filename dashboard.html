@@ -137,9 +137,46 @@ body{font-family:'DM Sans',sans-serif;background:#f0f2f5;color:#2a2e33;min-heigh
   .hdr-sub{display:none}
   .hdr-sep{display:none}
 }
+
+/* Login */
+.login-overlay{position:fixed;inset:0;background:linear-gradient(135deg,#2a2e33,#3a4048);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px}
+.login-box{background:#fff;border-radius:18px;padding:40px 36px;width:100%;max-width:380px;box-shadow:0 24px 64px rgba(0,0,0,.35)}
+.login-brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;color:#2a2e33;margin-bottom:6px}
+.login-brand svg{width:30px;height:30px;fill:#3a4048}
+.login-sub{font-size:13px;color:#7a8490;margin-bottom:28px}
+.login-fg{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
+.login-fg label{font-size:12px;font-weight:600;color:#5a6472}
+.login-fg input{border:1.5px solid #dde0e4;border-radius:8px;padding:11px 13px;font-family:'DM Sans',sans-serif;font-size:14px;outline:none;color:#2a2e33;background:#fff;width:100%}
+.login-fg input:focus{border-color:#5a6472}
+.login-err{font-size:13px;color:#e74c3c;min-height:18px;margin-bottom:6px}
+.btn-login{width:100%;background:#3a4048;color:#fff;border:none;border-radius:9px;padding:13px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;margin-top:4px}
+.btn-login:hover{background:#2a2e33}
+.btn-logout{background:rgba(255,255,255,.15);color:#fff;border:1.5px solid rgba(255,255,255,.3);border-radius:9px;padding:7px 13px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer}
+.btn-logout:hover{background:rgba(255,255,255,.25)}
 </style>
 </head>
 <body>
+
+<!-- Login Overlay -->
+<div class="login-overlay" id="loginOverlay">
+  <div class="login-box">
+    <div class="login-brand">
+      <svg viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
+      Mobilitybase
+    </div>
+    <div class="login-sub">Vehicle MOT &amp; Tax Dashboard</div>
+    <div class="login-fg">
+      <label>Username</label>
+      <input id="lUser" type="text" placeholder="Username" autocomplete="username" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <div class="login-fg">
+      <label>Password</label>
+      <input id="lPass" type="password" placeholder="Password" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <div class="login-err" id="loginErr"></div>
+    <button class="btn-login" onclick="doLogin()">Sign In</button>
+  </div>
+</div>
 
 <div class="hdr">
   <div class="hdr-brand">
@@ -160,6 +197,7 @@ body{font-family:'DM Sans',sans-serif;background:#f0f2f5;color:#2a2e33;min-heigh
       <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
       Add Vehicle
     </button>
+    <button class="btn-logout" onclick="doLogout()">Sign Out</button>
   </div>
 </div>
 
@@ -250,6 +288,47 @@ body{font-family:'DM Sans',sans-serif;background:#f0f2f5;color:#2a2e33;min-heigh
 </div>
 
 <script>
+const AUTH_KEY = 'mb_auth';
+const USER_HASH = '410e43704238c57beaf0b1a42bf75de77b5ee14e8b28ac0d68ba49e35bde8f47';
+const PASS_HASH = '3147052da5d1bfeebf773cda24d8bfb7319b908b769291911c4c86fa989b4226';
+
+async function sha256(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
+async function doLogin() {
+  const u = document.getElementById('lUser').value.trim();
+  const p = document.getElementById('lPass').value;
+  const err = document.getElementById('loginErr');
+  if (!u || !p) { err.textContent = 'Please enter your username and password.'; return; }
+  const [uh, ph] = await Promise.all([sha256(u), sha256(p)]);
+  if (uh === USER_HASH && ph === PASS_HASH) {
+    sessionStorage.setItem(AUTH_KEY, '1');
+    document.getElementById('loginOverlay').style.display = 'none';
+  } else {
+    err.textContent = 'Incorrect username or password.';
+    document.getElementById('lPass').value = '';
+  }
+}
+
+function doLogout() {
+  sessionStorage.removeItem(AUTH_KEY);
+  document.getElementById('lUser').value = '';
+  document.getElementById('lPass').value = '';
+  document.getElementById('loginErr').textContent = '';
+  document.getElementById('loginOverlay').style.display = 'flex';
+}
+
+function checkAuth() {
+  if (sessionStorage.getItem(AUTH_KEY) !== '1') {
+    document.getElementById('loginOverlay').style.display = 'flex';
+    setTimeout(() => document.getElementById('lUser').focus(), 100);
+  } else {
+    document.getElementById('loginOverlay').style.display = 'none';
+  }
+}
+
 const SK = 'mb_fleet_v1';
 const GH_TOKEN_KEY = 'mb_gh_token';
 const GH_OWNER = '06moore';
@@ -596,6 +675,7 @@ function delVehicle(id) {
   syncToGitHub();
 }
 
+checkAuth();
 load();
 render();
 loadFromGitHub();
