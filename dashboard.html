@@ -102,6 +102,10 @@ body{font-family:'DM Sans',sans-serif;background:#f0f2f5;color:#2a2e33;min-heigh
 .ico-btn:hover{background:#dde0e4}
 .ico-btn svg{width:14px;height:14px;fill:#5a6472}
 .ico-btn.del:hover{background:#fde8e8}.ico-btn.del:hover svg{fill:#e74c3c}
+.ico-btn.refresh:hover{background:#e8f8ee}.ico-btn.refresh:hover svg{fill:#27ae60}
+.btn-refresh-all{background:#fff;color:#5a6472;border:1.5px solid #dde0e4;border-radius:10px;padding:10px 16px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap}
+.btn-refresh-all:hover{background:#f0f2f5}
+.btn-refresh-all svg{width:15px;height:15px;fill:#5a6472}
 
 /* Empty */
 .empty{text-align:center;padding:70px 20px;grid-column:1/-1}
@@ -219,6 +223,10 @@ body{font-family:'DM Sans',sans-serif;background:#f0f2f5;color:#2a2e33;min-heigh
         <option value="tax">Tax expiry</option>
       </select>
     </div>
+    <button class="btn-refresh-all" onclick="refreshAllMOT()" id="btnRefreshAll" title="Refresh all MOT dates from DVSA">
+      <svg viewBox="0 0 24 24"><path d="M17.65 6.35A7.96 7.96 0 0012 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+      Refresh MOT Dates
+    </button>
     <button class="btn-add" onclick="openModal()">
       <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
       Add Vehicle
@@ -499,7 +507,8 @@ const ICONS = {
   'x': `<svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>`
 };
 
-const EDIT_SVG = `<svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>`;
+const EDIT_SVG    = `<svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>`;
+const REFRESH_SVG = `<svg viewBox="0 0 24 24"><path d="M17.65 6.35A7.96 7.96 0 0012 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>`;
 const DEL_SVG  = `<svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>`;
 const CAR_SVG  = `<svg viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>`;
 
@@ -589,6 +598,7 @@ function render() {
       <div class="card-bot">
         <span class="v-notes">${v.notes || ''}</span>
         <div class="card-acts">
+          <button class="ico-btn refresh" onclick="lookupMOT('${v.registration}','${v.id}')" title="Refresh MOT from DVSA">${REFRESH_SVG}</button>
           <button class="ico-btn" onclick="openModal('${v.id}')" title="Edit">${EDIT_SVG}</button>
           <button class="ico-btn del" onclick="delVehicle('${v.id}')" title="Delete">${DEL_SVG}</button>
         </div>
@@ -673,6 +683,46 @@ function delVehicle(id) {
   save();
   render();
   syncToGitHub();
+}
+
+const MOT_WORKER = 'https://mobilitybase-mot.service-0e4.workers.dev/mot';
+
+async function lookupMOT(reg, id) {
+  const cleanReg = reg.replace(/\s/g, '');
+  setSyncStatus('busy', `Looking up ${reg}…`);
+  try {
+    const r = await fetch(`${MOT_WORKER}?reg=${cleanReg}`);
+    const d = await r.json();
+    if (!r.ok || d.error) throw new Error(d.error || `Error ${r.status}`);
+    if (!d.motExpiryDate) throw new Error('No MOT date returned');
+    fleet = fleet.map(v => v.id === id ? { ...v, motExpiry: d.motExpiryDate } : v);
+    save();
+    render();
+    syncToGitHub();
+    setSyncStatus('ok', `MOT updated for ${reg}`);
+  } catch(e) {
+    setSyncStatus('err', `Lookup failed: ${e.message}`);
+  }
+}
+
+async function refreshAllMOT() {
+  const btn = document.getElementById('btnRefreshAll');
+  btn.disabled = true;
+  btn.textContent = 'Refreshing…';
+  let updated = 0;
+  for (const v of fleet) {
+    try {
+      const r = await fetch(`${MOT_WORKER}?reg=${v.registration.replace(/\s/g,'')}`);
+      const d = await r.json();
+      if (r.ok && d.motExpiryDate) { v.motExpiry = d.motExpiryDate; updated++; }
+    } catch(e) { /* skip */ }
+  }
+  save();
+  render();
+  if (updated > 0) syncToGitHub();
+  btn.disabled = false;
+  btn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M17.65 6.35A7.96 7.96 0 0012 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg> Refresh MOT Dates`;
+  setSyncStatus('ok', `Updated ${updated} vehicle${updated===1?'':'s'}`);
 }
 
 checkAuth();
