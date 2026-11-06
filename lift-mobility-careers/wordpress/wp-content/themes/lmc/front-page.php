@@ -1,4 +1,5 @@
 <?php get_header(); ?>
+<?php if ( ! empty( $_GET['account_closed'] ) ) : ?><div class="lmc-wrap" style="padding-top:20px"><?php echo lmc_notice( 'Your employer account has been closed and your details deleted. Thank you for advertising with us.', 'success' ); ?></div><?php endif; ?>
 <section class="lmc-hero">
 	<div class="lmc-hero__rails" aria-hidden="true"></div>
 	<div class="lmc-wrap lmc-hero__inner">

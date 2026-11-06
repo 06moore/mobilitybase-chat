@@ -8,6 +8,7 @@ class LMC_Install {
 		self::roles();
 		LMC_Post_Types::register();
 		self::terms();
+		self::index_policy();
 		self::pages();
 		LMC_Cron::schedule();
 		update_option( 'lmc_db_version', LMC_DB_VERSION );
@@ -25,7 +26,9 @@ class LMC_Install {
 	public static function maybe_upgrade() {
 		if ( get_option( 'lmc_db_version' ) !== LMC_DB_VERSION ) {
 			self::tables();
+			self::roles();
 			self::terms();
+			self::index_policy();
 			self::pages();
 			flush_rewrite_rules( false );
 			update_option( 'lmc_db_version', LMC_DB_VERSION );
@@ -56,6 +59,7 @@ class LMC_Install {
 			stripe_intent varchar(255) NOT NULL DEFAULT '',
 			status varchar(20) NOT NULL DEFAULT 'pending',
 			mode varchar(10) NOT NULL DEFAULT 'test',
+			customer varchar(255) NOT NULL DEFAULT '',
 			created_at datetime NOT NULL,
 			paid_at datetime NULL,
 			PRIMARY KEY  (id),
@@ -237,15 +241,21 @@ class LMC_Install {
 		}
 	}
 
+	/**
+	 * Employers get the bare minimum capability. They deliberately do NOT get upload_files:
+	 * that would let them upload arbitrary media through the WordPress REST API. Logo uploads
+	 * go through our own validated form handler instead.
+	 */
 	public static function roles() {
-		add_role(
-			'lmc_employer',
-			'Employer',
-			array(
-				'read'         => true,
-				'upload_files' => true,
-			)
-		);
+		add_role( 'lmc_employer', 'Employer', array( 'read' => true ) );
+		$role = get_role( 'lmc_employer' );
+		if ( $role ) {
+			foreach ( array_keys( $role->capabilities ) as $cap ) {
+				if ( 'read' !== $cap ) {
+					$role->remove_cap( $cap );
+				}
+			}
+		}
 	}
 
 	public static function terms() {
@@ -294,6 +304,23 @@ class LMC_Install {
 				$slug = sanitize_title( $county );
 				if ( ! term_exists( $slug, 'lmc_location' ) ) {
 					wp_insert_term( $county, 'lmc_location', array( 'slug' => $slug, 'parent' => $pid ) );
+				}
+			}
+		}
+	}
+
+	/** Which landing pages are always indexable. Others need ≥ index_threshold live vacancies. */
+	public static function index_policy() {
+		$always = array(
+			'lmc_sector' => array( 'stairlifts', 'home-lifts', 'through-floor-lifts', 'platform-lifts', 'ceiling-track-hoists', 'patient-handling' ),
+			'lmc_role'   => array( 'installation-engineer', 'service-engineer', 'loler-inspector', 'trainee-engineer', 'apprentice' ),
+		);
+		foreach ( $always as $tax => $slugs ) {
+			foreach ( get_terms( array( 'taxonomy' => $tax, 'hide_empty' => false ) ) as $t ) {
+				if ( in_array( $t->slug, $slugs, true ) ) {
+					update_term_meta( $t->term_id, 'lmc_index', 'always' );
+				} else {
+					delete_term_meta( $t->term_id, 'lmc_index' );
 				}
 			}
 		}

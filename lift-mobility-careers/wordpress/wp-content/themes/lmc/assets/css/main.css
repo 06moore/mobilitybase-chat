@@ -352,3 +352,8 @@ h3{font-size:18px;font-weight:700}
 .lmc-results--company{grid-template-columns:1fr 300px}
 @media (max-width:900px){.lmc-results--company{grid-template-columns:1fr}}
 @media (max-width:760px){.lmc-hero__rails:after{display:none}.lmc-hero__rails{width:100%;opacity:.6}}
+
+.lmc-footer__cookies{color:#D5E0E6;font-size:13px;text-decoration:none}
+.lmc-footer__cookies:hover{color:var(--white);text-decoration:underline}
+.lmc-danger{margin-top:40px;border-top:1px solid var(--grey-200);padding-top:16px}
+.lmc-danger summary{cursor:pointer;color:var(--error);font-weight:600}

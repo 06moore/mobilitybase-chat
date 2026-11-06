@@ -18,7 +18,8 @@ SP=wp/wp-content/plugins/sqlite-database-integration
 rm -rf "$SP" && cp -rL sqlite/packages/plugin-sqlite-database-integration "$SP"
 sed -e "s#{SQLITE_IMPLEMENTATION_FOLDER_PATH}#$DEV/$SP#" -e "s#{SQLITE_PLUGIN}#sqlite-database-integration/load.php#" "$SP/db.copy" > wp/wp-content/db.php
 # Link our code
-rm -rf wp/wp-content/plugins/lmc-core wp/wp-content/themes/lmc
+rm -rf wp/wp-content/plugins/lmc-core wp/wp-content/themes/lmc wp/wp-content/mu-plugins
+mkdir -p wp/wp-content/mu-plugins && ln -s "$ROOT/tools/dev/mu-plugins/lmc-dev-fakes.php" wp/wp-content/mu-plugins/lmc-dev-fakes.php
 ln -s "$ROOT/wordpress/wp-content/plugins/lmc-core" wp/wp-content/plugins/lmc-core
 ln -s "$ROOT/wordpress/wp-content/themes/lmc" wp/wp-content/themes/lmc
 cat > wp/wp-config.php <<CFG
@@ -34,6 +35,7 @@ if (\$lmc_proto === 'https') { \$_SERVER['HTTPS'] = 'on'; }
 define('WP_HOME', \$lmc_url); define('WP_SITEURL', \$lmc_url); // dev: follow the preview proxy's host
 define('LMC_MAIL_CAPTURE', '$DEV/mail.log'); // dev only: emails are written here instead of being sent
 define('DISABLE_WP_CRON', true);
+define('LMC_FAKE_STRIPE', true); // dev only: fake Stripe checkout (tools/dev/mu-plugins/lmc-dev-fakes.php)
 foreach (['AUTH_KEY','SECURE_AUTH_KEY','LOGGED_IN_KEY','NONCE_KEY','AUTH_SALT','SECURE_AUTH_SALT','LOGGED_IN_SALT','NONCE_SALT'] as \$k) define(\$k, 'dev-only-'.\$k);
 if ( ! defined('ABSPATH') ) define('ABSPATH', __DIR__ . '/');
 require_once ABSPATH . 'wp-settings.php';

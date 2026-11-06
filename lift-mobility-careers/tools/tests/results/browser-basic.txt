@@ -1,0 +1,34 @@
+Candidate
+  ✓ Homepage headline
+  ✓ Location search from homepage returns Kent jobs
+  ✓ Job page has an Apply button (no account needed)
+Employer registration
+  ✓ Registration refused until terms accepted
+  ✓ Account created and signed in
+  ✓ Posting blocked until email confirmed
+  ✓ Registration confirmation email sent
+  ✓ Email confirmation link works
+Vacancy submission
+  ✓ Required fields validated (13 errors)
+  ✓ Valid vacancy saved → advert options step
+  ✓ Payments switched off: clear message, no charge possible
+Operator grants free listing; employer uses credit
+  ✓ Admin grants free 30-day listing
+  ✓ Credit used → vacancy sent for approval (first vacancy)
+Operator approves from the dashboard
+  ✓ One-click approval
+  ✓ New vacancy live and found by location search
+  ✓ Employer dashboard shows the vacancy as Live with end date
+  ✓ "Now live" email sent to employer
+  ✓ Admin screen loads: lmc-discovery
+  ✓ Admin screen loads: lmc-crm
+  ✓ Admin screen loads: lmc-payments
+  ✓ Admin screen loads: lmc-social
+  ✓ Admin screen loads: lmc-settings
+  ✓ Admin screen loads: lmc-logs
+Mobile
+  ✓ No horizontal scroll on a phone (390px)
+  ✓ Mobile menu opens
+  ✓ No JavaScript errors
+
+26 passed, 0 failed

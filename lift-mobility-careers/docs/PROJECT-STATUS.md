@@ -2,7 +2,7 @@
 
 Updated: 6 Nov 2026. ✅ = built **and tested** · 🟡 = built, can only be fully tested once you connect an external account · ⬜ = needs you (or a professional).
 
-**Test results (local WordPress 7.1.4 + PHP 8.3):** `php tools/tests/run.php` → **146/146 pass** · `node tools/tests/e2e.js` → **26/26 pass** (real browser: candidate search, registration, email confirmation, validation, submission, free credit, approval, live listing, all admin screens, mobile layout, no JS errors).
+**Test results (local WordPress 7.1.4 + PHP 8.3):** `php tools/tests/run.php` → **207/207 pass** · `node tools/tests/e2e.js` → **26/26 pass** · `node tools/tests/e2e-employer.js` → **50/50 pass** (all via `tools/tests/run-all.sh`, each on a fresh site). Latest review response: `docs/CHANGES-AND-STATUS.md` (real browser: candidate search, registration, email confirmation, validation, submission, free credit, approval, live listing, all admin screens, mobile layout, no JS errors).
 
 Tested locally with an SQLite database and captured (not sent) emails. Live hosting, real email delivery, real Stripe calls and the postcodes.io lookup **could not be exercised from this environment** (no accounts / outbound network blocked) – those are marked 🟡.
 

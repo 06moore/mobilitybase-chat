@@ -165,6 +165,7 @@ class LMC_Employer_Dashboard {
 		echo '<div class="lmc-check"><label><input type="checkbox" name="marketing_opt_out" value="1" ' . checked( LMC_Forms::old( 'marketing_opt_out' ), '1', false ) . '> Don\'t send me emails about advertising offers</label></div>';
 		echo '<p class="lmc-muted">Account email: ' . esc_html( $u->user_email ) . '. To change your email or close your account, please <a href="' . esc_url( lmc_page_url( 'contact' ) ) . '">contact us</a>.</p>';
 		echo '<button class="lmc-btn lmc-btn--primary" type="submit">Save profile</button> <a href="' . esc_url( wp_logout_url( home_url( '/' ) ) ) . '">Sign out</a></form>';
+		echo LMC_Account::form(); // phpcs:ignore -- built from escaped parts.
 		return ob_get_clean();
 	}
 

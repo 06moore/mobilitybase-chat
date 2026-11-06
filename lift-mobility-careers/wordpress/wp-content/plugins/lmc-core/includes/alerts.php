@@ -267,6 +267,9 @@ class LMC_Alerts {
 	/* ---------- Matching & sending ---------- */
 
 	public static function job_matches( $s, $job_id ) {
+		if ( LMC_Launch::is_demo_job( $job_id ) ) {
+			return false;
+		}
 		if ( $s->sectors && ! array_intersect( explode( ',', $s->sectors ), wp_list_pluck( lmc_job_terms( $job_id, 'lmc_sector' ), 'slug' ) ) ) {
 			return false;
 		}

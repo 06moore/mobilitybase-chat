@@ -40,9 +40,10 @@
 	</div>
 	<div class="lmc-wrap lmc-footer__legal">
 		<nav aria-label="Legal">
-			<?php foreach ( array( 'terms' => 'Terms', 'privacy' => 'Privacy', 'cookies' => 'Cookies', 'agreement' => 'Advertising agreement', 'refunds' => 'Refunds', 'disclaimer' => 'Disclaimer' ) as $k => $l ) : ?>
+			<?php foreach ( array( 'terms' => 'Terms', 'privacy' => 'Privacy', 'cookies' => 'Cookie policy', 'agreement' => 'Advertising agreement', 'refunds' => 'Refunds', 'disclaimer' => 'Disclaimer' ) as $k => $l ) : ?>
 				<a href="<?php echo esc_url( lmc_page_url( $k ) ); ?>"><?php echo esc_html( $l ); ?></a>
 			<?php endforeach; ?>
+			<?php if ( lmc_opt( 'ga4_id' ) || lmc_opt( 'track_returning' ) ) : ?><button type="button" class="lmc-link lmc-footer__cookies" onclick="window.lmcResetConsent&&window.lmcResetConsent()">Cookie settings</button><?php endif; ?>
 		</nav>
 		<p>&copy; <?php echo esc_html( wp_date( 'Y' ) ); ?> <?php echo esc_html( lmc_opt( 'business_name' ) ); ?><?php
 		$id = array_filter( array( lmc_opt( 'legal_entity' ) ? 'a trading name of ' . lmc_opt( 'legal_entity' ) : '', lmc_opt( 'company_number' ) ? 'Registered in England & Wales no. ' . lmc_opt( 'company_number' ) : '', lmc_opt( 'registered_office' ) ? 'Registered office: ' . preg_replace( '/\s*\n\s*/', ', ', lmc_opt( 'registered_office' ) ) : '', lmc_opt( 'vat_number' ) ? 'VAT ' . lmc_opt( 'vat_number' ) : '' ) );

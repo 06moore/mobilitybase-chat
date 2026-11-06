@@ -36,6 +36,10 @@ Assets (in `brand/`):
 - **CTA button:** "Learn more" → /jobs/
 - Facebook is where many field engineers and trainees will see posts – keep posts short and practical.
 
-## Automation
+## Automation (optional – not needed to run the business)
+
+No advert package includes social media posting, so nothing has to be posted. If you want social posts, switch on "Social post drafts" (Settings → Automation) and optionally connect a Zapier/Make/Buffer webhook to publish them automatically.
+
+### How it works when switched on
 
 Every time an employer-authorised vacancy goes live, the site creates LinkedIn and Facebook drafts (Admin → Lift & Mobility → Social posts). Copy them in (2 minutes), or connect a free Zapier/Make/Buffer workflow: paste its webhook URL into Settings → Automation, and press "Send via webhook" (or enable auto-send once you trust it). Posts are only created when the employer ticked the social permission box.

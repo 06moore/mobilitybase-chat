@@ -18,6 +18,8 @@ A complete, automated UK specialist job board for the stairlift, home lift, plat
 | `docs/marketing/` | Social profiles, 12-week content plan, post templates, outreach process, target employer list |
 | `docs/operations/` | Deployment guide, Stripe setup & test checklist |
 | `docs/growth/` | SEO strategy, 12-month growth plan with targets, Google/Bing/aggregator setup |
+| `docs/CHANGES-AND-STATUS.md` | Response to the independent review: prioritised changes, outstanding issues, tests |
+| `docs/SECURITY-REVIEW.md` · `docs/DB-SCHEMA.md` | Security review; database schema and data retention |
 | `docs/PROJECT-STATUS.md` | **Phase-by-phase record of what's done, tested and outstanding – start here** |
 | `tools/` | Local dev environment, test suites, brand asset builder, zip packager |
 
@@ -29,7 +31,7 @@ A complete, automated UK specialist job board for the stairlift, home lift, plat
 - One purpose-built plugin gives one dashboard, fewer plugins to update and fewer things to break, faster pages, and zero licence fees.
 - **Stripe Checkout** (hosted payment page) means card data never touches the site (lowest PCI scope), with Stripe receipts, refunds and optional invoices.
 - **Prices, durations, moderation, email wording and keys are all editable in WP Admin** – no rebuild needed.
-- Trade-off: you depend on this codebase rather than a large plugin community. Mitigation: plain WordPress APIs, documented, covered by 172 automated tests, and any WordPress developer can maintain it.
+- Trade-off: you depend on this codebase rather than a large plugin community. Mitigation: plain WordPress APIs, documented, covered by 283 automated checks, and any WordPress developer can maintain it.
 
 ## Feature summary
 

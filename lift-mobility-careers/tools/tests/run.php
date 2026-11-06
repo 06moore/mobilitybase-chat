@@ -61,6 +61,34 @@ ok( lmc_package( 'featured' )['price'] === 7500, 'Price change in settings appli
 lmc_update_opts( array( 'price_featured' => 6900 ) );
 ok( ! LMC_Payments::enabled(), 'Payments are OFF by default' );
 
+section( 'Launch control (pre-launch is the default)' );
+ok( ! LMC_Launch::is_live(), 'Fresh install starts in PRE-LAUNCH mode' );
+$rt = wp_remote_retrieve_body( wp_remote_get( home_url( '/robots.txt' ) ) );
+ok( false !== strpos( $rt, 'Disallow: /' ) && false === strpos( $rt, 'Sitemap:' ), 'Pre-launch robots.txt blocks all crawling' );
+$hp = wp_remote_retrieve_body( wp_remote_get( home_url( '/' ) ) );
+ok( (bool) preg_match( '/<meta name=.robots. content=.[^"\']*noindex/', $hp ), 'Pre-launch pages carry noindex' );
+ok( 404 === wp_remote_retrieve_response_code( wp_remote_get( home_url( '/wp-sitemap.xml' ) ) ), 'No XML sitemap before launch' );
+ok( 404 === wp_remote_retrieve_response_code( wp_remote_get( home_url( '/feeds/jobs.xml' ) ) ), 'No aggregator job feed before launch' );
+lmc_update_opts( array( 'stripe_mode' => 'live' ) );
+ok( 'test' === LMC_Payments::mode(), 'Stripe is forced to TEST mode before launch, even if set to live' );
+lmc_update_opts( array( 'stripe_mode' => 'test' ) );
+$bl = LMC_Launch::blockers();
+ok( isset( $bl['legal'], $bl['placeholders'], $bl['demo'], $bl['business'], $bl['domain'], $bl['email'] ), 'Blockers: legal sign-off, placeholders, demo content, business details, domain/HTTPS, email' );
+ok( ! LMC_Launch::go_live() && ! LMC_Launch::is_live(), 'Cannot go live while blockers remain' );
+$ph = LMC_Launch::placeholders();
+$flat = implode( ' ', array_merge( ...array_values( $ph ) ) );
+ok( false !== strpos( $flat, '[LEGAL ENTITY NAME]' ) && false !== strpos( $flat, '[CONTACT EMAIL]' ) && isset( $ph['Cookie Policy'], $ph['Privacy Policy'] ), 'Placeholder scanner finds remaining [PLACEHOLDERS] page by page (' . count( $ph ) . ' pages)' );
+$demo_ids = get_posts( array( 'post_type' => 'lmc_job', 'post_status' => 'any', 'numberposts' => -1, 'fields' => 'ids', 'meta_key' => '_lmc_demo' ) );
+ok( 9 === count( $demo_ids ), 'Dev seed vacancies are flagged as demo (9)' );
+// From here on, functional tests run as if live (blockers bypassed deliberately for testing only).
+lmc_update_opts( array( 'launch_mode' => 'live' ) );
+$dj = $demo_ids[0];
+$dh = wp_remote_retrieve_body( wp_remote_get( get_permalink( $dj ) ) );
+ok( false !== strpos( $dh, 'noindex' ) && false === strpos( $dh, '"JobPosting"' ), 'Demo vacancy: noindex and no JobPosting even when live' );
+$sm = wp_remote_retrieve_body( wp_remote_get( home_url( '/wp-sitemap-posts-lmc_job-1.xml' ) ) );
+ok( false === strpos( $sm, get_permalink( $dj ) ), 'Demo vacancies excluded from the sitemap' );
+ok( false === strpos( wp_remote_retrieve_body( wp_remote_get( home_url( '/feeds/jobs.xml' ) ) ), 'LMC-' . $dj . ']' ), 'Demo vacancies excluded from the aggregator feed' );
+
 section( 'Stripe webhook signature' );
 $secret = 'whsec_test_123';
 ok( LMC_Payments::verify_signature( 'abc', 't=' . lmc_now() . ',v1=' . hash_hmac( 'sha256', lmc_now() . '.abc', $secret ), $secret ), 'Valid signature accepted' );
@@ -94,7 +122,7 @@ ok( abs( (int) lmc_job_meta( $job, 'expires' ) - ( lmc_now() + 30 * DAY_IN_SECON
 ok( mails( 'vacancy_published' ) >= 1, '"Vacancy published" email sent' );
 ok( (bool) get_user_meta( $emp, 'lmc_trusted', true ), 'Employer becomes trusted after first approval' );
 global $wpdb;
-ok( 2 === (int) $wpdb->get_var( $wpdb->prepare( 'SELECT COUNT(*) FROM ' . lmc_table( 'social' ) . ' WHERE job_id = %d', $job ) ), 'LinkedIn + Facebook drafts created (employer gave permission)' );
+ok( 0 === (int) $wpdb->get_var( $wpdb->prepare( 'SELECT COUNT(*) FROM ' . lmc_table( 'social' ) . ' WHERE job_id = %d', $job ) ), 'Low-maintenance default: no social drafts are created (nothing to post manually)' );
 
 $job2 = make_job( $emp, 'Second Vacancy' );
 $wpdb->insert( lmc_table( 'payments' ), array( 'user_id' => $emp, 'job_id' => $job2, 'package' => 'standard', 'purpose' => 'new', 'net' => 3900, 'vat' => 0, 'total' => 3900, 'status' => 'pending', 'mode' => 'test', 'stripe_session' => 'cs_test_B', 'created_at' => lmc_mysql_time() ) );
@@ -410,7 +438,7 @@ unlink( ABSPATH . 'fixture-unlinked.html' );
 
 section( 'Job feed for aggregators' );
 $xml = simplexml_load_string( wp_remote_retrieve_body( wp_remote_get( home_url( '/feeds/jobs.xml' ) ) ) );
-$live_n = count( get_posts( array( 'post_type' => 'lmc_job', 'post_status' => 'publish', 'numberposts' => -1, 'fields' => 'ids' ) ) );
+$live_n = count( get_posts( array( 'post_type' => 'lmc_job', 'post_status' => 'publish', 'numberposts' => -1, 'fields' => 'ids', 'meta_query' => array( LMC_Launch::demo_meta_query() ) ) ) );
 ok( $xml && count( $xml->job ) === $live_n, 'Valid XML feed with every live vacancy (' . $live_n . ')' );
 ok( $xml && false !== strpos( (string) $xml->job[0]->url, 'utm_source=aggregator' ) && 'GB' === (string) $xml->job[0]->country && (string) $xml->job[0]->salary, 'Feed jobs link back to us with salary and location' );
 
@@ -428,8 +456,19 @@ lmc_update_opts( array( 'indexnow_enabled' => 0 ) );
 
 section( 'SEO landing pages & content' );
 $roles = get_terms( array( 'taxonomy' => 'lmc_role', 'hide_empty' => false ) );
-ok( 13 === count( array_filter( $roles, array( 'LMC_SEO', 'term_indexable' ) ) ), 'All 13 job-category landing pages have curated copy and are indexable' );
-ok( 9 === count( array_filter( get_terms( array( 'taxonomy' => 'lmc_sector', 'hide_empty' => false ) ), array( 'LMC_SEO', 'term_indexable' ) ) ), 'All 9 sector landing pages indexable' );
+$idx_roles = wp_list_pluck( array_filter( $roles, array( 'LMC_SEO', 'term_indexable' ) ), 'slug' );
+ok( ! array_diff( array( 'installation-engineer', 'service-engineer', 'loler-inspector', 'trainee-engineer', 'apprentice' ), $idx_roles ), 'Priority job-category pages indexed (installation, service, LOLER, trainee, apprentice)' );
+ok( ! in_array( 'operations-manager', $idx_roles, true ) && ! in_array( 'technical-manager', $idx_roles, true ), 'Thin job-category pages (e.g. operations manager) NOT indexed without enough live jobs' );
+$tm = get_term_by( 'slug', 'technical-manager', 'lmc_role' );
+for ( $i = 0; $i < 3; $i++ ) { $tj = make_job( $emp, 'Tech manager ' . $i, 'draft' ); wp_set_object_terms( $tj, 'technical-manager', 'lmc_role' ); LMC_Jobs::publish( $tj ); }
+ok( LMC_SEO::term_indexable( $tm ), '…but becomes indexable automatically once it has 3 genuine live vacancies' );
+foreach ( get_terms( array( 'taxonomy' => 'lmc_role', 'hide_empty' => false ) ) as $rt ) {
+	if ( 'always' === get_term_meta( $rt->term_id, 'lmc_index', true ) ) {
+		ok( str_word_count( wp_strip_all_tags( $rt->description ) ) >= 75, 'Indexed role page "' . $rt->name . '" has substantial copy (' . str_word_count( $rt->description ) . ' words)' );
+	}
+}
+$idx_sec = wp_list_pluck( array_filter( get_terms( array( 'taxonomy' => 'lmc_sector', 'hide_empty' => false ) ), array( 'LMC_SEO', 'term_indexable' ) ), 'slug' );
+ok( 6 <= count( $idx_sec ) && ! in_array( 'wheelchair-lifts', $idx_sec, true ) && ! in_array( 'access-lifts', $idx_sec, true ), 'Distinct sector pages indexed; overlapping access/wheelchair lift pages wait for real vacancies' );
 $g = wp_remote_retrieve_body( wp_remote_get( lmc_page_url( 'g_loler' ) ) );
 ok( false !== strpos( $g, '"@type":"Article"' ) && false !== strpos( $g, '"BreadcrumbList"' ), 'Career guides output Article + Breadcrumb schema' );
 ok( 5 === count( get_pages( array( 'parent' => (int) get_option( 'lmc_page_guides' ) ) ) ), '5 career guides published under /career-guides/' );
@@ -453,6 +492,162 @@ ok( $md['cur']['visits'] >= 2 && $md['cur']['job_views'] >= 1 && isset( $md['sou
 $html = LMC_Monthly_Report::render( $md );
 ok( false !== strpos( $html, 'Suggested actions' ) && false !== strpos( $html, 'target' ) && false !== strpos( $html, 'Traffic sources' ), 'Report shows targets, sources and suggested actions' );
 ok( LMC_Monthly_Report::send( wp_date( 'Y-m', lmc_now() ) ), 'Monthly report emailed' );
+
+
+/* ================== Security ================== */
+section( 'Security: roles, passwords, enumeration, headers' );
+wp_set_current_user( 0 );
+ok( array( 'read' => true ) === get_role( 'lmc_employer' )->capabilities, 'Employer role has only the "read" capability (no uploads, no editing)' );
+$pu  = get_userdata( $emp );
+ok( 0 !== strpos( $pu->user_pass, 'a-' ) && strlen( $pu->user_pass ) > 30 && wp_check_password( 'wrong', $pu->user_pass, $emp ) === false, 'Passwords stored only as salted hashes' );
+$r = wp_remote_get( home_url( '/?author=1' ), array( 'redirection' => 0 ) );
+ok( 301 === wp_remote_retrieve_response_code( $r ), 'Author archives (username enumeration) redirected' );
+ok( 404 === wp_remote_retrieve_response_code( wp_remote_get( rest_url( 'wp/v2/users' ) ) ), 'REST users list hidden from the public' );
+$h = wp_remote_retrieve_headers( wp_remote_get( home_url( '/' ) ) );
+ok( 'nosniff' === $h['x-content-type-options'] && 'SAMEORIGIN' === $h['x-frame-options'] && 'strict-origin-when-cross-origin' === $h['referrer-policy'], 'Security headers sent (nosniff, frame protection, referrer policy)' );
+$r = wp_remote_post( rest_url( 'wp/v2/media' ), array( 'body' => 'x' ) );
+ok( in_array( wp_remote_retrieve_response_code( $r ), array( 401, 403 ), true ), 'Anonymous media upload via REST refused' );
+
+section( 'Security: CSRF, rate limits, spam' );
+$r = wp_remote_post( lmc_page_url( 'register' ), array( 'redirection' => 0, 'body' => array( 'lmc_action' => 'lmc_register', 'first_name' => 'X', 'last_name' => 'Y', 'company' => 'Z', 'email' => 'csrf@example.test', 'password' => 'abcdefghijkl', 'entity_type' => 'limited_company', 'agree' => 1 ) ) );
+ok( ! email_exists( 'csrf@example.test' ) && false !== strpos( wp_remote_retrieve_body( $r ), 'session expired' ), 'Registration without a valid nonce is refused' );
+$nonce = wp_create_nonce( 'lmc_register' );
+$r = wp_remote_post( lmc_page_url( 'register' ), array( 'redirection' => 0, 'body' => array( 'lmc_action' => 'lmc_register', '_lmc_nonce' => $nonce, '_lmc_t' => time() - 10, 'lmc_website_hp' => 'http://spam', 'first_name' => 'X', 'last_name' => 'Y', 'company' => 'Z', 'email' => 'bot@example.test', 'password' => 'abcdefghijkl', 'entity_type' => 'limited_company', 'agree' => 1 ) ) );
+ok( ! email_exists( 'bot@example.test' ), 'Honeypot field blocks bots' );
+$r = wp_remote_post( lmc_page_url( 'register' ), array( 'redirection' => 0, 'body' => array( 'lmc_action' => 'lmc_register', '_lmc_nonce' => $nonce, '_lmc_t' => time(), 'first_name' => 'X', 'last_name' => 'Y', 'company' => 'Z', 'email' => 'fast@example.test', 'password' => 'abcdefghijkl', 'entity_type' => 'limited_company', 'agree' => 1 ) ) );
+ok( ! email_exists( 'fast@example.test' ), 'Forms submitted faster than a human could are refused' );
+$made = 0;
+for ( $i = 0; $i < 7; $i++ ) {
+	wp_remote_post( lmc_page_url( 'register' ), array( 'redirection' => 0, 'body' => array( 'lmc_action' => 'lmc_register', '_lmc_nonce' => $nonce, '_lmc_t' => time() - 10, 'first_name' => 'R', 'last_name' => 'L', 'company' => 'RL', 'email' => "rl$i@example.test", 'password' => 'abcdefghijkl', 'entity_type' => 'limited_company', 'agree' => 1 ) ) );
+	$made += email_exists( "rl$i@example.test" ) ? 1 : 0;
+}
+ok( 5 === $made, 'Registration rate limit: max 5 accounts per connection per hour (' . $made . ' of 7 created)' );
+$cn = wp_create_nonce( 'lmc_contact' );
+$sent0 = mails( 'admin_contact' );
+for ( $i = 0; $i < 7; $i++ ) {
+	wp_remote_post( lmc_page_url( 'contact' ), array( 'redirection' => 0, 'body' => array( 'lmc_action' => 'lmc_contact', '_lmc_nonce' => $cn, '_lmc_t' => time() - 10, 'name' => 'C', 'email' => 'c@example.test', 'message' => 'Hello' ) ) );
+}
+ok( 5 === mails( 'admin_contact' ) - $sent0, 'Contact form rate limit: max 5 messages per hour' );
+$locked = false;
+for ( $i = 0; $i < 6; $i++ ) {
+	$lr = wp_remote_post( site_url( 'wp-login.php' ), array( 'redirection' => 0, 'body' => array( 'log' => 'demo-employer', 'pwd' => 'wrong' . $i ) ) );
+	$locked = false !== strpos( wp_remote_retrieve_body( $lr ), 'Too many failed sign-in attempts' );
+}
+ok( $locked, 'Login locked after 5 failed attempts (15 minutes)' );
+$lr = wp_remote_post( site_url( 'wp-login.php' ), array( 'redirection' => 0, 'body' => array( 'log' => 'demo-employer', 'pwd' => 'demo-employer-pass' ) ) );
+ok( 302 !== wp_remote_retrieve_response_code( $lr ), '…even the correct password is refused while locked' );
+
+section( 'Security: injection and output escaping' );
+foreach ( array( "' OR 1=1 --", '"; DROP TABLE wp_posts; --', '<script>alert(1)</script>' ) as $evil ) {
+	$r = wp_remote_get( add_query_arg( array( 'q' => $evil, 'location' => $evil, 'sector' => $evil, 'salary_min' => $evil ), home_url( '/jobs/' ) ) );
+	$b = wp_remote_retrieve_body( $r );
+	ok( 200 === wp_remote_retrieve_response_code( $r ) && false === strpos( $b, '<script>alert(1)</script>' ) && false === stripos( $b, 'database error' ), 'Hostile search input handled safely: ' . esc_html( $evil ) );
+}
+ok( null !== $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->posts}" ), '…and the posts table is intact' );
+$xj = make_job( $emp, 'Escaping test vacancy', 'draft', array( 'employer_name' => '<img src=x onerror=alert(1)>Evil Ltd', 'town' => '"><script>alert(2)</script>', 'requirements' => "<b>bold</b>\n<script>alert(3)</script>" ) );
+LMC_Jobs::publish( $xj );
+$b = wp_remote_retrieve_body( wp_remote_get( get_permalink( $xj ) ) );
+ok( false === strpos( $b, '<img src=x onerror' ) && false === strpos( $b, '<script>alert(2)' ) && false === strpos( $b, '<script>alert(3)' ) && false !== strpos( $b, '&lt;img src=x' ), 'Vacancy page escapes every employer-supplied field' );
+$k = wp_kses( '<p>Hello</p><script>x</script><a href="javascript:alert(1)">y</a><iframe></iframe>', array( 'p' => array(), 'strong' => array() ) );
+ok( '<p>Hello</p>xy' === $k, 'Job descriptions keep only safe formatting tags' );
+
+section( 'Security: signed links and tokens' );
+$url = LMC_CRM::unsubscribe_url( 'victim@example.test' );
+$bad = preg_replace( '/s=[a-f0-9]+/', 's=' . str_repeat( '0', 32 ), $url );
+wp_remote_post( $bad, array( 'body' => array( 'List-Unsubscribe' => 'One-Click' ) ) );
+ok( ! LMC_CRM::is_suppressed( 'victim@example.test' ), 'Tampered unsubscribe link does nothing' );
+wp_remote_post( $url, array( 'body' => array( 'List-Unsubscribe' => 'One-Click' ) ) );
+ok( LMC_CRM::is_suppressed( 'victim@example.test' ), 'Genuine one-click unsubscribe works' );
+$fl = wp_remote_get( add_query_arg( array( 'lmc_filled' => $job, 'a' => 'yes', 's' => 'forged' ), home_url( '/' ) ) );
+ok( 403 === wp_remote_retrieve_response_code( $fl ), '"Filled?" answer links are signed (forged link → 403)' );
+ok( false !== strpos( wp_remote_retrieve_body( wp_remote_get( add_query_arg( 'manage', str_repeat( 'a', 40 ), lmc_page_url( 'alerts' ) ) ) ), 'no longer valid' ), 'Guessed job-alert management token rejected' );
+$v = wp_remote_get( add_query_arg( array( 'lmc_verify' => $emp, 'k' => 'guess' ), home_url( '/' ) ) );
+ok( 400 === wp_remote_retrieve_response_code( $v ), 'Email verification links cannot be guessed' );
+
+section( 'Payments: duplicates, failures, refunds' );
+wp_set_current_user( 1 );
+$emp3 = make_employer( 'dup@example.test' );
+update_user_meta( $emp3, 'lmc_trusted', 1 );
+$dj   = make_job( $emp3, 'Duplicate payment test' );
+foreach ( array( 'cs_dup_1', 'cs_dup_2' ) as $sid ) {
+	$wpdb->insert( lmc_table( 'payments' ), array( 'user_id' => $emp3, 'job_id' => $dj, 'package' => 'standard', 'purpose' => 'new', 'net' => 3900, 'vat' => 0, 'total' => 3900, 'status' => 'pending', 'mode' => 'test', 'stripe_session' => $sid, 'created_at' => lmc_mysql_time() ) );
+}
+LMC_Payments::fulfil_session( array( 'id' => 'cs_dup_1', 'payment_status' => 'paid', 'amount_total' => 3900, 'currency' => 'gbp', 'payment_intent' => 'pi_dup_1' ) );
+$pub_mails = mails( 'vacancy_published' );
+LMC_Payments::fulfil_session( array( 'id' => 'cs_dup_2', 'payment_status' => 'paid', 'amount_total' => 3900, 'currency' => 'gbp', 'payment_intent' => 'pi_dup_2' ) );
+ok( 'publish' === get_post_status( $dj ) && 1 === ( LMC_Credits::balance( $emp3 )['standard'] ?? 0 ), 'Second payment for the same vacancy becomes a credit (never charged for nothing)' );
+ok( mails( 'vacancy_published' ) === $pub_mails, 'Vacancy is not published twice / no duplicate "now live" email' );
+$wpdb->insert( lmc_table( 'payments' ), array( 'user_id' => $emp3, 'job_id' => $dj, 'package' => 'standard', 'purpose' => 'renew', 'net' => 3900, 'vat' => 0, 'total' => 3900, 'status' => 'pending', 'mode' => 'test', 'stripe_session' => 'cs_fail', 'created_at' => lmc_mysql_time() ) );
+signed_webhook( wp_json_encode( array( 'type' => 'checkout.session.async_payment_failed', 'data' => array( 'object' => array( 'id' => 'cs_fail' ) ) ) ), $secret );
+ok( 'failed' === $wpdb->get_var( "SELECT status FROM " . lmc_table( 'payments' ) . " WHERE stripe_session = 'cs_fail'" ) && mails( 'payment_failed' ) >= 1, 'Failed payment recorded and the employer is told (nothing published)' );
+$wpdb->insert( lmc_table( 'payments' ), array( 'user_id' => $emp3, 'job_id' => $dj, 'package' => 'standard', 'purpose' => 'renew', 'net' => 3900, 'vat' => 0, 'total' => 3900, 'status' => 'pending', 'mode' => 'test', 'stripe_session' => 'cs_exp', 'created_at' => lmc_mysql_time() ) );
+signed_webhook( wp_json_encode( array( 'type' => 'checkout.session.expired', 'data' => array( 'object' => array( 'id' => 'cs_exp' ) ) ) ), $secret );
+ok( 'expired' === $wpdb->get_var( "SELECT status FROM " . lmc_table( 'payments' ) . " WHERE stripe_session = 'cs_exp'" ), 'Abandoned checkout marked expired' );
+signed_webhook( wp_json_encode( array( 'type' => 'charge.refunded', 'data' => array( 'object' => array( 'payment_intent' => 'pi_dup_2', 'refunded' => true, 'amount_refunded' => 3900 ) ) ) ), $secret );
+ok( 0 === ( LMC_Credits::balance( $emp3 )['standard'] ?? 0 ) && 'publish' === get_post_status( $dj ), 'Refunding the duplicate cancels its credit and leaves the paid vacancy live' );
+signed_webhook( wp_json_encode( array( 'type' => 'charge.refunded', 'data' => array( 'object' => array( 'payment_intent' => 'pi_dup_1', 'refunded' => true, 'amount_refunded' => 3900 ) ) ) ), $secret );
+ok( 'lmc_unpaid' === get_post_status( $dj ) && mails( 'refund_confirmation' ) >= 2, 'Full refund of a new advert takes it off the board and emails the employer' );
+$n = mails( 'refund_confirmation' );
+signed_webhook( wp_json_encode( array( 'type' => 'charge.refunded', 'data' => array( 'object' => array( 'payment_intent' => 'pi_dup_1', 'refunded' => true, 'amount_refunded' => 3900 ) ) ) ), $secret );
+ok( mails( 'refund_confirmation' ) === $n, 'Repeated refund webhooks are idempotent' );
+$wpdb->insert( lmc_table( 'payments' ), array( 'user_id' => $emp3, 'job_id' => 0, 'package' => 'pack5', 'purpose' => 'credits', 'net' => 17500, 'vat' => 0, 'total' => 17500, 'status' => 'pending', 'mode' => 'test', 'stripe_session' => 'cs_part', 'created_at' => lmc_mysql_time() ) );
+LMC_Payments::fulfil_session( array( 'id' => 'cs_part', 'payment_status' => 'paid', 'amount_total' => 17500, 'currency' => 'gbp', 'payment_intent' => 'pi_part' ) );
+signed_webhook( wp_json_encode( array( 'type' => 'charge.refunded', 'data' => array( 'object' => array( 'payment_intent' => 'pi_part', 'refunded' => false, 'amount_refunded' => 3500 ) ) ) ), $secret );
+ok( 5 === ( LMC_Credits::balance( $emp3 )['standard'] ?? 0 ) && 'part_refunded' === $wpdb->get_var( "SELECT status FROM " . lmc_table( 'payments' ) . " WHERE stripe_session = 'cs_part'" ), 'Partial refund recorded for review; credits left untouched' );
+$wpdb->insert( lmc_table( 'payments' ), array( 'user_id' => $emp3, 'job_id' => 0, 'package' => 'standard', 'purpose' => 'credits', 'net' => 3900, 'total' => 3900, 'status' => 'pending', 'mode' => 'test', 'stripe_session' => 'cs_old', 'created_at' => lmc_mysql_time( lmc_now() - 3 * DAY_IN_SECONDS ) ) );
+LMC_Payments::cleanup_stale();
+ok( 'expired' === $wpdb->get_var( "SELECT status FROM " . lmc_table( 'payments' ) . " WHERE stripe_session = 'cs_old'" ), 'Stale pending checkouts tidied up automatically' );
+
+$wpdb->insert( lmc_table( 'email_log' ), array( 'recipient' => 'old@example.test', 'template' => 'x', 'subject' => 'old', 'created_at' => lmc_mysql_time( lmc_now() - 800 * DAY_IN_SECONDS ) ) );
+do_action( 'lmc_hourly' );
+ok( ! $wpdb->get_var( "SELECT id FROM " . lmc_table( 'email_log' ) . " WHERE recipient = 'old@example.test'" ), 'Email log entries older than 2 years deleted automatically' );
+
+section( 'Closed and expired vacancies leave search, sitemaps, feeds and structured data' );
+$cj = make_job( $emp, 'Filled vacancy test', 'draft' );
+LMC_Jobs::publish( $cj );
+LMC_Jobs::close( $cj );
+$b = wp_remote_retrieve_body( wp_remote_get( get_permalink( $cj ) ) );
+ok( false !== strpos( $b, 'has closed' ) && false !== strpos( $b, 'noindex' ) && false === strpos( $b, '"JobPosting"' ), 'Filled (closed) vacancy: closed notice, noindex, JobPosting removed' );
+ok( false === strpos( wp_remote_retrieve_body( wp_remote_get( home_url( '/wp-sitemap-posts-lmc_job-1.xml' ) ) ), get_permalink( $cj ) ), '…removed from the sitemap' );
+ok( false === strpos( wp_remote_retrieve_body( wp_remote_get( home_url( '/feeds/jobs.xml' ) ) ), 'Filled vacancy test' ), '…and from the aggregator feed' );
+ok( false === strpos( wp_remote_retrieve_body( wp_remote_get( home_url( '/jobs/' ) ) ), 'Filled vacancy test' ), '…and from live listings' );
+
+section( 'SEO validation' );
+$bad_canon = array();
+$checked   = 0;
+$smx = wp_remote_retrieve_body( wp_remote_get( home_url( '/wp-sitemap.xml' ) ) );
+preg_match_all( '#<loc>([^<]+)</loc>#', $smx, $subs );
+foreach ( $subs[1] as $sub ) {
+	preg_match_all( '#<loc>([^<]+)</loc>#', wp_remote_retrieve_body( wp_remote_get( $sub ) ), $urls );
+	foreach ( $urls[1] as $u ) {
+		$page = wp_remote_retrieve_body( wp_remote_get( $u ) );
+		$checked++;
+		if ( ! preg_match( '#<link rel="canonical" href="([^"]+)"#', $page, $cm ) || $cm[1] !== $u || 0 !== strpos( $cm[1], home_url( '/' ) ) ) {
+			$bad_canon[] = $u . ' → ' . ( $cm[1] ?? 'none' );
+		}
+		if ( preg_match( '/<meta name=.robots. content=.[^"\']*noindex/', $page ) ) {
+			$bad_canon[] = $u . ' is in the sitemap but noindex';
+		}
+	}
+}
+ok( $checked > 20 && ! $bad_canon, "Every sitemap URL ($checked) has an absolute, self-referencing canonical on the site's own domain and is indexable" . ( $bad_canon ? ': ' . implode( '; ', array_slice( $bad_canon, 0, 3 ) ) : '' ) );
+$sch = LMC_SEO::job_schema( $job );
+$errs = array();
+foreach ( array( 'title', 'description', 'datePosted', 'validThrough', 'hiringOrganization', 'jobLocation', 'employmentType', 'baseSalary', 'identifier' ) as $req ) {
+	if ( empty( $sch[ $req ] ) ) { $errs[] = "missing $req"; }
+}
+if ( false === DateTime::createFromFormat( DATE_ATOM, $sch['datePosted'] ) || false === DateTime::createFromFormat( DATE_ATOM, $sch['validThrough'] ) ) { $errs[] = 'dates not ISO 8601'; }
+if ( strtotime( $sch['validThrough'] ) <= strtotime( $sch['datePosted'] ) ) { $errs[] = 'validThrough not after datePosted'; }
+if ( array_diff( (array) $sch['employmentType'], array( 'FULL_TIME', 'PART_TIME', 'CONTRACTOR', 'TEMPORARY', 'INTERN', 'VOLUNTEER', 'PER_DIEM', 'OTHER' ) ) ) { $errs[] = 'bad employmentType'; }
+$bv = $sch['baseSalary']['value'];
+if ( 'GBP' !== $sch['baseSalary']['currency'] || ! in_array( $bv['unitText'], array( 'HOUR', 'DAY', 'WEEK', 'MONTH', 'YEAR' ), true ) || ! ( is_numeric( $bv['value'] ?? null ) || ( is_numeric( $bv['minValue'] ?? null ) && $bv['maxValue'] >= $bv['minValue'] ) ) ) { $errs[] = 'bad baseSalary'; }
+if ( 'GB' !== $sch['jobLocation']['address']['addressCountry'] || empty( $sch['jobLocation']['address']['addressLocality'] ) ) { $errs[] = 'bad address'; }
+if ( strip_tags( $sch['description'] ) === $sch['description'] ) { $errs[] = 'description not HTML'; }
+if ( lmc_plain_title( $job ) !== $sch['title'] || (int) lmc_job_meta( $job, 'expires' ) !== strtotime( $sch['validThrough'] ) ) { $errs[] = 'values do not match the vacancy'; }
+ok( ! $errs, 'JobPosting matches Google\'s required/recommended fields and the vacancy data' . ( $errs ? ': ' . implode( ', ', $errs ) : '' ) );
+$jp = wp_remote_retrieve_body( wp_remote_get( get_permalink( $job ) ) );
+preg_match_all( '#<script type="application/ld\+json">(.*?)</script>#s', $jp, $lds );
+ok( $lds[1] && ! in_array( null, array_map( fn( $x ) => json_decode( $x, true ), $lds[1] ), true ), 'All structured data on the job page is valid JSON' );
 
 echo "\n$pass passed, $fail failed\n";
 exit( $fail ? 1 : 0 );

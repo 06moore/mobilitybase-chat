@@ -59,7 +59,8 @@ function lmc_settings_schema() {
 			'outreach_daily_cap'     => array( 'Max outreach emails per day', '', 'number' ),
 			'outreach_followup_days' => array( 'Follow-up reminder after outreach (days)', '', 'number' ),
 			'social_webhook_url'     => array( 'Social automation webhook (Zapier/Make/Buffer)', 'Optional. Approved posts are POSTed here as JSON.' ),
-			'social_auto_send'       => array( 'Send social posts automatically (skip approval)', 'Not recommended at launch.', 'checkbox' ),
+			'social_drafts'          => array( 'Create social post drafts for new vacancies', 'Off by default. No advert package promises social posts, so this is optional extra promotion.', 'checkbox' ),
+			'social_auto_send'       => array( 'Send social posts automatically (skip approval)', 'Needs a webhook above. Not recommended at launch.', 'checkbox' ),
 		) ),
 		'growth'   => array( 'Growth', array(
 			'launch_date'          => array( 'Launch date (YYYY-MM-DD)', 'Month 1 of the 12-month growth plan – the monthly report compares against that month\'s targets.' ),

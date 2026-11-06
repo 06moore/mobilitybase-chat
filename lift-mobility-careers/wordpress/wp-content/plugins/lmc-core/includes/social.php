@@ -61,7 +61,7 @@ class LMC_Social {
 	}
 
 	public static function on_published( $job_id ) {
-		if ( ! lmc_job_meta( $job_id, 'social_ok' ) ) {
+		if ( ! lmc_opt( 'social_drafts' ) || ! lmc_job_meta( $job_id, 'social_ok' ) || LMC_Launch::is_demo_job( $job_id ) ) {
 			return;
 		}
 		global $wpdb;

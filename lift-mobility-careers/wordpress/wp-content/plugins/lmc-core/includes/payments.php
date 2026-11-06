@@ -23,6 +23,10 @@ class LMC_Payments {
 	}
 
 	public static function mode() {
+		// Real payments are impossible until the site has passed the launch checks.
+		if ( class_exists( 'LMC_Launch' ) && ! LMC_Launch::is_live() ) {
+			return 'test';
+		}
 		return 'live' === lmc_opt( 'stripe_mode' ) ? 'live' : 'test';
 	}
 
@@ -91,6 +95,7 @@ class LMC_Payments {
 			'total'      => $net + $vat,
 			'status'     => 'pending',
 			'mode'       => self::mode(),
+			'customer'   => mb_substr( get_user_meta( $user_id, 'lmc_company', true ) . ' <' . $user->user_email . '>', 0, 255 ),
 			'created_at' => lmc_mysql_time(),
 		) );
 		$payment_id = (int) $wpdb->insert_id;
@@ -171,8 +176,12 @@ class LMC_Payments {
 		$obj   = $event['data']['object'] ?? array();
 		if ( in_array( $type, array( 'checkout.session.completed', 'checkout.session.async_payment_succeeded' ), true ) ) {
 			self::fulfil_session( $obj );
+		} elseif ( 'checkout.session.expired' === $type ) {
+			self::close_session( $obj['id'] ?? '', 'expired' );
+		} elseif ( 'checkout.session.async_payment_failed' === $type ) {
+			self::close_session( $obj['id'] ?? '', 'failed' );
 		} elseif ( 'charge.refunded' === $type ) {
-			self::mark_refunded( $obj['payment_intent'] ?? '' );
+			self::mark_refunded( $obj['payment_intent'] ?? '', ! empty( $obj['refunded'] ), (int) ( $obj['amount_refunded'] ?? 0 ) );
 		}
 		return new WP_REST_Response( array( 'received' => true ), 200 );
 	}
@@ -205,14 +214,53 @@ class LMC_Payments {
 		return true;
 	}
 
+	/** A pending checkout that will never complete (expired, or a delayed payment method failed). */
+	public static function close_session( $session_id, $status ) {
+		global $wpdb;
+		$t = lmc_table( 'payments' );
+		$p = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $t WHERE stripe_session = %s AND status = 'pending'", $session_id ) );
+		if ( ! $p ) {
+			return false;
+		}
+		$wpdb->update( $t, array( 'status' => $status ), array( 'id' => $p->id ) );
+		if ( 'failed' === $status ) {
+			$user = get_userdata( $p->user_id );
+			if ( $user ) {
+				lmc_send_email( 'payment_failed', $user->user_email, array( 'first_name' => $user->first_name ?: 'there', 'package' => lmc_package( $p->package )['label'] ?? $p->package, 'job_title' => $p->job_id ? lmc_plain_title( $p->job_id ) : 'your advert' ), $p->id );
+			}
+		}
+		return true;
+	}
+
+	/** Pending checkouts older than 2 days are closed (Stripe sessions expire after 24 hours). */
+	public static function cleanup_stale() {
+		global $wpdb;
+		$wpdb->query( $wpdb->prepare( 'UPDATE ' . lmc_table( 'payments' ) . " SET status = 'expired' WHERE status = 'pending' AND created_at < %s", lmc_mysql_time( lmc_now() - 2 * DAY_IN_SECONDS ) ) );
+	}
+
+	/** Can this payment still be applied to its vacancy in the way it was bought? */
+	public static function job_accepts( $p ) {
+		if ( ! $p->job_id || 'lmc_job' !== get_post_type( $p->job_id ) ) {
+			return false;
+		}
+		$st = get_post_status( $p->job_id );
+		return 'renew' === $p->purpose ? in_array( $st, array( 'publish', 'lmc_expired', 'lmc_closed' ), true ) : 'lmc_unpaid' === $st;
+	}
+
 	/** Grant what was bought: credits and/or vacancy activation, then confirm by email. */
 	public static function apply_purchase( $p ) {
 		$pkg    = lmc_package( $p->package );
 		$job_id = (int) $p->job_id;
 		$detail = '';
+		// Paid twice for the same vacancy (e.g. two browser tabs)? Never charge for nothing: give a credit instead.
+		if ( $job_id && 'new' === $p->purpose && ! self::job_accepts( $p ) ) {
+			lmc_log( 'error', 'stripe', "Payment {$p->id} arrived for vacancy $job_id, which was already paid for. Converted to advert credit(s) – consider refunding if the employer asks." );
+			$job_id = 0;
+			$detail = 'This vacancy had already been paid for, so instead of charging twice we have added this purchase to your account as advert credit, ready for your next vacancy. If you would prefer a refund, just reply to this email. ';
+		}
 		if ( $pkg['credits'] > 1 ) {
 			LMC_Credits::add( $p->user_id, 'standard', $pkg['credits'], 'purchase', $p->id, $pkg['label'] );
-			$detail = $pkg['credits'] . ' standard advert credits have been added to your account. They can be used any time in the next ' . round( lmc_opt( 'pack_validity_days' ) / 30 ) . ' months.';
+			$detail .= $pkg['credits'] . ' standard advert credits have been added to your account. They can be used any time in the next ' . round( lmc_opt( 'pack_validity_days' ) / 30 ) . ' months.';
 			if ( $job_id && LMC_Credits::consume( $p->user_id, 'standard' ) ) {
 				$res     = LMC_Jobs::activate( $job_id, 'standard', $p->purpose );
 				$detail .= ' One credit has been used for "' . get_the_title( $job_id ) . '".';
@@ -225,7 +273,7 @@ class LMC_Payments {
 			}
 		} else {
 			LMC_Credits::add( $p->user_id, $pkg['tier'], 1, 'purchase', $p->id, $pkg['label'] );
-			$detail = 'A ' . strtolower( $pkg['label'] ) . ' credit has been added to your account.';
+			$detail .= 'A ' . strtolower( $pkg['label'] ) . ' credit has been added to your account.';
 		}
 		$user = get_userdata( $p->user_id );
 		if ( $user ) {
@@ -248,16 +296,51 @@ class LMC_Payments {
 		return is_wp_error( $s ) ? false : self::fulfil_session( $s );
 	}
 
-	public static function mark_refunded( $intent ) {
+	/**
+	 * Refund issued in Stripe. A full refund automatically reverses what was bought:
+	 * new vacancy → taken down (back to "awaiting payment"); renewal → the added days are removed;
+	 * unused credits from that payment are cancelled. Partial refunds are recorded for review only.
+	 */
+	public static function mark_refunded( $intent, $full = true, $amount_refunded = 0 ) {
 		global $wpdb;
+		$t = lmc_table( 'payments' );
 		if ( ! $intent ) {
-			return;
+			return false;
 		}
-		$p = $wpdb->get_row( $wpdb->prepare( 'SELECT * FROM ' . lmc_table( 'payments' ) . ' WHERE stripe_intent = %s', $intent ) );
-		if ( $p ) {
-			$wpdb->update( lmc_table( 'payments' ), array( 'status' => 'refunded' ), array( 'id' => $p->id ) );
-			lmc_log( 'error', 'stripe', "Payment {$p->id} was refunded in Stripe. Review vacancy {$p->job_id} and any credits manually." );
+		$p = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $t WHERE stripe_intent = %s", $intent ) );
+		if ( ! $p || 'refunded' === $p->status ) {
+			return false;
 		}
+		if ( ! $full ) {
+			$wpdb->update( $t, array( 'status' => 'part_refunded' ), array( 'id' => $p->id ) );
+			lmc_log( 'warning', 'stripe', "Payment {$p->id} partly refunded (" . lmc_money( $amount_refunded ) . '). Nothing was changed automatically.' );
+			return true;
+		}
+		$wpdb->update( $t, array( 'status' => 'refunded' ), array( 'id' => $p->id ) );
+		$wpdb->query( $wpdb->prepare( 'UPDATE ' . lmc_table( 'credits' ) . ' SET remaining = 0 WHERE payment_id = %d', $p->id ) );
+		$what = 'Any unused credits from this purchase have been cancelled.';
+		if ( $p->job_id && 'lmc_job' === get_post_type( $p->job_id ) ) {
+			$st = get_post_status( $p->job_id );
+			if ( 'renew' === $p->purpose ) {
+				$exp = (int) lmc_job_meta( $p->job_id, 'expires' ) - (int) lmc_opt( 'listing_days' ) * DAY_IN_SECONDS;
+				update_post_meta( $p->job_id, '_lmc_expires', $exp );
+				if ( 'publish' === $st && $exp <= lmc_now() ) {
+					LMC_Jobs::expire( $p->job_id );
+					update_post_meta( $p->job_id, '_lmc_sent_expired', 1 );
+				}
+				$what = 'The extra time added by this renewal has been removed from "' . lmc_plain_title( $p->job_id ) . '".';
+			} elseif ( in_array( $st, array( 'publish', 'pending' ), true ) && (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $t WHERE job_id = %d AND status = 'paid' AND id <> %d", $p->job_id, $p->id ) ) === 0 ) {
+				wp_update_post( array( 'ID' => $p->job_id, 'post_status' => 'lmc_unpaid' ) );
+				delete_post_meta( $p->job_id, '_lmc_paid' );
+				$what = '"' . lmc_plain_title( $p->job_id ) . '" has been taken off the job board. It is saved in your dashboard if you want to advertise it again.';
+			}
+		}
+		$user = get_userdata( $p->user_id );
+		if ( $user ) {
+			lmc_send_email( 'refund_confirmation', $user->user_email, array( 'first_name' => $user->first_name ?: 'there', 'amount' => lmc_money( $p->total ), 'package' => lmc_package( $p->package )['label'] ?? $p->package, 'refund_detail' => $what ), $p->id );
+		}
+		lmc_log( 'info', 'stripe', "Payment {$p->id} fully refunded and reversed automatically." );
+		return true;
 	}
 
 	/** Revenue in pence between two timestamps (paid, not refunded, net of VAT). */

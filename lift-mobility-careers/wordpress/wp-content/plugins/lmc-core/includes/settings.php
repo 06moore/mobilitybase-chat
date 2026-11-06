@@ -73,6 +73,12 @@ function lmc_settings_defaults() {
 		'facebook_url'       => '',
 		'index_threshold'    => 3,
 
+		// Launch control (see includes/launch.php). Stays "prelaunch" until every blocker is cleared.
+		'launch_mode'        => 'prelaunch',
+		'legal_signoff_by'   => '',
+		'legal_signoff_date' => '',
+		'social_drafts'      => 0,           // Auto-create social post drafts. Off by default: low-maintenance mode.
+
 		// Growth: analytics, Google, alerts, feeds, employer sharing.
 		'launch_date'        => '',          // YYYY-MM-DD – month 1 of the growth plan for target tracking.
 		'track_returning'    => 1,           // Count returning visitors (only for visitors who accept analytics).
@@ -146,7 +152,7 @@ function lmc_packages() {
 				'Everything in Standard',
 				'Highlighted "Featured" listing design',
 				'Ranked above standard adverts in search and sector pages',
-				'Included in the weekly vacancy round-up post on our social channels',
+				'Highlighted in candidate job alert emails',
 			),
 		),
 		'premium'  => array(
@@ -159,7 +165,7 @@ function lmc_packages() {
 				'Everything in Featured',
 				'Shown in the homepage "Premium vacancies" section',
 				'Top priority position in search and sector pages',
-				'Your own dedicated vacancy post on LinkedIn and Facebook',
+				'Listed first in candidate job alert emails',
 			),
 		),
 		'pack5'    => array(

@@ -1,0 +1,265 @@
+
+Settings & pricing
+  ✓ Launch prices: £39 standard … £300 ten-pack
+  ✓ Price change in settings applies instantly
+  ✓ Payments are OFF by default
+
+Launch control (pre-launch is the default)
+  ✓ Fresh install starts in PRE-LAUNCH mode
+  ✓ Pre-launch robots.txt blocks all crawling
+  ✓ Pre-launch pages carry noindex
+  ✓ No XML sitemap before launch
+  ✓ No aggregator job feed before launch
+  ✓ Stripe is forced to TEST mode before launch, even if set to live
+  ✓ Blockers: legal sign-off, placeholders, demo content, business details, domain/HTTPS, email
+  ✓ Cannot go live while blockers remain
+  ✓ Placeholder scanner finds remaining [PLACEHOLDERS] page by page (8 pages)
+  ✓ Dev seed vacancies are flagged as demo (9)
+  ✓ Demo vacancy: noindex and no JobPosting even when live
+  ✓ Demo vacancies excluded from the sitemap
+  ✓ Demo vacancies excluded from the aggregator feed
+
+Stripe webhook signature
+  ✓ Valid signature accepted
+  ✓ Wrong signature rejected
+  ✓ Stale (replayed) signature rejected
+
+Paid submission → webhook → moderation → publish
+  ✓ Payments enabled once keys present
+  ✓ Forged webhook returns 400
+  ✓ …and vacancy stays unpaid
+  ✓ Signed webhook accepted
+  ✓ First-time employer → held for approval
+  ✓ Featured tier and priority applied
+  ✓ Payment confirmation + admin review emails sent
+  ✓ Duplicate webhook is idempotent (no double fulfilment / emails)
+  ✓ Admin approval publishes
+  ✓ Expiry set to 30 days after publishing
+  ✓ "Vacancy published" email sent
+  ✓ Employer becomes trusted after first approval
+  ✓ Low-maintenance default: no social drafts are created (nothing to post manually)
+  ✓ Amount mismatch is refused
+  ✓ Trusted employer's next paid vacancy auto-publishes
+
+Packs and credits
+  ✓ Five-pack: 5 credits, 1 used for the vacancy, 4 left
+  ✓ Free introductory listing granted
+  ✓ …only once per employer
+  ✓ Cannot consume a credit tier you don't have
+  ✓ Revenue totals paid net amounts (£283.00)
+
+Closing date
+  ✓ Listing ends on an earlier closing date
+
+Search & filters
+  ✓ Live vacancies returned (10)
+  ✓ Premium vacancies rank first
+  ✓ Sector filter
+  ✓ Salary filter
+  ✓ Region search includes child counties (Kent → South East)
+  ✓ County search
+  ✓ Postcode radius search (Ashford TN23 → Maidstone within 25 miles)
+  ✓ …and excludes far-away jobs
+  ✓ Keyword search
+  ✓ Experience filter
+
+Expiry reminders, expiry, follow-ups, renewal (time travel)
+  ✓ 7-day reminder sent
+  ✓ …and not repeated on the next run
+  ✓ 2-day reminder sent
+  ✓ Listing expires automatically
+  ✓ Expired notification with renewal link sent
+  ✓ Expired vacancy removed from live search
+  ✓ "Has it been filled?" follow-up sent
+  ✓ Repeat-advertising email sent once per employer (not once per vacancy)
+  ✓ Paid renewal re-activates the expired vacancy
+  ✓ Renewed for 30 days from now
+  ✓ Renewal confirmation sent
+  ✓ Early renewal adds time to the END of the current listing
+
+Content checks
+  ✓ Age-discriminatory wording flagged
+  ✓ Candidate fee flagged
+  ✓ Normal advert not flagged
+
+SEO
+  ✓ JobPosting has required + recommended fields
+  ✓ Sector pages indexable (curated copy)
+  ✓ Empty county page NOT indexable (no thin pages)
+  ✓ Live job page outputs JobPosting JSON-LD
+  ✓ Canonical + meta description present
+  ✓ Expired job: closed notice, noindex, no JobPosting
+  ✓ Filtered search pages are noindex
+
+Vacancy discovery
+  ✓ Parses JobPosting structured data (3 jobs)
+  ✓ Parses job links and resolves relative URLs
+  ✓ Relevance scoring excludes non-engineering roles
+  ✓ JavaScript-only careers page detected (flagged, not faked)
+  ✓ robots.txt rules honoured
+  ✓ Source not fetched until terms are reviewed
+  ✓ Live check of a careers page: 2 relevant vacancies found (Read via page links; 2 relevant of 2 listed.)
+  ✓ Opportunity recorded with employer, title, URL, first-seen
+  ✓ Vacancy no longer on the page is marked "gone"
+  ✓ Approved opportunity becomes a DRAFT with placeholder (no copied text)
+  ✓ Unreachable careers page is flagged as failing
+
+Outreach CRM & PECR guard rails
+  ✓ Blocked until sender postal address configured
+  ✓ Sole trader without consent is blocked (PECR)
+  ✓ Unknown entity type is treated as individual (blocked)
+  ✓ Limited company contact can be emailed
+  ✓ Contact logged, status + follow-up date set
+  ✓ Email includes unsubscribe link + sender address
+  ✓ One follow-up allowed
+  ✓ Third contact without reply is blocked
+  ✓ Unsubscribe link is signed
+  ✓ Unsubscribed contact suppressed (case-insensitive)
+  ✓ Daily outreach cap enforced
+
+Weekly report
+  ✓ Report includes all required metrics
+  ✓ View / apply-click counters
+  ✓ Weekly report email sent
+  ✓ Report delivered to admin address
+
+Automation health
+  ✓ Heartbeat check runs
+  ✓ Missed automation runs produce a dashboard warning
+
+Traffic analytics (cookie-free)
+  ✓ Google referrer → Organic search
+  ✓ LinkedIn / Facebook → Social
+  ✓ Indeed → Job aggregators
+  ✓ utm_source=jobalert → Job alert emails
+  ✓ No referrer → Direct
+  ✓ Internal navigation is not counted as a new visit
+  ✓ Page views (3) and visits (2, internal click excluded)
+  ✓ Traffic sources recorded
+  ✓ Landing page recorded
+  ✓ Returning vs new visitors (consented visitors only)
+  ✓ Job view counted from page hit
+  ✓ Share click counted by network
+  ✓ Bots are ignored
+
+Candidate job alerts
+  ✓ Sign-up stored as pending with only email + preferences
+  ✓ Double opt-in confirmation email sent
+  ✓ Confirmation link activates the alert
+  ✓ Re-signup of an active address sends a manage link (no silent overwrite)
+  ✓ Invalid email rejected
+  ✓ Postcode alert geocoded for radius matching
+  ✓ Daily alerts go out from 07:00 London time
+  ✓ Weekly alerts only on Mondays
+  ✓ Kent stairlift job matches the Kent + stairlifts alert
+  ✓ …but not a Leeds 10-mile alert
+  ✓ Sector filter respected (home lift job excluded)
+  ✓ Hourly run sends one digest (only to the matching subscriber)
+  ✓ Digest lists the job with tracked links
+  ✓ Digest has unsubscribe link
+  ✓ No duplicate digest on the next run the same day
+  ✓ Unconfirmed sign-ups deleted after 7 days
+  ✓ Unsubscribe link deletes the subscription and email
+  ✓ Job page has a pre-filled job alert box
+  ✓ Web sign-up form works (from a cached page – no nonce needed)
+  ✓ No subscription without the consent tick
+
+Social sharing & employer backlinks
+  ✓ Job page has LinkedIn, Facebook, WhatsApp, X, email and copy-link sharing
+  ✓ BreadcrumbList structured data on job pages
+  ✓ Public company page lists the employer's live vacancies
+  ✓ Company pages with live jobs are in the sitemap
+  ✓ Share kit: tracked link, ready-written post, badge code
+  ✓ Page without a link to us is not verified
+  ✓ Verified backlink → free Featured credit
+  ✓ Backlink reward only once per employer
+  ✓ Live backlink count for reports
+  ✓ Monthly re-check notices a removed link
+
+Job feed for aggregators
+  ✓ Valid XML feed with every live vacancy (3)
+  ✓ Feed jobs link back to us with salary and location
+
+Search engine integrations
+  ✓ Service-account JWT for Google APIs is correctly signed (RS256)
+  ✓ Search Console reports "not connected" cleanly until configured
+  ✓ IndexNow key file served
+
+SEO landing pages & content
+  ✓ Priority job-category pages indexed (installation, service, LOLER, trainee, apprentice)
+  ✓ Thin job-category pages (e.g. operations manager) NOT indexed without enough live jobs
+  ✓ …but becomes indexable automatically once it has 3 genuine live vacancies
+  ✓ Indexed role page "Apprentice" has substantial copy (115 words)
+  ✓ Indexed role page "Installation engineer" has substantial copy (93 words)
+  ✓ Indexed role page "LOLER inspector" has substantial copy (83 words)
+  ✓ Indexed role page "Service engineer" has substantial copy (131 words)
+  ✓ Indexed role page "Trainee engineer" has substantial copy (133 words)
+  ✓ Distinct sector pages indexed; overlapping access/wheelchair lift pages wait for real vacancies
+  ✓ Career guides output Article + Breadcrumb schema
+  ✓ 5 career guides published under /career-guides/
+  ✓ Salary data hidden for categories with fewer than 5 adverts
+  ✓ Salary insights appear once 5+ real adverts exist (median £37,000 from 6 adverts)
+
+Monthly traffic & SEO report
+  ✓ Growth-plan month number from launch date
+  ✓ 12-month targets loaded
+  ✓ Monthly data: visits, job views, sources
+  ✓ Report shows targets, sources and suggested actions
+  ✓ Monthly report emailed
+
+Security: roles, passwords, enumeration, headers
+  ✓ Employer role has only the "read" capability (no uploads, no editing)
+  ✓ Passwords stored only as salted hashes
+  ✓ Author archives (username enumeration) redirected
+  ✓ REST users list hidden from the public
+  ✓ Security headers sent (nosniff, frame protection, referrer policy)
+  ✓ Anonymous media upload via REST refused
+
+Security: CSRF, rate limits, spam
+  ✓ Registration without a valid nonce is refused
+  ✓ Honeypot field blocks bots
+  ✓ Forms submitted faster than a human could are refused
+  ✓ Registration rate limit: max 5 accounts per connection per hour (5 of 7 created)
+  ✓ Contact form rate limit: max 5 messages per hour
+  ✓ Login locked after 5 failed attempts (15 minutes)
+  ✓ …even the correct password is refused while locked
+
+Security: injection and output escaping
+  ✓ Hostile search input handled safely: &#039; OR 1=1 --
+  ✓ Hostile search input handled safely: &quot;; DROP TABLE wp_posts; --
+  ✓ Hostile search input handled safely: &lt;script&gt;alert(1)&lt;/script&gt;
+  ✓ …and the posts table is intact
+  ✓ Vacancy page escapes every employer-supplied field
+  ✓ Job descriptions keep only safe formatting tags
+
+Security: signed links and tokens
+  ✓ Tampered unsubscribe link does nothing
+  ✓ Genuine one-click unsubscribe works
+  ✓ "Filled?" answer links are signed (forged link → 403)
+  ✓ Guessed job-alert management token rejected
+  ✓ Email verification links cannot be guessed
+
+Payments: duplicates, failures, refunds
+  ✓ Second payment for the same vacancy becomes a credit (never charged for nothing)
+  ✓ Vacancy is not published twice / no duplicate "now live" email
+  ✓ Failed payment recorded and the employer is told (nothing published)
+  ✓ Abandoned checkout marked expired
+  ✓ Refunding the duplicate cancels its credit and leaves the paid vacancy live
+  ✓ Full refund of a new advert takes it off the board and emails the employer
+  ✓ Repeated refund webhooks are idempotent
+  ✓ Partial refund recorded for review; credits left untouched
+  ✓ Stale pending checkouts tidied up automatically
+  ✓ Email log entries older than 2 years deleted automatically
+
+Closed and expired vacancies leave search, sitemaps, feeds and structured data
+  ✓ Filled (closed) vacancy: closed notice, noindex, JobPosting removed
+  ✓ …removed from the sitemap
+  ✓ …and from the aggregator feed
+  ✓ …and from live listings
+
+SEO validation
+  ✓ Every sitemap URL (51) has an absolute, self-referencing canonical on the site's own domain and is indexable
+  ✓ JobPosting matches Google's required/recommended fields and the vacancy data
+  ✓ All structured data on the job page is valid JSON
+
+207 passed, 0 failed

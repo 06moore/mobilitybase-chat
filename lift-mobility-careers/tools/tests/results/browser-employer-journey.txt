@@ -1,0 +1,74 @@
+
+1. Register and verify
+  ✓ Employer A registered and confirmed email
+
+2. Submit vacancy – upload restrictions and authorisation
+  ✓ Cannot submit without the authorisation declaration
+  ✓ PHP code disguised as .png rejected
+  ✓ SVG (can carry scripts) rejected
+  ✓ Files over 1MB rejected
+  ✓ Logo needs the rights confirmation
+  ✓ Valid vacancy with a genuine PNG logo accepted → advert options
+  ✓ Logo stored in the media library
+
+3. Payment – declined, abandoned, then paid
+  ✓ Redirected to (fake) Stripe Checkout
+  ✓ Declined card: stays on checkout, nothing charged
+  ✓ Abandoned checkout → back to dashboard with a clear message
+  ✓ Vacancy still awaiting payment; abandoned session marked expired
+  ✓ Payment succeeded → dashboard confirms
+  ✓ Signed webhook processed: payment paid, first vacancy held for approval
+  ✓ Payment confirmation email sent
+
+4. Approval and publishing
+  ✓ Admin approval publishes the vacancy
+  ✓ "Now live" email sent
+  ✓ Live vacancy shows the authorised logo
+
+5. Edit
+  ✓ Edit saved and shown on the live advert
+
+6. Expiry reminder, renewal, refund of the renewal
+  ✓ 7-day reminder emailed automatically
+  ✓ Renewal adds 30 days to the end of the current listing
+  ✓ Renewal confirmation email sent
+  ✓ Refunding the renewal removes the extra 30 days and emails the employer
+
+7. Second employer: access isolation
+  ✓ B cannot open A's vacancy for editing
+  ✓ B cannot overwrite A's vacancy by tampering with the form
+  ✓ B cannot renew (or pay for) A's vacancy
+  ✓ B cannot open A's share kit
+  ✓ B cannot reach A's payment step
+  ✓ Employers are kept out of wp-admin
+  ✓ Employers cannot run admin actions (tried "delete all demo content": nothing deleted)
+  ✓ Employers cannot upload through the REST media API (401)
+
+8. Double payment from two tabs
+  ✓ Second payment became a standard credit instead of being wasted
+  ✓ Employer is told and offered a refund
+  ✓ B cannot close A's vacancy by tampering with the close form
+
+9. Close (filled)
+  ✓ Employer closes their own vacancy
+  ✓ Closed vacancy removed from live listings
+
+10. Cancel account
+  ✓ Wrong password: account not closed
+  ✓ Account closed and deleted; employer signed out
+  ✓ Their vacancies are gone
+  ✓ Closure confirmation email sent
+
+11. Consent and analytics
+  ✓ Consent banner shown on first visit
+  ✓ Nothing stored on the device before a choice is made
+  ✓ Google Analytics not loaded before consent
+  ✓ Reject: only the choice itself is remembered; no analytics, no visit tracking
+  ✓ Footer "Cookie settings" reopens the choice
+  ✓ Accept: analytics loads and returning-visitor marker set
+  ✓ Job alert conversion fires exactly once per submission (duplicate listener fixed)
+  ✓ Footer Cookie policy link points to /cookie-policy/
+  ✓ Cookie policy page lists every cookie and storage item in tables
+  ✓ No JavaScript errors
+
+50 passed, 0 failed

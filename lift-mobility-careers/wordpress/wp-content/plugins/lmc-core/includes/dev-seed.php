@@ -13,6 +13,7 @@ function lmc_dev_seed() {
 	update_user_meta( $emp, 'lmc_email_verified', time() );
 	update_user_meta( $emp, 'lmc_trusted', 1 );
 	update_user_meta( $emp, 'lmc_entity_type', 'limited_company' );
+	update_user_meta( $emp, 'lmc_demo', 1 );
 
 	$jobs = array(
 		array( 'Stairlift Service Engineer', 'Demo Stairlifts Ltd', 'stairlifts', 'service-engineer', 'kent', 'Maidstone', 'ME14', 31000, 36000, 'premium', 'experienced' ),
@@ -55,6 +56,7 @@ function lmc_dev_seed() {
 		foreach ( $meta as $k => $v ) {
 			update_post_meta( $id, '_lmc_' . $k, $v );
 		}
+		update_post_meta( $id, '_lmc_demo', 1 ); // Never indexed, never in sitemaps/feeds/alerts; removable in one click.
 		update_post_meta( $id, '_lmc_tier', $j[9] );
 		update_post_meta( $id, '_lmc_priority', lmc_tier_priority( $j[9] ) );
 		update_post_meta( $id, '_lmc_lat', 51.5 + $i * 0.3 );

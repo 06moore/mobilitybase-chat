@@ -18,7 +18,7 @@ class LMC_Feeds {
 		if ( '/feeds/jobs.xml' !== wp_parse_url( $_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH ) ) {
 			return;
 		}
-		if ( ! lmc_opt( 'feed_enabled' ) ) {
+		if ( ! lmc_opt( 'feed_enabled' ) || ! LMC_Launch::is_live() ) {
 			status_header( 404 );
 			exit;
 		}
@@ -33,7 +33,7 @@ class LMC_Feeds {
 	}
 
 	public static function xml() {
-		$jobs = get_posts( array( 'post_type' => 'lmc_job', 'post_status' => 'publish', 'numberposts' => 1000 ) );
+		$jobs = get_posts( array( 'post_type' => 'lmc_job', 'post_status' => 'publish', 'numberposts' => 1000, 'meta_query' => array( LMC_Launch::demo_meta_query() ) ) );
 		$x    = '<?xml version="1.0" encoding="utf-8"?>' . "\n<source>\n<publisher>" . self::c( lmc_opt( 'business_name' ) ) . '</publisher><publisherurl>' . self::c( home_url( '/' ) ) . '</publisherurl><lastBuildDate>' . self::c( gmdate( DATE_RFC2822 ) ) . "</lastBuildDate>\n";
 		foreach ( $jobs as $j ) {
 			$county = '';

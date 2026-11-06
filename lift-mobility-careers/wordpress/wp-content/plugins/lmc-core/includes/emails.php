@@ -60,6 +60,22 @@ function lmc_email_templates_default() {
 			'marketing' => true,
 		),
 
+		'payment_failed'        => array(
+			'name'    => 'Payment failed',
+			'subject' => 'Your payment for {package} didn\'t go through',
+			'body'    => "Hi {first_name},\n\nUnfortunately your payment for {package} ({job_title}) didn't go through, so nothing has been charged and the advert hasn't been published.\n\nYour vacancy is saved – you can try again with the same or a different card from your dashboard:\n\n[button:{dashboard_url}|Go to my dashboard]\n\nKind regards,\nThe {site_name} team",
+		),
+		'refund_confirmation'   => array(
+			'name'    => 'Refund confirmation',
+			'subject' => 'Refund processed – {package}',
+			'body'    => "Hi {first_name},\n\nWe've refunded {amount} for {package}. Refunds usually reach your card within 5–10 working days.\n\n{refund_detail}\n\nKind regards,\nThe {site_name} team",
+		),
+		'account_closed'        => array(
+			'name'    => 'Employer account closed',
+			'subject' => 'Your {site_name} account has been closed',
+			'body'    => "Hi {first_name},\n\nAs requested, your employer account for {company} has been closed. Your live adverts have been removed and your account details deleted. We keep payment records for as long as the law requires (normally 6 years) and nothing else.\n\nYou're welcome back any time.\n\nThe {site_name} team",
+		),
+
 		// Candidate job alerts.
 		'alert_confirm'         => array(
 			'name'    => 'Job alerts: confirm subscription',

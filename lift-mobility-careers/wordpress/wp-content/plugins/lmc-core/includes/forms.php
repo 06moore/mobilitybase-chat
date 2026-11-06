@@ -26,7 +26,7 @@ class LMC_Forms {
 				return;
 			}
 			$u = wp_get_current_user();
-			if ( in_array( 'lmc_employer', (array) $u->roles, true ) && ! current_user_can( 'edit_posts' ) && 'async-upload.php' !== ( $GLOBALS['pagenow'] ?? '' ) ) {
+			if ( in_array( 'lmc_employer', (array) $u->roles, true ) && ! current_user_can( 'edit_posts' ) ) {
 				wp_safe_redirect( lmc_page_url( 'dashboard' ) );
 				exit;
 			}
@@ -121,6 +121,10 @@ class LMC_Forms {
 
 	private static function do_register() {
 		if ( ! self::human_check( 'lmc_register' ) ) {
+			return;
+		}
+		if ( ! LMC_Security::allow( 'register', 5 ) ) {
+			self::$errors['_form'] = 'Too many accounts have been created from this connection. Please try again later.';
 			return;
 		}
 		$p     = wp_unslash( $_POST );

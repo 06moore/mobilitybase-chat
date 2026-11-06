@@ -13,7 +13,7 @@
 defined( 'ABSPATH' ) || exit;
 
 define( 'LMC_VERSION', '1.0.0' );
-define( 'LMC_DB_VERSION', '4' );
+define( 'LMC_DB_VERSION', '5' );
 define( 'LMC_FILE', __FILE__ );
 define( 'LMC_DIR', plugin_dir_path( __FILE__ ) );
 define( 'LMC_URL', plugin_dir_url( __FILE__ ) );
@@ -21,13 +21,17 @@ define( 'LMC_URL', plugin_dir_url( __FILE__ ) );
 $lmc_includes = array(
 	'helpers', 'settings', 'install', 'post-types', 'logger', 'emails', 'jobs', 'credits', 'payments',
 	'search', 'location', 'forms', 'employer-dashboard', 'cron', 'reports', 'discovery', 'crm',
-	'social', 'seo', 'stats', 'analytics', 'alerts', 'google', 'employer-share', 'feeds', 'monthly-report', 'insights', 'dev-seed',
+	'social', 'seo', 'stats', 'analytics', 'alerts', 'google', 'employer-share', 'feeds', 'monthly-report', 'insights', 'security', 'launch', 'account',
 );
 foreach ( $lmc_includes as $lmc_inc ) {
 	require_once LMC_DIR . 'includes/' . $lmc_inc . '.php';
 }
+// Demo content generator for local development only. It is excluded from release zips (tools/build-zips.sh).
+if ( file_exists( LMC_DIR . 'includes/dev-seed.php' ) ) {
+	require_once LMC_DIR . 'includes/dev-seed.php';
+}
 if ( is_admin() ) {
-	foreach ( array( 'menu', 'dashboard', 'settings-page', 'discovery-page', 'crm-page', 'payments-page', 'employers-page', 'social-page', 'logs-page', 'job-metabox', 'growth-page' ) as $lmc_inc ) {
+	foreach ( array( 'menu', 'dashboard', 'settings-page', 'discovery-page', 'crm-page', 'payments-page', 'employers-page', 'social-page', 'logs-page', 'job-metabox', 'growth-page', 'launch-page' ) as $lmc_inc ) {
 		require_once LMC_DIR . 'includes/admin/' . $lmc_inc . '.php';
 	}
 }

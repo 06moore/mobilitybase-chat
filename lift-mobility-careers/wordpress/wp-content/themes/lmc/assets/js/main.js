@@ -75,11 +75,16 @@
 		});
 	});
 
-	// Job alert sign-ups → GA conversion (on-site count is recorded server-side).
-	document.querySelectorAll('form.lmc-alert-box, form input[name="lmc_action"][value="lmc_alert_signup"]').forEach(function (el) {
-		var f = el.tagName === 'FORM' ? el : el.form;
-		if (f) f.addEventListener('submit', function () { ga('sign_up', { method: 'job_alert' }); });
+	// Job alert sign-ups → one GA conversion per form submit (on-site count is recorded server-side).
+	// Each form is collected once via its hidden action field, so no form can get two listeners.
+	var alertForms = [];
+	document.querySelectorAll('input[name="lmc_action"][value="lmc_alert_signup"]').forEach(function (el) {
+		if (el.form && alertForms.indexOf(el.form) === -1) alertForms.push(el.form);
 	});
+	alertForms.forEach(function (f) {
+		f.addEventListener('submit', function () { ga('sign_up', { method: 'job_alert' }); });
+	});
+	window.lmcAlertFormCount = alertForms.length; // exposed for automated tests
 
 	// Submission form: show only the relevant application field.
 	var m = document.getElementById('lmc-apply_method');

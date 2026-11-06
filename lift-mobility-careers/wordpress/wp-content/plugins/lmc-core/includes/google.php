@@ -15,7 +15,7 @@ class LMC_Google {
 		add_action( 'lmc_job_published', array( __CLASS__, 'on_live' ) );
 		add_action( 'lmc_job_renewed', array( __CLASS__, 'on_live' ) );
 		add_action( 'transition_post_status', function ( $new, $old, $post ) {
-			if ( 'lmc_job' === $post->post_type && 'publish' === $old && in_array( $new, array( 'lmc_expired', 'lmc_closed', 'draft', 'trash' ), true ) ) {
+			if ( 'lmc_job' === $post->post_type && 'publish' === $old && in_array( $new, array( 'lmc_expired', 'lmc_closed', 'lmc_unpaid', 'pending', 'draft', 'trash' ), true ) ) {
 				LMC_Google::notify( get_permalink( $post ), 'URL_DELETED' );
 			}
 		}, 20, 3 );
@@ -27,6 +27,10 @@ class LMC_Google {
 	}
 
 	public static function notify( $url, $type ) {
+		$id = url_to_postid( $url );
+		if ( ! LMC_Launch::is_live() || ( $id && LMC_Launch::is_demo_job( $id ) ) ) {
+			return; // Never ping search engines before launch or about demo content.
+		}
 		if ( lmc_opt( 'google_indexing' ) && self::credentials() ) {
 			$r = self::api( 'POST', 'https://indexing.googleapis.com/v3/urlNotifications:publish', array( 'url' => $url, 'type' => $type ), 'https://www.googleapis.com/auth/indexing' );
 			if ( is_wp_error( $r ) ) {

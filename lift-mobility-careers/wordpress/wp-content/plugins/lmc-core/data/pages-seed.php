@@ -24,10 +24,43 @@ function lmc_md_to_html( $md ) {
 	$inline = function ( $t ) {
 		$t = esc_html( $t );
 		$t = preg_replace( '/\*\*(.+?)\*\*/', '<strong>$1</strong>', $t );
-		$t = preg_replace( '/\[(.+?)\]\((.+?)\)/', '<a href="$2">$1</a>', $t );
+		$t = preg_replace( '/\[([^\[\]]+)\]\(([^()\s]+)\)/', '<a href="$2">$1</a>', $t );
 		return $t;
 	};
+	$table = array();
+	$flush_table = function () use ( &$table, &$html, $inline ) {
+		if ( ! $table ) {
+			return;
+		}
+		$rows  = array_values( array_filter( $table, function ( $r ) {
+			return ! preg_match( '/^\|?\s*:?-{3,}/', $r );
+		} ) );
+		$cells = function ( $r ) {
+			return array_map( 'trim', explode( '|', trim( trim( $r ), '|' ) ) );
+		};
+		$html .= '<div class="lmc-table-wrap"><table class="lmc-table"><thead><tr>';
+		foreach ( $cells( array_shift( $rows ) ) as $c ) {
+			$html .= '<th>' . $inline( $c ) . '</th>';
+		}
+		$html .= '</tr></thead><tbody>';
+		foreach ( $rows as $r ) {
+			$html .= '<tr>';
+			foreach ( $cells( $r ) as $c ) {
+				$html .= '<td>' . $inline( $c ) . '</td>';
+			}
+			$html .= '</tr>';
+		}
+		$html .= "</tbody></table></div>\n";
+		$table = array();
+	};
 	foreach ( $lines as $line ) {
+		if ( preg_match( '/^\s*\|/', $line ) ) {
+			$flush();
+			$close();
+			$table[] = $line;
+			continue;
+		}
+		$flush_table();
 		if ( preg_match( '/^(#{1,4})\s+(.*)$/', $line, $m ) ) {
 			$flush();
 			$close();
@@ -56,6 +89,7 @@ function lmc_md_to_html( $md ) {
 	}
 	$flush();
 	$close();
+	$flush_table();
 	return $html;
 }
 

@@ -39,14 +39,16 @@ class LMC_SEO {
 	}
 
 	/** Is this taxonomy term page substantial enough to index? */
+	/**
+	 * Index policy (avoids thin / near-duplicate pages):
+	 *  - "always": distinct, high-value landing pages with substantial original copy (see LMC_Install::index_policy()).
+	 *  - everything else: indexed only once it has at least N genuine (non-demo) live vacancies.
+	 */
 	public static function term_indexable( $term ) {
-		if ( 'lmc_sector' === $term->taxonomy ) {
+		if ( 'always' === get_term_meta( $term->term_id, 'lmc_index', true ) ) {
 			return true;
 		}
-		if ( 'lmc_role' === $term->taxonomy && get_term_meta( $term->term_id, 'lmc_seo_title', true ) ) {
-			return true;
-		}
-		$n = count( get_posts( array( 'post_type' => 'lmc_job', 'post_status' => 'publish', 'numberposts' => -1, 'fields' => 'ids', 'tax_query' => array( array( 'taxonomy' => $term->taxonomy, 'terms' => $term->term_id, 'include_children' => true ) ) ) ) );
+		$n = count( get_posts( array( 'post_type' => 'lmc_job', 'post_status' => 'publish', 'numberposts' => -1, 'fields' => 'ids', 'meta_query' => array( LMC_Launch::demo_meta_query() ), 'tax_query' => array( array( 'taxonomy' => $term->taxonomy, 'terms' => $term->term_id, 'include_children' => true ) ) ) ) );
 		return $n >= (int) lmc_opt( 'index_threshold' );
 	}
 
@@ -123,7 +125,8 @@ class LMC_SEO {
 		if ( ! $c['title'] ) {
 			return $t;
 		}
-		return ! empty( $c['full'] ) || false !== strpos( $c['title'], self::site() ) ? $c['title'] : $c['title'] . ' | ' . self::site();
+		$t = ! empty( $c['full'] ) || false !== strpos( $c['title'], self::site() ) ? $c['title'] : $c['title'] . ' | ' . self::site();
+		return esc_html( wp_strip_all_tags( html_entity_decode( $t, ENT_QUOTES ) ) );
 	}
 
 	public static function robots( $r ) {
@@ -178,7 +181,7 @@ class LMC_SEO {
 				'potentialAction' => array( '@type' => 'SearchAction', 'target' => get_post_type_archive_link( 'lmc_job' ) . '?q={search_term_string}', 'query-input' => 'required name=search_term_string' ),
 			);
 		}
-		if ( is_singular( 'lmc_job' ) && 'publish' === get_post_status() ) {
+		if ( is_singular( 'lmc_job' ) && 'publish' === get_post_status() && ! LMC_Launch::is_demo_job( get_queried_object_id() ) ) {
 			$schema[] = self::job_schema( get_queried_object_id() );
 		}
 		$crumbs = self::breadcrumbs();
@@ -204,7 +207,7 @@ class LMC_SEO {
 			);
 		}
 		foreach ( $schema as $s ) {
-			echo '<script type="application/ld+json">' . wp_json_encode( $s, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) . "</script>\n";
+			echo '<script type="application/ld+json">' . wp_json_encode( $s, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP ) . "</script>\n";
 		}
 	}
 
@@ -272,7 +275,8 @@ class LMC_SEO {
 				$desc .= '<h3>' . $label . '</h3><ul><li>' . implode( '</li><li>', array_map( 'esc_html', $items ) ) . '</li></ul>';
 			}
 		}
-		$org = array( '@type' => 'Organization', 'name' => lmc_job_meta( $id, 'employer_name' ) );
+		$desc = false === strpos( $desc, '<' ) ? wpautop( $desc ) : $desc;
+		$org  = array( '@type' => 'Organization', 'name' => wp_strip_all_tags( lmc_job_meta( $id, 'employer_name' ) ) );
 		if ( lmc_job_meta( $id, 'employer_website' ) ) {
 			$org['sameAs'] = lmc_job_meta( $id, 'employer_website' );
 		}
@@ -303,9 +307,9 @@ class LMC_SEO {
 				'@type'   => 'Place',
 				'address' => array_filter( array(
 					'@type'           => 'PostalAddress',
-					'addressLocality' => lmc_job_meta( $id, 'town' ),
+					'addressLocality' => wp_strip_all_tags( lmc_job_meta( $id, 'town' ) ),
 					'addressRegion'   => $county,
-					'postalCode'      => lmc_job_meta( $id, 'postcode' ),
+					'postalCode'      => wp_strip_all_tags( lmc_job_meta( $id, 'postcode' ) ),
 					'addressCountry'  => 'GB',
 				) ),
 			),

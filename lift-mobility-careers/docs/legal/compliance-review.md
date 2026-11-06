@@ -8,6 +8,44 @@ Draft documents (rendered as website pages automatically): `wordpress/wp-content
 
 ---
 
+## ⛔ LAUNCH BLOCKER – employment agency regulation
+
+**Being an advertising-only job board does not automatically exempt this business from the Employment Agencies Act 1973 or the Conduct of Employment Agencies and Employment Businesses Regulations 2003.** The site is designed on the cautious assumption that it may be an employment agency (section 1 below), but **whether it is, and exactly which duties apply, must be decided by a specialist** (an employment lawyer or recruitment-compliance specialist) before launch.
+
+This is enforced in the software, not just written down:
+- The site is in **pre-launch mode** until the operator records the specialist's name and the review date in *Lift & Mobility → Launch checklist*. In pre-launch mode, every page is `noindex`, robots.txt blocks crawling, there is no sitemap or job feed, nothing is sent to search engines, and **Stripe is forced to test mode, so no real payment can be taken**.
+- The "Go live" button stays disabled while any blocker remains: legal sign-off, legal-page placeholders/DRAFT notices, demo content, incomplete business details, no HTTPS domain, no email delivery.
+
+**Questions for the specialist** (bring this document):
+1. Is the business an "employment agency" under EAA s.13, given s.13(4)(a) excludes publications only if not "published wholly or mainly" to help people find work?
+2. If so, which Conduct Regulations apply to an advertising-only service that never introduces or supplies candidates? In particular: reg 26 (no work-seeker fees), reg 27 (advertisement content – the agency's full name and whether it's an agency or business; nature of work, location and minimum experience where pay is stated), regs 14–16 (terms with hirers – does the Employer Advertising Agreement need specific content?), regs 18–22 (suitability/information checks – do they bite at all?), and record-keeping (reg 29).
+3. Is the advert disclosure wording right? Default: *"Advertised by Lift and Mobility Careers, an employment agency providing job advertising services only. We are not the employer and do not charge candidates any fee."* (Settings → Business details). Calling the business an "employment agency" is itself a legal position; the specialist may prefer different wording.
+4. Who enforces now? The Employment Agency Standards Inspectorate has historically enforced these rules. The Employment Rights Act 2025 provides for a new Fair Work Agency to take over several enforcement bodies including EAS – confirm the current position and any new obligations.
+5. Northern Ireland employers: separate legislation applies (Employment (Miscellaneous Provisions) (NI) Order 1981 and the NI Conduct Regulations) – advise, or restrict NI adverts.
+6. Online Safety Act 2023 scope (section 7), PECR/UK GDPR outreach approach (sections 2–3), Data (Use and Access) Act 2025 changes, and the liability/refund terms.
+7. Job alerts: confirm double opt-in consent and the privacy wording.
+
+## Remaining placeholders (all must be replaced after the review)
+
+The Launch checklist lists these live from the published pages. At the time of writing:
+
+| Document | Placeholders |
+|---|---|
+| Terms and Conditions | [DATE], [LEGAL ENTITY NAME], [NUMBER], [ADDRESS], [CONTACT EMAIL], plus the instruction "Replace every [BRACKETED] item" |
+| Privacy Policy | [DATE], [LEGAL ENTITY NAME], [CONTACT EMAIL] ×2, [POSTAL ADDRESS], [ICO REFERENCE], [HOST NAME], [EMAIL PROVIDER] |
+| Cookie Policy | [DATE], [LEGAL ENTITY NAME], [CONTACT EMAIL] |
+| Employer Advertising Agreement | [DATE], [LEGAL ENTITY NAME] |
+| Refund Policy | [DATE], [CONTACT EMAIL] |
+| Employer Permission and Content Licence | [LEGAL ENTITY NAME], [CONTACT EMAIL] |
+| Vacancy Authorisation Declaration | none (DRAFT notice only) |
+| Website Disclaimer | none (DRAFT notice only) |
+
+Every document also carries a "DRAFT – not yet reviewed by a solicitor" notice, which must be removed once approved. The checklist treats it as a blocker too.
+
+**Cross-references checked:** every internal link in the legal pages resolves (Privacy → Cookie Policy; Cookie → Privacy; Terms → Advertising Agreement, Authorisation Declaration, Content Licence, Contact; Agreement → Pricing, Authorisation, Refunds; Refunds → Agreement; Declaration → Agreement, Licence; Disclaimer → Contact). An earlier formatting bug garbled any link that followed a [PLACEHOLDER] in the same paragraph (e.g. the Cookie Policy's link to the Privacy Policy). It has been fixed and covered by a test.
+
+---
+
 ## 1. Employment Agencies Act 1973 (EAA) and Conduct Regulations 2003
 
 **Do not assume exemption.** EAA s.13(2) defines an employment agency as a business providing services "(whether by the provision of information or otherwise)" for the purpose of finding persons employment with employers or supplying employers with persons. s.13(4)(a) excludes "publishing a newspaper or other publication **unless it is published wholly or mainly** for the purpose" of finding people work. A specialist job board exists wholly for that purpose, so on a plain reading **the exclusion is unlikely to apply and the business should be treated as an employment agency** unless a solicitor advises otherwise. Trade commentary (e.g. Recruiter, 2012) and the *BERR v Adams* (2008) decision point the same way, though no case settles it for job boards generally. The 2003 Regulations define "publication" to include electronic form.

@@ -14,6 +14,11 @@ class LMC_Cron {
 		} );
 		add_action( 'lmc_hourly', array( 'LMC_Jobs', 'run_lifecycle' ) );
 		add_action( 'lmc_hourly', array( 'LMC_CRM', 'refresh_followups' ) );
+		add_action( 'lmc_hourly', array( 'LMC_Payments', 'cleanup_stale' ) );
+		add_action( 'lmc_hourly', function () {
+			global $wpdb; // Retention: the email log is kept for 2 years.
+			$wpdb->query( $wpdb->prepare( 'DELETE FROM ' . lmc_table( 'email_log' ) . ' WHERE created_at < %s', lmc_mysql_time( lmc_now() - 730 * DAY_IN_SECONDS ) ) );
+		} );
 		add_action( 'lmc_daily_discovery', array( 'LMC_Discovery', 'run' ) );
 		add_action( 'lmc_weekly_report', array( 'LMC_Reports', 'send_weekly' ) );
 		add_action( 'init', array( __CLASS__, 'schedule' ) );

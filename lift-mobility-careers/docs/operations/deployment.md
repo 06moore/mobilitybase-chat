@@ -19,6 +19,10 @@ Nothing here has been purchased or published. Each step that costs money or goes
 
 Server requirements: PHP 8.1+ (8.3 tested), MySQL 8 / MariaDB 10.6+, HTTPS, ability to add a cron job.
 
+## 0. Pre-launch mode
+
+The site installs in **pre-launch mode**: hidden from search engines, no sitemap or job feed, and Stripe locked to test mode. Work through *Lift & Mobility → Launch checklist*. "Go live" only unlocks once the legal sign-off is recorded and every other blocker is cleared.
+
 ## 2. Install
 
 1. Install WordPress on the host (one-click is fine). Use a strong admin password and an admin username that isn't "admin".

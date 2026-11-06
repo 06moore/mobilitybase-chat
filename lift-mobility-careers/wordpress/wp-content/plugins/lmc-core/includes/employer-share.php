@@ -94,7 +94,7 @@ class LMC_Employer_Share {
 		$c['title']     = $name . ' Jobs & Careers';
 		$c['desc']      = $n ? "$name is recruiting: $n live engineering " . _n( 'vacancy', 'vacancies', $n ) . ' on Lift and Mobility Careers. See salaries and apply direct.' : "Engineering vacancies at $name on Lift and Mobility Careers.";
 		$c['canonical'] = self::company_url( $uid );
-		$c['noindex']   = 0 === $n;
+		$c['noindex']   = 0 === $n || get_user_meta( $uid, 'lmc_demo', true );
 		return $c;
 	}
 
@@ -160,7 +160,7 @@ class LMC_Employer_Share {
 			$out .= '<p><strong>Thank-you offer:</strong> add a link to us on your website and we\'ll give you a free upgrade to a Featured advert (one per employer).</p>';
 		}
 		foreach ( array_filter( $links ) as $u => $info ) {
-			$out .= '<p>' . ( ! empty( $info['ok'] ) ? '✅' : '⚠️' ) . ' <a href="' . esc_url( $u ) . '" rel="nofollow noopener" target="_blank">' . esc_html( $u ) . '</a> – ' . esc_html( ! empty( $info['ok'] ) ? 'link found ' . lmc_date( $info['checked'] ) : 'link not found when checked ' . lmc_date( $info['checked'] ) ) . '</p>';
+			$out .= '<p>' . ( ! empty( $info['ok'] ) ? '<strong style="color:#2E6B12">Verified</strong>' : '<strong style="color:#8A5A00">Not found</strong>' ) . ' <a href="' . esc_url( $u ) . '" rel="nofollow noopener" target="_blank">' . esc_html( $u ) . '</a> – ' . esc_html( ! empty( $info['ok'] ) ? 'link found ' . lmc_date( $info['checked'] ) : 'link not found when checked ' . lmc_date( $info['checked'] ) ) . '</p>';
 		}
 		return $out . '<form method="post" class="lmc-inline-form">' . LMC_Forms::hidden( 'lmc_verify_backlink' ) . '<label class="screen-reader-text" for="lmc-bl">Page URL</label><input id="lmc-bl" type="url" name="page_url" placeholder="https://yourcompany.co.uk/careers" required style="max-width:420px;padding:10px;border:1px solid #C5CFD5;border-radius:6px"> <button class="lmc-btn lmc-btn--primary lmc-btn--small" type="submit">Check my link</button></form>';
 	}
@@ -245,7 +245,7 @@ if ( class_exists( 'WP_Sitemaps_Provider' ) || ( require_once ABSPATH . WPINC . 
 		public function get_url_list( $page_num, $object_subtype = '' ) {
 			$out = array();
 			foreach ( get_users( array( 'role' => 'lmc_employer', 'fields' => 'ID', 'number' => -1 ) ) as $uid ) {
-				if ( LMC_Employer_Share::live_jobs( $uid ) ) {
+				if ( ! get_user_meta( $uid, 'lmc_demo', true ) && LMC_Employer_Share::live_jobs( $uid ) ) {
 					$out[] = array( 'loc' => LMC_Employer_Share::company_url( $uid ) );
 				}
 			}
