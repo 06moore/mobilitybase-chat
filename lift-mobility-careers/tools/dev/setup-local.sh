@@ -27,7 +27,11 @@ define('DB_NAME','wp'); define('DB_USER',''); define('DB_PASSWORD',''); define('
 define('DB_DIR', '$DEV/db/'); define('DB_FILE','lmc.sqlite');
 \$table_prefix = 'wp_';
 define('WP_DEBUG', true); define('WP_DEBUG_LOG', '$DEV/debug.log'); define('WP_DEBUG_DISPLAY', false);
-define('WP_HOME','$URL'); define('WP_SITEURL','$URL');
+\$lmc_host = \$_SERVER['HTTP_X_FORWARDED_HOST'] ?? (\$_SERVER['HTTP_HOST'] ?? '');
+\$lmc_proto = ((\$_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https' || (\$_SERVER['HTTPS'] ?? '') === 'on') ? 'https' : 'http';
+if (\$lmc_proto === 'https') { \$_SERVER['HTTPS'] = 'on'; }
+\$lmc_url = (\$lmc_host && \$lmc_host !== parse_url('$URL', PHP_URL_HOST) . ':' . parse_url('$URL', PHP_URL_PORT)) ? \$lmc_proto . '://' . \$lmc_host : '$URL';
+define('WP_HOME', \$lmc_url); define('WP_SITEURL', \$lmc_url); // dev: follow the preview proxy's host
 define('LMC_MAIL_CAPTURE', '$DEV/mail.log'); // dev only: emails are written here instead of being sent
 define('DISABLE_WP_CRON', true);
 foreach (['AUTH_KEY','SECURE_AUTH_KEY','LOGGED_IN_KEY','NONCE_KEY','AUTH_SALT','SECURE_AUTH_SALT','LOGGED_IN_SALT','NONCE_SALT'] as \$k) define(\$k, 'dev-only-'.\$k);
