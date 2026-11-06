@@ -1,26 +1,34 @@
-company,entity_type,sector,website,careers_url,town,region,notes
-Stannah,unknown,"Stairlifts; Platform lifts; Lifts",,,,,"UNVERIFIED starter lead. Check Companies House for the UK employing entity, find the official careers page and a published recruitment contact before use."
-Acorn Stairlifts,unknown,Stairlifts,,,,,"UNVERIFIED starter lead – verify before use."
-Handicare / Savaria UK,unknown,"Stairlifts; Patient handling",,,,,"UNVERIFIED – group structure has changed in recent years; confirm current UK entity."
-Otolift,unknown,Stairlifts,,,,,"UNVERIFIED – verify UK operation."
-Brooks Stairlifts,unknown,Stairlifts,,,,,"UNVERIFIED – verify before use."
-Platinum Stairlifts,unknown,Stairlifts,,,,,"UNVERIFIED – verify before use."
-TK Home Solutions,unknown,"Stairlifts; Home lifts",,,,,"UNVERIFIED – confirm current trading name."
-Stiltz Homelifts,unknown,Home lifts,,,,,"UNVERIFIED – verify before use."
-Terry Lifts,unknown,"Home lifts; Through-floor lifts; Platform lifts",,,,,"UNVERIFIED – verify before use."
-Pollock Lifts,unknown,"Platform lifts; Home lifts",,,,,"UNVERIFIED – verify before use."
-Wessex Lifts,unknown,"Platform lifts; Access lifts",,,,,"UNVERIFIED – verify before use."
-Gartec,unknown,"Platform lifts; Home lifts",,,,,"UNVERIFIED – verify before use."
-Cibes Lift UK,unknown,"Platform lifts; Home lifts",,,,,"UNVERIFIED – verify before use."
-Aritco UK,unknown,Home lifts,,,,,"UNVERIFIED – verify UK operation."
-Axess2,unknown,"Platform lifts; Access lifts",,,,,"UNVERIFIED – verify before use."
-Phoenix Mobility,unknown,"Through-floor lifts; Platform lifts",,,,,"UNVERIFIED – verify before use."
-Sesame Access Systems,unknown,"Access lifts; Wheelchair lifts",,,,,"UNVERIFIED – verify before use."
-Arjo UK,unknown,"Patient handling; Ceiling track hoists",,,,,"UNVERIFIED – verify UK entity."
-Guldmann UK,unknown,"Ceiling track hoists; Patient handling",,,,,"UNVERIFIED – verify UK entity."
-Prism Medical UK,unknown,"Ceiling track hoists; Patient handling",,,,,"UNVERIFIED – may now trade under a group name."
-Joerns Healthcare UK (Oxford hoists),unknown,Patient handling,,,,,"UNVERIFIED – verify before use."
-Invacare UK,unknown,"Patient handling; Mobility equipment",,,,,"UNVERIFIED – verify current status."
-Etac UK (Molift),unknown,Patient handling,,,,,"UNVERIFIED – verify UK operation."
-Chiltern Invadex,unknown,"Ceiling track hoists; Mobility equipment",,,,,"UNVERIFIED – verify before use."
-Benmor Medical,unknown,Patient handling,,,,,"UNVERIFIED – verify before use."
+company,entity_type,company_number,sector,website,careers_url,town,region,notes
+Stannah,unknown,,"Stairlifts; Platform lifts; Lifts",,https://www.jobtrain.co.uk/stannah/,,,"CONFIRMED hiring (Nov 2026 search): stairlift, service and lift engineer roles in Orpington, Preston, Poole, Basingstoke, Stevenage, Worthing, Gateshead, Cambridge, Bristol, Bath, Frome. Careers via JobTrain. Largest single target. Confirm UK employing entity on Companies House before emailing."
+Acorn Stairlifts,unknown,,Stairlifts,,https://careers.acornstairlifts.com/vacancies,Steeton,Yorkshire and the Humber,"CONFIRMED own careers site with field service, installation and support engineer roles across the UK (some listings dated 2024-26). HQ Steeton, West Yorkshire. Confirm entity on Companies House."
+Handicare Stairlifts UK (Savaria),unknown,,"Stairlifts; Home lifts; Patient handling",https://www.savaria.com,,Kingswinford,West Midlands,"CONFIRMED hiring: field service engineers Glasgow (£40-50k), facilities/maintenance engineer and technical support lead (vertical home lifts) Kingswinford. Savaria owns Handicare; UK manufacturing in Kingswinford. Find UK careers page."
+Stiltz,unknown,,Home lifts,,,,,"CONFIRMED hiring 2026: homelift engineers (Manchester, Nottingham, Peterborough, Leicester, Coventry, Bristol, Dartford) and trainee roles; c.£26-31k + overtime/van. NOTE: says it uses a small set of agencies and doesn't accept unsolicited agency CVs - pitch as a direct advertising channel, not a recruiter. Find careers page."
+Terry Lifts (Terry Group),unknown,,"Through-floor lifts; Home lifts; Platform lifts",http://www.terrylifts.co.uk/,,Knutsford,North West,"Verified UK manufacturer (Knutsford, Cheshire); 'Terry Group Ltd' per directory. No vacancies found in search. Contact numbers vary between sources - use the official website."
+Arjo UK,unknown,,"Patient handling; Ceiling track hoists",,https://jobs.arjo.com/,,,"CONFIRMED own careers site: many UK field service engineer roles (Manchester, London, Surrey, Shrewsbury, Wrexham, Belfast, Newcastle) plus LOLER engineer (Scotland) and apprentice installation engineer. 100+ UK field engineers. High-value target for LOLER and patient handling."
+Guldmann UK,unknown,,"Ceiling track hoists; Patient handling",https://www.guldmann.com/en-gb/,,,,"Verified UK presence; services UK via a network of approved distributors. Service engineer roles advertised via recruiter Universal Business Team. Ask whether Guldmann or its distributors recruit directly."
+Prism Medical UK,unknown,,"Ceiling track hoists; Patient handling",,,,,"Verified: 'Prism Medical UK Limited', about 84 install/service engineers of 314 staff (per listing). No direct vacancy found. Find careers page / HR contact."
+Millbrook Healthcare,unknown,,"Ceiling track hoists; Patient handling; Mobility equipment",,,Abingdon,South East,"CONFIRMED hiring 2025: ceiling track hoist engineer/technician roles (Oxford/Abingdon, Aylesbury, Rochdale, national), £28-39k. Community equipment provider - recruits regularly. Strong target."
+Joerns Healthcare (Oxford hoists),unknown,,Patient handling,,,Pershore,West Midlands,"Verified: Joerns Healthcare Ltd, home of the Oxford hoist brand; UK address Pershore, Worcestershire. No direct vacancy found."
+Gartec,unknown,,"Platform lifts; Home lifts",https://www.gartec.com,,Aylesbury,South East,"CONFIRMED hiring: lead platform lift installer (Aylesbury), project engineer (platform lift installations), field service engineer (London area). About 50 staff incl. 20 service engineers; part of a group (Innovalift AB per one listing). Website per listing text - verify."
+Pollock Lifts,unknown,,"Platform lifts; Home lifts",,,Carrickfergus,Northern Ireland,"Verified: Pollock Lifts Limited, Carrickfergus/Belfast; platform, inclined, short-rise and vertical lifts. NI employer - see compliance review re Northern Ireland rules before advertising."
+Sesame Access Systems,limited_company,03259843,"Platform lifts; Access lifts; Wheelchair lifts",https://www.sesameaccess.com,,West Byfleet,South East,"VERIFIED on Companies House: Sesame Access Systems Limited (03259843), active, incorporated 1996, West Byfleet, Surrey. Hidden/retracting platform lifts for heritage buildings. LEIA member. Small company - occasional hiring."
+Halton Stairlifts,unknown,,Stairlifts,,,Widnes,North West,"Verified: Halton Stairlifts Limited (per company data: incorporated 2012), Widnes, Cheshire; new 17,000 sq ft HQ; family firm; new and reconditioned stairlifts UK-wide. Advertised stairlift engineer roles (2025, £24.5-35k). Growing independent - good target. Confirm on Companies House."
+Senior Stairlifts,unknown,,Stairlifts,,https://jobs.gohire.io/senior-stairlifts-ltd-r4tgzjw4/,,,"CONFIRMED hiring: several stairlift engineer roles via GoHire (Yorkshire, Eastbourne). Trades as Senior Stairlifts Ltd per listing. Independent - good target."
+Superglide Stairlifts,unknown,,Stairlifts,,,Warrington,North West,"Advertised a stairlift engineer role with weekend on-call (2026). Address 23 Craven Court, Warrington per directory. Little else verified - research further."
+Apex Lifts,unknown,,"Lifts; Platform lifts",https://www.apexlifts.com,,Bexleyheath,South East,"Advertised a service & call-out engineer role (Camden/West End). Mostly passenger lifts - check how much is accessibility/platform work before approaching."
+WR Engineering,unknown,,"Stairlifts; Platform lifts",,,High Wycombe,South East,"Advertised stairlift engineer (£38-40k, Home Counties) and platform lift roles. Check whether a direct employer or a recruiter before approaching."
+TVMC Mobility,unknown,,"Ceiling track hoists; Mobility equipment",,,,,"Advertised hoist engineer roles. Research location and website."
+Medequip,unknown,,"Ceiling track hoists; Mobility equipment",,,,,"Community equipment provider; advertised ceiling track hoist installer (£40-60k). Recruits regularly - research careers page."
+Otolift,unknown,,Stairlifts,,,,,"UNVERIFIED: no UK vacancies or UK site found in search. Check whether it operates a UK subsidiary or sells through dealers."
+Brooks Stairlifts,unknown,,Stairlifts,,,,,UNVERIFIED: no results in search. Research before use.
+Platinum Stairlifts,unknown,,Stairlifts,,,,,UNVERIFIED: no results in search. Research before use.
+TK Home Solutions,unknown,,"Stairlifts; Home lifts",,,,,"Has UK web presence (homesolutions.tkelevator.com/uk-en). No UK vacancies found. Confirm current UK trading entity."
+Wessex Lifts,unknown,,"Platform lifts; Access lifts",,,,,UNVERIFIED: no vacancies or company details found in search.
+Cibes Lift UK,unknown,,"Platform lifts; Home lifts",,,,,"Platform lift installation engineer role seen (UK and Channel Islands travel). Confirm UK entity and careers page."
+Aritco UK,unknown,,Home lifts,,,,,UNVERIFIED: not searched in depth. Research before use.
+Axess2,unknown,,"Platform lifts; Access lifts",,,,,UNVERIFIED: search returned nothing relevant.
+Phoenix Mobility,unknown,,"Through-floor lifts; Platform lifts",,,,,UNVERIFIED: search returned only unrelated US companies.
+Invacare UK,unknown,,"Patient handling; Mobility equipment",,,,,UNVERIFIED: not searched in depth - check current UK status.
+Etac UK (Molift),unknown,,Patient handling,,,,,UNVERIFIED: not searched in depth.
+Chiltern Invadex,unknown,,"Ceiling track hoists; Mobility equipment",,,,,UNVERIFIED: no relevant results (a different firm - The Chiltern Lift Company - appeared instead).
+Benmor Medical,unknown,,Patient handling,,,,,UNVERIFIED: not searched in depth.
