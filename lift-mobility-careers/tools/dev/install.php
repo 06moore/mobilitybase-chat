@@ -13,7 +13,7 @@ activate_plugin('sqlite-database-integration/load.php');
 switch_theme('lmc');
 $r = activate_plugin('lmc-core/lmc-core.php');
 if (is_wp_error($r)) { fwrite(STDERR, $r->get_error_message() . "\n"); exit(1); }
-foreach (get_posts(["post_type"=>["post","page"],"post_status"=>"any","numberposts"=>-1]) as $p) { if (in_array($p->post_name, ["hello-world","sample-page","privacy-policy-2"], true) || ($p->post_type==="page" && !in_array($p->ID, array_map(fn($k)=>(int)get_option($k), array_filter(array_keys(wp_load_alloptions()), fn($k)=>str_starts_with($k,"lmc_page_"))), true))) wp_delete_post($p->ID, true); }
+foreach (get_posts(["post_type"=>["post","page"],"post_status"=>"any","numberposts"=>-1]) as $p) { if (in_array($p->post_name, ["hello-world","sample-page"], true) || ($p->post_type==="page" && !in_array($p->ID, array_map(fn($k)=>(int)get_option($k), array_filter(array_keys(wp_load_alloptions()), fn($k)=>str_starts_with($k,"lmc_page_"))), true))) wp_delete_post($p->ID, true); }
 do_action("lmc_dev_seed");
 flush_rewrite_rules();
 echo "Installed.\n";

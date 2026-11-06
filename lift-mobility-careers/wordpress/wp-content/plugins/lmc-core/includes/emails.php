@@ -263,7 +263,9 @@ add_action( 'phpmailer_init', function ( $mailer ) {
 if ( defined( 'LMC_MAIL_CAPTURE' ) && LMC_MAIL_CAPTURE ) {
 	add_filter( 'pre_wp_mail', function ( $null, $atts ) {
 		$to = is_array( $atts['to'] ) ? implode( ',', $atts['to'] ) : $atts['to'];
-		file_put_contents( LMC_MAIL_CAPTURE, "=====\nTO: $to\nSUBJECT: {$atts['subject']}\n" . wp_strip_all_tags( str_replace( '</p>', "\n", $atts['message'] ) ) . "\n", FILE_APPEND );
+		$body = preg_replace( '#<a [^>]*href="([^"]+)"[^>]*>(.*?)</a>#', '$2 [$1]', $atts['message'] );
+		$body = html_entity_decode( wp_strip_all_tags( str_replace( array( '</p>', '</td>', '<br>', '</li>' ), "\n", $body ) ), ENT_QUOTES );
+		file_put_contents( LMC_MAIL_CAPTURE, "=====\nTO: $to\nSUBJECT: {$atts['subject']}\n" . $body . "\n", FILE_APPEND );
 		return true;
 	}, 10, 2 );
 }

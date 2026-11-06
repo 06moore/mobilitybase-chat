@@ -13,6 +13,7 @@ function lmc_settings_schema() {
 			'vat_registered'     => array( 'VAT registered', 'When ticked, VAT is added at checkout and prices show "+ VAT".', 'checkbox' ),
 			'vat_number'         => array( 'VAT number' ),
 			'vat_rate'           => array( 'VAT rate (%)', '', 'number' ),
+			'advert_disclosure'  => array( 'Disclosure shown on every vacancy', 'Conduct Regulations 2003 reg 27: adverts must give the agency\'s name and nature. Have a solicitor confirm this wording.', 'textarea' ),
 			'contact_email'      => array( 'Public contact email' ),
 			'admin_report_email' => array( 'Admin / weekly report email' ),
 			'linkedin_url'       => array( 'LinkedIn company page URL' ),

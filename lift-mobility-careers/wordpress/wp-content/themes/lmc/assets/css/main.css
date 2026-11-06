@@ -53,6 +53,7 @@ h3{font-size:18px;font-weight:700}
 /* Header */
 .lmc-header{background:var(--navy);position:sticky;top:0;z-index:50;border-bottom:1px solid rgba(255,255,255,.06)}
 .lmc-header__inner{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:76px}
+.lmc-logo{flex:none}
 .lmc-logo img{display:block;height:46px;width:auto}
 .lmc-nav{display:flex;align-items:center;gap:22px}
 .lmc-nav__list{display:flex;gap:4px;list-style:none;margin:0;padding:0}

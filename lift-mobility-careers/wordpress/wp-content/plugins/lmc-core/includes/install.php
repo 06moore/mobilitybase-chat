@@ -278,6 +278,17 @@ class LMC_Install {
 			if ( ! empty( $p['parent'] ) ) {
 				$parent = (int) get_option( 'lmc_page_' . $p['parent'] );
 			}
+			// Adopt a page already at this address (e.g. WordPress's own draft Privacy Policy) instead of
+			// creating "privacy-policy-2". Drafts get our content; published pages are left as they are.
+			$path     = ( $parent ? get_page_uri( $parent ) . '/' : '' ) . $p['slug'];
+			$existing = get_page_by_path( $path );
+			if ( $existing ) {
+				if ( 'publish' !== $existing->post_status ) {
+					wp_update_post( array( 'ID' => $existing->ID, 'post_status' => 'publish', 'post_title' => $p['title'], 'post_content' => $p['content'] ) );
+				}
+				update_option( 'lmc_page_' . $key, $existing->ID );
+				continue;
+			}
 			$id = wp_insert_post(
 				array(
 					'post_type'    => 'page',

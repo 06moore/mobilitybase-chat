@@ -282,6 +282,8 @@ class LMC_CRM {
 	/** Hourly: mark employers who've paid as customers. */
 	public static function refresh_followups() {
 		global $wpdb;
+		// Retention (Privacy Policy): researched contacts with no relationship after 24 months are deleted.
+		$wpdb->query( $wpdb->prepare( 'DELETE FROM ' . lmc_table( 'prospects' ) . " WHERE employer_user_id = 0 AND status IN ('researching','ready','contacted','not_interested','free_listing_offered') AND updated_at < %s", lmc_mysql_time( lmc_now() - 730 * DAY_IN_SECONDS ) ) );
 		$wpdb->query( 'UPDATE ' . lmc_table( 'prospects' ) . " SET status = 'customer' WHERE employer_user_id > 0 AND employer_user_id IN (SELECT user_id FROM " . lmc_table( 'payments' ) . " WHERE status = 'paid') AND status <> 'do_not_contact'" );
 	}
 

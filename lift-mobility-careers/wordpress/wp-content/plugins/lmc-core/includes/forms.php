@@ -758,6 +758,9 @@ class LMC_Forms {
 			$out .= '<li>' . esc_html( $f ) . '</li>';
 		}
 		$out .= '</ul>';
+		if ( $cta && null === $job_id ) {
+			$out .= '<a class="lmc-btn lmc-btn--ghost" href="' . esc_url( lmc_page_url( 'dashboard', array( 'tab' => 'credits' ) ) ) . '">Buy from your dashboard</a>';
+		}
 		if ( $cta && $job_id !== null ) {
 			if ( $job_id || $purpose === 'credits' ) {
 				$disabled = LMC_Payments::enabled() ? '' : ' disabled';

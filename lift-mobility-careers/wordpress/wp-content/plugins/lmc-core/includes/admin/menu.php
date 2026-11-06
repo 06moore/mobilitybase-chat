@@ -66,3 +66,9 @@ function lmc_admin_form_open( $do ) {
 function lmc_admin_badge( $text, $kind = 'neutral' ) {
 	return '<span class="lmc-a-badge lmc-a-badge--' . esc_attr( $kind ) . '">' . esc_html( $text ) . '</span>';
 }
+
+// The site has no blog or comments – hide those menus to keep the admin simple.
+add_action( 'admin_menu', function () {
+	remove_menu_page( 'edit.php' );
+	remove_menu_page( 'edit-comments.php' );
+}, 99 );

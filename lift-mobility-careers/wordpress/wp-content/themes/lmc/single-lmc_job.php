@@ -49,7 +49,7 @@ while ( have_posts() ) :
 					<h2><?php echo esc_html( $label ); ?></h2>
 					<ul class="lmc-ticks lmc-ticks--dark"><?php foreach ( $items as $it ) : ?><li><?php echo lmc_theme_icon( 'check' ); ?> <?php echo esc_html( $it ); ?></li><?php endforeach; ?></ul>
 				<?php endif; endforeach; ?>
-				<p class="lmc-muted lmc-job__report">Something wrong with this advert? <a href="<?php echo esc_url( lmc_page_url( 'contact', array( 'ref' => $id ) ) ); ?>">Report it</a>. Lift and Mobility Careers is an advertising platform; the employer is responsible for the vacancy and recruitment decisions.</p>
+				<p class="lmc-muted lmc-job__report"><?php echo esc_html( lmc_opt( 'advert_disclosure' ) ); ?> The employer is responsible for the vacancy and all recruitment decisions. Something wrong with this advert? <a href="<?php echo esc_url( lmc_page_url( 'contact', array( 'ref' => $id ) ) ); ?>">Report it</a>.</p>
 			</div>
 			<aside class="lmc-job__aside">
 				<div class="lmc-apply-box">

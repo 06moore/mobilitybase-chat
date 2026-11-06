@@ -71,7 +71,9 @@ function lmc_settings_defaults() {
 		'bing_verification'  => '',
 		'linkedin_url'       => '',
 		'facebook_url'       => '',
-		'index_threshold'    => 3,           // Location/role pages without curated copy need ≥ this many live jobs to be indexed.
+		'index_threshold'    => 3,
+		// Shown on every vacancy page. Conduct Regs 2003 reg 27 requires agencies' adverts to name the agency and state its nature – confirm wording with a solicitor.
+		'advert_disclosure'  => 'Advertised by Lift and Mobility Careers, an employment agency providing job advertising services only. We are not the employer and do not charge candidates any fee.',           // Location/role pages without curated copy need ≥ this many live jobs to be indexed.
 	);
 }
 

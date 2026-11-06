@@ -34,6 +34,6 @@ foreach (['AUTH_KEY','SECURE_AUTH_KEY','LOGGED_IN_KEY','NONCE_KEY','AUTH_SALT','
 if ( ! defined('ABSPATH') ) define('ABSPATH', __DIR__ . '/');
 require_once ABSPATH . 'wp-settings.php';
 CFG
-rm -rf "$DEV/db" && mkdir -p "$DEV/db" && : > "$DEV/mail.log"
+rm -rf "$DEV/db" && mkdir -p "$DEV/db" && : > "$DEV/mail.log" && rm -f "$DEV/debug.log"
 php "$ROOT/tools/dev/install.php" "$DEV/wp" "$URL"
 echo "Local site ready: $URL  (admin / admin-dev-password)"
