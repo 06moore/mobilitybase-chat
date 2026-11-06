@@ -72,6 +72,20 @@ function lmc_settings_defaults() {
 		'linkedin_url'       => '',
 		'facebook_url'       => '',
 		'index_threshold'    => 3,
+
+		// Growth: analytics, Google, alerts, feeds, employer sharing.
+		'launch_date'        => '',          // YYYY-MM-DD – month 1 of the growth plan for target tracking.
+		'track_returning'    => 1,           // Count returning visitors (only for visitors who accept analytics).
+		'google_sa_json'     => '',          // Service account JSON (prefer LMC_GOOGLE_SA_JSON constant) for Indexing API + Search Console.
+		'gsc_property'       => '',          // e.g. sc-domain:liftandmobilitycareers.co.uk
+		'google_indexing'    => 0,           // Notify Google Indexing API when vacancies go live / close.
+		'indexnow_key'       => '',          // Bing/Yandex IndexNow key (auto-generated when enabled).
+		'indexnow_enabled'   => 0,
+		'alerts_enabled'     => 1,
+		'alerts_max_per_run' => 250,         // Emails per hourly run – size to your SMTP plan.
+		'feed_enabled'       => 1,           // XML job feed for job-search aggregators.
+		'backlink_bonus'     => 1,           // Free Featured upgrade credit for a verified link to us.
+		'monthly_report_email' => '',        // Defaults to the admin/report email.
 		// Shown on every vacancy page. Conduct Regs 2003 reg 27 requires agencies' adverts to name the agency and state its nature – confirm wording with a solicitor.
 		'advert_disclosure'  => 'Advertised by Lift and Mobility Careers, an employment agency providing job advertising services only. We are not the employer and do not charge candidates any fee.',           // Location/role pages without curated copy need ≥ this many live jobs to be indexed.
 	);

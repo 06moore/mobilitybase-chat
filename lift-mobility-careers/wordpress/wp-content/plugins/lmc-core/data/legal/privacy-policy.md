@@ -12,7 +12,13 @@
 
 We have deliberately designed the Site so that candidates do not need to give us any personal data. You can search and apply without an account. When you apply, you go to the employer's own website or send an email from your own email account directly to the employer; we do not receive or store your application. The employer's own privacy notice then applies.
 
-We count anonymous page views and "Apply" clicks for each vacancy so we can report performance to employers. These counts contain no personal data and use no cookies.
+We count anonymous page views, visits, where visits come from (for example "Google" or "LinkedIn"), "Apply" clicks and shares, so we can improve the site and report performance to employers. These counts contain no personal data, no IP addresses and use no cookies.
+
+**Returning visitors (optional).** If you accept analytics in our cookie banner, we store a small value in your browser's local storage so we can count whether you have visited before. It contains no personal data and is never linked to you. If you don't accept, nothing is stored.
+
+## Job alerts (optional)
+
+If you sign up for job alerts we store your **email address** and the **preferences you choose** (sectors, job categories, location and distance, how often). If you enter a town or postcode, we convert it to approximate map coordinates using postcodes.io so we can match nearby jobs. We use this only to send the alerts you asked for. Lawful basis: consent, confirmed by clicking the link in our confirmation email. Unconfirmed sign-ups are deleted after 7 days. Every alert contains a link to change your preferences or unsubscribe; unsubscribing **deletes** your alert and email address. We never share subscriber details with employers.
 
 ## Employers and employer contacts
 
@@ -41,6 +47,7 @@ Our hosting provider ([HOST NAME]), our email delivery provider ([EMAIL PROVIDER
 - Researched business contacts: reviewed every 12 months; deleted if no relationship develops within 24 months.
 - Suppression list: indefinitely, containing only the email address, so we can honour your request.
 - Contact form messages: 2 years.
+- Job alert subscriptions: until you unsubscribe (deleted immediately); unconfirmed sign-ups after 7 days.
 
 ## Your rights
 

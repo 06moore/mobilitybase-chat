@@ -66,6 +66,18 @@
 	</div>
 </section>
 
+<section class="lmc-section lmc-alerts-band">
+	<div class="lmc-wrap lmc-alerts-band__grid">
+		<div>
+			<p class="lmc-eyebrow">Free job alerts</p>
+			<h2>Hear about new jobs first</h2>
+			<p>Tell us the sectors, job types and area you're interested in and we'll email you when matching vacancies go live. Just your email address – no account, no CV.</p>
+			<p><a class="lmc-link-arrow" href="<?php echo esc_url( lmc_page_url( 'guides' ) ); ?>">New to the industry? Read our career guides <?php echo lmc_theme_icon( 'arrow' ); ?></a></p>
+		</div>
+		<?php echo do_shortcode( '[lmc_alert_box source="home"]' ); ?>
+	</div>
+</section>
+
 <section class="lmc-employers">
 	<div class="lmc-wrap lmc-employers__grid">
 		<div>

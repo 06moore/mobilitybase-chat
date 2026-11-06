@@ -18,7 +18,7 @@ add_action( 'wp_enqueue_scripts', function () {
 	$v = LMC_THEME_VERSION . '.' . filemtime( get_template_directory() . '/assets/css/main.css' );
 	wp_enqueue_style( 'lmc', get_template_directory_uri() . '/assets/css/main.css', array(), $v );
 	wp_enqueue_script( 'lmc', get_template_directory_uri() . '/assets/js/main.js', array(), $v, array( 'strategy' => 'defer', 'in_footer' => true ) );
-	wp_localize_script( 'lmc', 'LMC', array( 'track' => rest_url( 'lmc/v1/track' ) ) );
+	wp_localize_script( 'lmc', 'LMC', array( 'hit' => rest_url( 'lmc/v1/hit' ), 'returning' => (int) lmc_opt( 'track_returning' ) ) );
 	// Strip unneeded core front-end assets for speed.
 	wp_dequeue_style( 'wp-block-library' );
 	wp_dequeue_style( 'global-styles' );
@@ -140,4 +140,14 @@ function lmc_theme_posted( $job_id ) {
 	$ts = (int) lmc_job_meta( $job_id, 'published_at' ) ?: get_post_time( 'U', true, $job_id );
 	$d  = floor( ( time() - $ts ) / DAY_IN_SECONDS );
 	return $d < 1 ? 'Posted today' : ( $d < 2 ? 'Posted yesterday' : 'Posted ' . $d . ' days ago' );
+}
+
+/** Share buttons for a vacancy (plain links – no third-party scripts or tracking pixels). */
+function lmc_theme_share( $job_id ) {
+	$url   = get_permalink( $job_id );
+	$title = lmc_plain_title( $job_id ) . ' – ' . lmc_location_text( $job_id ) . ' (' . lmc_salary_text( $job_id ) . ')';
+	echo '<div class="lmc-share" aria-label="Share this job"><p class="lmc-share__label">Share this job</p>';
+	echo '<button type="button" class="lmc-share__btn lmc-share__btn--native" data-lmc-native-share data-url="' . esc_attr( $url ) . '" hidden>Share…</button>';
+	echo LMC_Employer_Share::buttons( add_query_arg( 'utm_source', 'share', $url ), $title, $job_id ); // phpcs:ignore -- escaped inside.
+	echo '</div>';
 }

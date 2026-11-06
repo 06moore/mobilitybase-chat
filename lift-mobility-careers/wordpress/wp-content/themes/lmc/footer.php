@@ -14,6 +14,9 @@
 				<li><a href="<?php echo esc_url( lmc_page_url( 'lp_stairlift_service' ) ); ?>">Stairlift service engineer jobs</a></li>
 				<li><a href="<?php echo esc_url( home_url( '/jobs/role/loler-inspector/' ) ); ?>">LOLER inspector jobs</a></li>
 				<li><a href="<?php echo esc_url( home_url( '/jobs/role/apprentice/' ) ); ?>">Apprenticeships</a></li>
+				<li><a href="<?php echo esc_url( lmc_page_url( 'alerts' ) ); ?>">Job alerts</a></li>
+				<li><a href="<?php echo esc_url( lmc_page_url( 'guides' ) ); ?>">Career guides</a></li>
+				<li><a href="<?php echo esc_url( lmc_page_url( 'g_salary' ) ); ?>">Salary guide</a></li>
 			</ul>
 		</div>
 		<div>

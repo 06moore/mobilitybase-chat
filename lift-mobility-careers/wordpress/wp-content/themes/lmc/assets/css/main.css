@@ -322,3 +322,32 @@ h3{font-size:18px;font-weight:700}
 .lmc-consent div{display:flex;gap:10px;justify-content:flex-end}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 @media print{.lmc-header,.lmc-footer,.lmc-job__aside .lmc-btn,.lmc-filters{display:none}}
+
+/* ---- Growth features ---- */
+.lmc-share{margin:18px 0 0;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.lmc-share__label{width:100%;margin:0 0 2px;font:700 13px var(--font-head);text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.lmc-share__btn{display:inline-flex;align-items:center;padding:8px 12px;border:1px solid var(--grey-200);border-radius:20px;background:var(--white);color:var(--navy);font:600 13.5px var(--font-body);text-decoration:none;cursor:pointer}
+.lmc-share__btn:hover{border-color:var(--navy);background:var(--grey)}
+.lmc-share__btn--whatsapp{border-color:#25D36655}
+.lmc-share__btn--native{background:var(--navy);color:var(--white);border-color:var(--navy)}
+.lmc-alert-box{display:block;background:var(--lime-50);border:1px solid var(--lime);border-radius:var(--radius);padding:18px;margin-top:18px}
+.lmc-alert-box__title{font:800 16px var(--font-head);color:var(--navy);margin:0 0 2px}
+.lmc-alert-box .lmc-muted{margin:0 0 10px}
+.lmc-alert-box input[type=email]{width:100%;padding:11px 12px;border:1px solid #C5CFD5;border-radius:var(--radius-sm);font:400 16px var(--font-body);margin-bottom:10px}
+.lmc-alert-box__consent{display:flex;gap:8px;font-size:13.5px;margin-bottom:10px;align-items:flex-start}
+.lmc-alert-box__consent input{margin-top:3px}
+.lmc-alert-box__more{display:block;text-align:center;font-size:13.5px;margin-top:8px}
+.lmc-alerts-band{background:var(--lime-50)}
+.lmc-alerts-band__grid{display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center}
+.lmc-alerts-band .lmc-alert-box{background:var(--white);margin:0}
+@media (max-width:860px){.lmc-alerts-band__grid{grid-template-columns:1fr;gap:20px}}
+.lmc-guides{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin:20px 0}
+.lmc-guide{display:flex;flex-direction:column;gap:6px;padding:20px;border:1px solid var(--grey-200);border-radius:var(--radius);text-decoration:none;color:var(--ink)}
+.lmc-guide:hover{border-color:var(--navy);box-shadow:var(--shadow)}
+.lmc-guide__title{font:800 17px var(--font-head);color:var(--navy)}
+.lmc-guide__desc{font-size:14.5px;color:var(--muted)}
+.lmc-salary-summary{background:var(--grey);padding:12px 16px;border-radius:var(--radius-sm)}
+.lmc-share-kit h3{margin-top:28px}
+.lmc-share-kit textarea.lmc-copy{width:100%;font:13.5px/1.5 ui-monospace,Menlo,monospace;padding:10px;border:1px solid #C5CFD5;border-radius:var(--radius-sm);margin-bottom:8px;background:var(--grey)}
+.lmc-results--company{grid-template-columns:1fr 300px}
+@media (max-width:900px){.lmc-results--company{grid-template-columns:1fr}}

@@ -168,7 +168,7 @@ class LMC_SEO {
 			}
 		}
 		$schema = array();
-		if ( is_front_page() ) {
+		if ( is_front_page() && ! get_query_var( 'lmc_company' ) ) {
 			$schema[] = self::organization_schema();
 			$schema[] = array(
 				'@context'        => 'https://schema.org',
@@ -181,9 +181,60 @@ class LMC_SEO {
 		if ( is_singular( 'lmc_job' ) && 'publish' === get_post_status() ) {
 			$schema[] = self::job_schema( get_queried_object_id() );
 		}
+		$crumbs = self::breadcrumbs();
+		if ( count( $crumbs ) > 1 ) {
+			$items = array();
+			foreach ( $crumbs as $i => $c ) {
+				$items[] = array( '@type' => 'ListItem', 'position' => $i + 1, 'name' => $c[0], 'item' => $c[1] );
+			}
+			$schema[] = array( '@context' => 'https://schema.org', '@type' => 'BreadcrumbList', 'itemListElement' => $items );
+		}
+		if ( is_page() && class_exists( 'LMC_Insights' ) && LMC_Insights::is_guide( get_queried_object_id() ) ) {
+			$id       = get_queried_object_id();
+			$schema[] = array(
+				'@context'      => 'https://schema.org',
+				'@type'         => 'Article',
+				'headline'      => html_entity_decode( get_the_title( $id ), ENT_QUOTES ),
+				'description'   => get_post_meta( $id, '_lmc_seo_desc', true ),
+				'datePublished' => get_post_time( 'c', true, $id ),
+				'dateModified'  => get_post_modified_time( 'c', true, $id ),
+				'author'        => array( '@type' => 'Organization', 'name' => self::site(), 'url' => home_url( '/' ) ),
+				'publisher'     => array( '@type' => 'Organization', 'name' => self::site(), 'logo' => array( '@type' => 'ImageObject', 'url' => get_stylesheet_directory_uri() . '/assets/img/logo-square.png' ) ),
+				'mainEntityOfPage' => get_permalink( $id ),
+			);
+		}
 		foreach ( $schema as $s ) {
 			echo '<script type="application/ld+json">' . wp_json_encode( $s, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) . "</script>\n";
 		}
+	}
+
+	/** Breadcrumb trail [[name, url], …] for the current page (used for schema and the visible trail). */
+	public static function breadcrumbs() {
+		$c = array( array( 'Home', home_url( '/' ) ) );
+		if ( is_singular( 'lmc_job' ) ) {
+			$c[] = array( 'Jobs', get_post_type_archive_link( 'lmc_job' ) );
+			$s   = lmc_job_terms( get_queried_object_id(), 'lmc_sector' );
+			if ( $s ) {
+				$c[] = array( $s[0]->name, get_term_link( $s[0] ) );
+			}
+			$c[] = array( html_entity_decode( get_the_title(), ENT_QUOTES ), get_permalink() );
+		} elseif ( is_tax( array( 'lmc_sector', 'lmc_role', 'lmc_location' ) ) ) {
+			$t   = get_queried_object();
+			$c[] = array( 'Jobs', get_post_type_archive_link( 'lmc_job' ) );
+			if ( $t->parent ) {
+				$p   = get_term( $t->parent );
+				$c[] = array( $p->name, get_term_link( $p ) );
+			}
+			$c[] = array( $t->name, get_term_link( $t ) );
+		} elseif ( is_post_type_archive( 'lmc_job' ) ) {
+			$c[] = array( 'Jobs', get_post_type_archive_link( 'lmc_job' ) );
+		} elseif ( is_page() && ! is_front_page() ) {
+			foreach ( array_reverse( get_post_ancestors( get_queried_object_id() ) ) as $a ) {
+				$c[] = array( get_the_title( $a ), get_permalink( $a ) );
+			}
+			$c[] = array( html_entity_decode( get_the_title(), ENT_QUOTES ), get_permalink() );
+		}
+		return $c;
 	}
 
 	public static function organization_schema() {
@@ -278,17 +329,18 @@ class LMC_SEO {
 	 */
 	public static function consent_and_analytics() {
 		$ga = lmc_opt( 'ga4_id' );
-		if ( ! $ga || ! preg_match( '/^G-[A-Z0-9]+$/', $ga ) ) {
+		$ga = ( $ga && preg_match( '/^G-[A-Z0-9]+$/', $ga ) ) ? $ga : '';
+		if ( ! $ga && ! lmc_opt( 'track_returning' ) ) {
 			return;
 		}
 		?>
 		<div id="lmc-consent" class="lmc-consent" role="dialog" aria-live="polite" aria-label="Cookie preferences" hidden>
-			<p>We'd like to use analytics cookies to understand how the site is used. They're only set if you accept. <a href="<?php echo esc_url( lmc_page_url( 'cookies' ) ); ?>">Cookie policy</a></p>
-			<div><button type="button" class="lmc-btn lmc-btn--ghost" data-consent="no">Reject</button> <button type="button" class="lmc-btn lmc-btn--primary" data-consent="yes">Accept analytics</button></div>
+			<p>May we use analytics<?php echo $ga ? ' cookies' : ''; ?> to understand how the site is used – for example whether visitors come back? Nothing is stored on your device unless you accept. <a href="<?php echo esc_url( lmc_page_url( 'cookies' ) ); ?>">Cookie policy</a></p>
+			<div><button type="button" class="lmc-btn lmc-btn--ghost" data-consent="no">Reject</button> <button type="button" class="lmc-btn lmc-btn--primary" data-consent="yes">Accept</button></div>
 		</div>
 		<script>
 		(function(){var k='lmc_consent',v=null;try{v=localStorage.getItem(k)}catch(e){}
-		function load(){var s=document.createElement('script');s.async=1;s.src='https://www.googletagmanager.com/gtag/js?id=<?php echo esc_js( $ga ); ?>';document.head.appendChild(s);window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}window.gtag=gtag;gtag('js',new Date());gtag('config','<?php echo esc_js( $ga ); ?>',{anonymize_ip:true});}
+		function load(){window.lmcConsent='yes';document.dispatchEvent(new Event('lmc:consent'));if(!'<?php echo esc_js( $ga ); ?>')return;var s=document.createElement('script');s.async=1;s.src='https://www.googletagmanager.com/gtag/js?id=<?php echo esc_js( $ga ); ?>';document.head.appendChild(s);window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}window.gtag=gtag;gtag('js',new Date());gtag('config','<?php echo esc_js( $ga ); ?>',{anonymize_ip:true});}
 		var b=document.getElementById('lmc-consent');if(v==='yes'){load()}else if(v!=='no'){b.hidden=false}
 		b.addEventListener('click',function(e){var c=e.target.getAttribute('data-consent');if(!c)return;try{localStorage.setItem(k,c)}catch(err){}b.hidden=true;if(c==='yes')load();});
 		window.lmcResetConsent=function(){try{localStorage.removeItem(k)}catch(e){}b.hidden=false};})();

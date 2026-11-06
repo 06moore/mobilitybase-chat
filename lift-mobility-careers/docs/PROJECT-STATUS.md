@@ -2,7 +2,7 @@
 
 Updated: 6 Nov 2026. ✅ = built **and tested** · 🟡 = built, can only be fully tested once you connect an external account · ⬜ = needs you (or a professional).
 
-**Test results (local WordPress 7.1.4 + PHP 8.3):** `php tools/tests/run.php` → **87/87 pass** · `node tools/tests/e2e.js` → **26/26 pass** (real browser: candidate search, registration, email confirmation, validation, submission, free credit, approval, live listing, all admin screens, mobile layout, no JS errors).
+**Test results (local WordPress 7.1.4 + PHP 8.3):** `php tools/tests/run.php` → **146/146 pass** · `node tools/tests/e2e.js` → **26/26 pass** (real browser: candidate search, registration, email confirmation, validation, submission, free credit, approval, live listing, all admin screens, mobile layout, no JS errors).
 
 Tested locally with an SQLite database and captured (not sent) emails. Live hosting, real email delivery, real Stripe calls and the postcodes.io lookup **could not be exercised from this environment** (no accounts / outbound network blocked) – those are marked 🟡.
 
@@ -58,6 +58,21 @@ Tested locally with an SQLite database and captured (not sent) emails. Live host
 - ⬜ **Solicitor review** of all drafts and every [SOLICITOR] item (EAA/Conduct Regs scope, liability cap, Online Safety Act, website terms & discovery)
 - ⬜ ICO registration; LIA and processing record (templates provided); insurance
 
+## Phase 10 – Traffic & audience growth
+Strategy: `docs/growth/seo-strategy.md`, `docs/growth/12-month-growth-plan.md`, setup: `docs/growth/google-setup.md`.
+- ✅ SEO landing pages for all 9 sectors and all 13 job categories (curated copy, indexable); 3 combination pages; thin-page rules
+- ✅ 5 original career guides + hub (Article + Breadcrumb schema); salary guide and sector salary lines computed only from real adverts (shown once ≥5 adverts)
+- ✅ Job pages: JobPosting, BreadcrumbList, optimised titles/descriptions, share buttons (LinkedIn, Facebook, WhatsApp, X, email, copy link, native mobile share), job alert box
+- ✅ Cookie-free analytics: visits, page views, traffic sources (search, social, aggregators, email, job alerts, employer links, referrals, direct), landing pages, referrers, job views by source, Apply clicks, shares; returning visitors for consenting visitors only
+- ✅ Candidate job alerts: email + preferences only, double opt-in, sector/category/location/radius, daily or weekly digests, one-click unsubscribe deletes data, unconfirmed deleted after 7 days, send cap per hour
+- ✅ Employer sharing: share kit (tracked link, ready-written post, badge, plain link), public company pages + sitemap, automatic backlink verification with one-off Featured credit reward, monthly re-check
+- ✅ XML job feed for aggregators (`/feeds/jobs.xml`)
+- ✅ Traffic & growth admin page; monthly traffic & SEO report with targets, month-on-month change and suggested actions
+- ✅ Google Indexing API + Search Console API client (JWT signing tested), IndexNow
+- 🟡 Live Google/Bing calls, Search Console data and aggregator acceptance – need the live domain and your accounts (`google-setup.md`)
+- ⬜ Set launch date (Settings → Growth) so reports track against the 12-month targets
+- ⬜ Check real keyword volumes in Search Console / Keyword Planner after launch (none quoted – no tool available here)
+
 ## Phase 9 – Testing and launch
 - ✅ Automated integration and browser test suites (113 checks)
 - ⬜ Launch checklist below
@@ -86,9 +101,12 @@ Tested locally with an SQLite database and captured (not sent) emails. Live host
 | Admin/report email address (a business mailbox, not personal) | Weekly report, approvals | Settings → Business details |
 | Solicitor | Approve legal drafts | docs/legal |
 | Optional: GA4 ID, Search Console code, Zapier/Make webhook | Analytics, social automation | Settings |
+| Google Cloud service account (free) | Indexing API + Search Console data in reports | wp-config + Settings → Growth |
+| SMTP plan sized for job alerts | Alerts can reach thousands of emails/month by year-end | Settings → Email |
 
 ## Known limitations / decisions to revisit
 - Careers pages that load jobs with JavaScript or through an ATS (Workday, Greenhouse, etc.) are **flagged, not read** – check these manually or ask the employer for a feed.
 - "Traffic" in the weekly report is vacancy views/apply clicks counted on-site; full visitor analytics needs GA4 (with consent).
-- Candidate job alerts by email were not built (would require collecting candidate emails – deliberately excluded at launch).
+- Job alerts collect candidate email addresses (optional, double opt-in) – the Privacy and Cookie policies have been updated; include this in the solicitor review.
+- The consent banner now appears by default (it enables returning-visitor measurement). Untick "Measure returning visitors" in Settings → Growth to remove it if GA4 isn't used.
 - The site makes no audience/size claims; add them only when true and evidenced.

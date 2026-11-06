@@ -1,5 +1,7 @@
-/* Lift and Mobility Careers – tiny progressive-enhancement script (no dependencies). */
+/* Lift and Mobility Careers – progressive enhancement (no dependencies, no third-party requests). */
 (function () {
+	var L = window.LMC || {};
+
 	// Mobile navigation.
 	var t = document.querySelector('.lmc-nav-toggle'), n = document.getElementById('lmc-nav');
 	if (t && n) {
@@ -9,20 +11,75 @@
 		});
 	}
 
-	// Anonymous vacancy statistics (counts only – no cookies, no personal data).
+	// ---- Privacy-first analytics: counts only, no cookies. ----
 	var job = document.querySelector('[data-lmc-job]');
-	var id = job ? parseInt(job.getAttribute('data-lmc-job'), 10) : 0;
-	function send(e) {
-		if (!id || !window.LMC || !navigator.sendBeacon) return;
-		var f = new FormData(); f.append('job', id); f.append('e', e);
-		navigator.sendBeacon(window.LMC.track, f);
+	var jobId = job ? parseInt(job.getAttribute('data-lmc-job'), 10) || 0 : 0;
+	function hit(type, extra) {
+		if (!L.hit || !navigator.sendBeacon) return;
+		var f = new FormData();
+		f.append('t', type);
+		if (jobId) f.append('job', jobId);
+		for (var k in (extra || {})) f.append(k, extra[k]);
+		navigator.sendBeacon(L.hit, f);
 	}
-	if (id) {
-		send('view');
-		document.querySelectorAll('[data-lmc-apply]').forEach(function (a) {
-			a.addEventListener('click', function () { send('click'); });
+	function ga(name, params) { if (window.gtag) window.gtag('event', name, params || {}); }
+
+	var utm = (location.search.match(/[?&]utm_source=([^&]+)/) || [])[1] || '';
+	function pageHit() {
+		var extra = { ref: document.referrer || '', utm: decodeURIComponent(utm), path: location.pathname };
+		// Returning visitors: only when the visitor has accepted analytics (device storage needs consent).
+		if (window.lmcConsent === 'yes' && L.returning) {
+			try {
+				var seen = localStorage.getItem('lmc_seen');
+				extra.ret = seen ? '1' : '0';
+				localStorage.setItem('lmc_seen', String(Date.now()));
+			} catch (e) {}
+		}
+		hit('page', extra);
+		if (jobId) ga('view_item', { item_id: 'LMC-' + jobId, item_category: 'job' });
+	}
+	pageHit();
+
+	document.querySelectorAll('[data-lmc-apply]').forEach(function (a) {
+		a.addEventListener('click', function () { hit('click'); ga('apply_click', { job_id: jobId }); });
+	});
+
+	// ---- Sharing ----
+	document.querySelectorAll('[data-lmc-share]').forEach(function (b) {
+		b.addEventListener('click', function (e) {
+			var net = b.getAttribute('data-lmc-share');
+			hit('share', { net: net });
+			ga('share', { method: net, item_id: 'LMC-' + jobId });
+			if (net === 'copy') {
+				e.preventDefault();
+				var url = b.getAttribute('data-url') || location.href;
+				(navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject()).then(function () {
+					b.textContent = 'Link copied ✓';
+				}, function () { window.prompt('Copy this link:', url); });
+			}
+		});
+	});
+	var native = document.querySelector('[data-lmc-native-share]');
+	if (native && navigator.share) {
+		native.hidden = false;
+		native.addEventListener('click', function () {
+			navigator.share({ title: document.title, url: native.getAttribute('data-url') }).then(function () { hit('share', { net: 'native' }); }, function () {});
 		});
 	}
+	document.querySelectorAll('[data-lmc-copy]').forEach(function (b) {
+		b.addEventListener('click', function () {
+			var ta = b.previousElementSibling;
+			if (!ta) return;
+			ta.select();
+			(navigator.clipboard ? navigator.clipboard.writeText(ta.value) : Promise.reject()).then(function () { b.textContent = 'Copied ✓'; }, function () { document.execCommand('copy'); b.textContent = 'Copied ✓'; });
+		});
+	});
+
+	// Job alert sign-ups → GA conversion (on-site count is recorded server-side).
+	document.querySelectorAll('form.lmc-alert-box, form input[name="lmc_action"][value="lmc_alert_signup"]').forEach(function (el) {
+		var f = el.tagName === 'FORM' ? el : el.form;
+		if (f) f.addEventListener('submit', function () { ga('sign_up', { method: 'job_alert' }); });
+	});
 
 	// Submission form: show only the relevant application field.
 	var m = document.getElementById('lmc-apply_method');

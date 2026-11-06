@@ -5,6 +5,7 @@ add_action( 'admin_menu', function () {
 	$cap = 'manage_options';
 	add_menu_page( 'Lift & Mobility', 'Lift & Mobility', $cap, 'lmc', 'lmc_admin_dashboard', 'dashicons-arrow-up-alt', 3 );
 	add_submenu_page( 'lmc', 'Dashboard', 'Dashboard', $cap, 'lmc', 'lmc_admin_dashboard' );
+	add_submenu_page( 'lmc', 'Traffic & growth', 'Traffic & growth', $cap, 'lmc-growth', 'lmc_admin_growth' );
 	add_submenu_page( 'lmc', 'Employers', 'Employers', $cap, 'lmc-employers', 'lmc_admin_employers' );
 	add_submenu_page( 'lmc', 'Payments', 'Payments', $cap, 'lmc-payments', 'lmc_admin_payments' );
 	add_submenu_page( 'lmc', 'Vacancy discovery', 'Discovery', $cap, 'lmc-discovery', 'lmc_admin_discovery' );

@@ -26,7 +26,7 @@ function lmc_email_templates_default() {
 		'vacancy_published'     => array(
 			'name'    => '4. Vacancy successfully published',
 			'subject' => 'Your vacancy is now live: {job_title}',
-			'body'    => "Hi {first_name},\n\nGood news – \"{job_title}\" is now live on {site_name} and visible to candidates.\n\n[button:{job_url}|View the live advert]\n\nThe advert runs until {expiry_date}. Applications go straight to you using the method you chose, and you'll see views and application clicks in your dashboard.\n\nWe'll send you a reminder a week before the advert ends.\n\nKind regards,\nThe {site_name} team",
+			'body'    => "Hi {first_name},\n\nGood news – \"{job_title}\" is now live on {site_name} and visible to candidates.\n\n[button:{job_url}|View the live advert]\n\nThe advert runs until {expiry_date}. Applications go straight to you using the method you chose, and you'll see views and application clicks in your dashboard.\n\nTip: adverts shared by the employer get noticeably more views. Your share kit has a ready-written LinkedIn post, one-click share links and a small \"Advertised on {site_name}\" badge for your careers page:\n\n[button:{share_url}|Open my share kit]\n\nWe'll send you a reminder a week before the advert ends.\n\nKind regards,\nThe {site_name} team",
 		),
 		'expiry_7'              => array(
 			'name'    => '5. Seven-day expiry reminder',
@@ -58,6 +58,18 @@ function lmc_email_templates_default() {
 			'subject' => 'Recruiting again at {company}?',
 			'body'    => "Hi {first_name},\n\nIt's been a few weeks since your last advert with us, so we thought we'd check in.\n\nIf you have engineering roles coming up – installation, service, LOLER inspection, trainees or management – you can post them in a few minutes. If you expect to recruit regularly, our multi-advert packs work out cheaper per advert and can be used any time within 12 months.\n\n[button:{pricing_url}|See advert options]\n\nNo need to reply if now isn't the right time.\n\nKind regards,\nThe {site_name} team",
 			'marketing' => true,
+		),
+
+		// Candidate job alerts.
+		'alert_confirm'         => array(
+			'name'    => 'Job alerts: confirm subscription',
+			'subject' => 'Confirm your job alert',
+			'body'    => "Hello,\n\nPlease confirm you'd like to receive job alerts from {site_name}:\n\n{alert_summary}\n\n[button:{confirm_url}|Confirm my job alert]\n\nIf you didn't ask for this, ignore this email – you won't hear from us again and your address will be deleted within 7 days.\n\nThe {site_name} team",
+		),
+		'alert_manage'          => array(
+			'name'    => 'Job alerts: manage existing alert',
+			'subject' => 'Your job alert',
+			'body'    => "Hello,\n\nSomeone (hopefully you) asked to set up a job alert for this address, which already has an active alert. You can change or cancel it here:\n\n[button:{manage_url}|Manage my job alert]\n\nIf this wasn't you, no action is needed.\n\nThe {site_name} team",
 		),
 
 		// Operational / internal.
@@ -137,6 +149,7 @@ function lmc_job_email_vars( $job_id ) {
 		'views'          => number_format( $stat['views'] ),
 		'clicks'         => number_format( $stat['clicks'] ),
 		'admin_url'      => admin_url( 'post.php?post=' . $job_id . '&action=edit' ),
+		'share_url'      => lmc_page_url( 'dashboard', array( 'lmc_share' => $job_id ) ),
 		'package'        => ( lmc_package( lmc_job_tier( $job_id ) )['label'] ?? '' ),
 		'filled_yes_url' => add_query_arg( array( 'lmc_filled' => $job_id, 'a' => 'yes', 's' => lmc_sign( 'filled' . $job_id ) ), home_url( '/' ) ),
 		'filled_no_url'  => add_query_arg( array( 'lmc_filled' => $job_id, 'a' => 'no', 's' => lmc_sign( 'filled' . $job_id ) ), home_url( '/' ) ),

@@ -10,11 +10,16 @@ These are needed for the Site to work and do not require consent.
 
 - **wordpress_logged_in_*, wordpress_sec_*, wordpress_test_cookie** – keep employers signed in to their account. Set only when you sign in. Session or up to 14 days if you tick "Remember me".
 
-Candidates who simply browse and apply are not given any cookies by default.
+Candidates who simply browse and apply are not given any cookies, and nothing is stored on their device unless they accept analytics.
 
 ## Analytics cookies (only if you accept)
 
 If analytics is enabled, we will ask for your consent before setting Google Analytics cookies (**_ga**, **_ga_***, up to 2 years) which help us understand how many people use the Site and which pages are popular. If you reject them, they are not set. Your choice is remembered in your browser's local storage, and you can change it at any time by clearing your browser data for this Site.
+
+## Analytics consent and returning visitors (only if you accept)
+
+- **lmc_consent** (local storage) – remembers your choice in the consent banner. Not shared with anyone.
+- **lmc_seen** (local storage, only if you accept) – a timestamp so we can count returning visits. Contains no personal data.
 
 ## Vacancy statistics
 

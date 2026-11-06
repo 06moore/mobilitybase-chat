@@ -65,8 +65,21 @@ while ( have_posts() ) :
 						<?php endif; endforeach; ?>
 					</dl>
 				</div>
+				<?php if ( $live ) { lmc_theme_share( $id ); } ?>
+				<?php
+				$county = '';
+				foreach ( lmc_job_terms( $id, 'lmc_location' ) as $lt ) {
+					if ( $lt->parent ) {
+						$county = $lt->name;
+					}
+				}
+				echo do_shortcode( '[lmc_alert_box source="job_page" sector="' . esc_attr( $sectors ? $sectors[0]->slug : '' ) . '" location="' . esc_attr( $county ) . '"]' );
+				?>
 				<?php if ( lmc_job_meta( $id, 'employer_website' ) ) : ?>
 					<p class="lmc-employer-link"><a href="<?php echo esc_url( lmc_job_meta( $id, 'employer_website' ) ); ?>" rel="nofollow noopener" target="_blank">Visit <?php echo esc_html( lmc_job_meta( $id, 'employer_name' ) ); ?>'s website ↗</a></p>
+				<?php endif; ?>
+				<?php $author = (int) get_post_field( 'post_author', $id ); if ( in_array( 'lmc_employer', (array) get_userdata( $author )->roles, true ) ) : ?>
+					<p class="lmc-employer-link"><a href="<?php echo esc_url( LMC_Employer_Share::company_url( $author ) ); ?>">All vacancies at <?php echo esc_html( lmc_job_meta( $id, 'employer_name' ) ); ?> →</a></p>
 				<?php endif; ?>
 			</aside>
 		</div>

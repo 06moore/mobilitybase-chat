@@ -282,5 +282,177 @@ $clock = $base + 3 * DAY_IN_SECONDS;
 ok( count( lmc_heartbeat_warnings() ) >= 1, 'Missed automation runs produce a dashboard warning' );
 $clock = $base;
 
+
+/* ================== Growth features ================== */
+wp_set_current_user( 0 );
+$_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Windows NT 10.0) Chrome/120 Safari/537.36';
+$tf = wp_date( 'Y-m-d', lmc_now() - DAY_IN_SECONDS );
+$tt = wp_date( 'Y-m-d', lmc_now() + 2 * DAY_IN_SECONDS );
+
+section( 'Traffic analytics (cookie-free)' );
+ok( 'Organic search' === LMC_Analytics::classify( 'https://www.google.co.uk/', '' )[0], 'Google referrer → Organic search' );
+ok( 'Social' === LMC_Analytics::classify( 'https://www.linkedin.com/feed/', '' )[0] && 'Social' === LMC_Analytics::classify( 'https://l.facebook.com/x', '' )[0], 'LinkedIn / Facebook → Social' );
+ok( 'Job aggregators' === LMC_Analytics::classify( 'https://uk.indeed.com/viewjob', '' )[0], 'Indeed → Job aggregators' );
+ok( 'Job alert emails' === LMC_Analytics::classify( '', 'jobalert' )[0], 'utm_source=jobalert → Job alert emails' );
+ok( 'Direct' === LMC_Analytics::classify( '', '' )[0], 'No referrer → Direct' );
+ok( null === LMC_Analytics::classify( home_url( '/jobs/' ), '' ), 'Internal navigation is not counted as a new visit' );
+$hit = function ( $params ) {
+	$r = new WP_REST_Request( 'POST', '/lmc/v1/hit' );
+	foreach ( $params as $k => $v ) { $r->set_param( $k, $v ); }
+	return rest_do_request( $r )->get_status();
+};
+$live_job = get_posts( array( 'post_type' => 'lmc_job', 'post_status' => 'publish', 'numberposts' => 1, 'fields' => 'ids' ) )[0];
+$v0 = LMC_Stats::totals( $live_job )['views'];
+$hit( array( 't' => 'page', 'ref' => 'https://www.google.com/', 'path' => '/jobs/x/', 'job' => $live_job, 'ret' => '1' ) );
+$hit( array( 't' => 'page', 'ref' => 'https://www.linkedin.com/', 'path' => '/', 'ret' => '0' ) );
+$hit( array( 't' => 'page', 'ref' => home_url( '/' ), 'path' => '/jobs/' ) );
+$hit( array( 't' => 'share', 'net' => 'whatsapp', 'job' => $live_job ) );
+$hit( array( 't' => 'click', 'job' => $live_job ) );
+ok( 3 === LMC_Analytics::sum( 'pageview', $tf, $tt ) && 2 === LMC_Analytics::sum( 'visit', $tf, $tt ), 'Page views (3) and visits (2, internal click excluded)' );
+$src = LMC_Analytics::sum( 'source', $tf, $tt, true );
+ok( 1 === ( $src['Organic search'] ?? 0 ) && 1 === ( $src['Social'] ?? 0 ), 'Traffic sources recorded' );
+ok( isset( LMC_Analytics::sum( 'landing', $tf, $tt, true )['/jobs/x/'] ), 'Landing page recorded' );
+ok( 1 === LMC_Analytics::sum( 'visitor_returning', $tf, $tt ) && 1 === LMC_Analytics::sum( 'visitor_new', $tf, $tt ), 'Returning vs new visitors (consented visitors only)' );
+ok( LMC_Stats::totals( $live_job )['views'] === $v0 + 1, 'Job view counted from page hit' );
+ok( 1 === ( LMC_Analytics::sum( 'share', $tf, $tt, true )['whatsapp'] ?? 0 ), 'Share click counted by network' );
+$_SERVER['HTTP_USER_AGENT'] = 'Googlebot/2.1';
+$hit( array( 't' => 'page', 'ref' => 'https://www.google.com/', 'path' => '/' ) );
+ok( 2 === LMC_Analytics::sum( 'visit', $tf, $tt ), 'Bots are ignored' );
+$_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 Chrome/120';
+
+section( 'Candidate job alerts' );
+global $wpdb;
+$st = lmc_table( 'subscribers' );
+$id = LMC_Alerts::subscribe( 'Candidate@Example.test', LMC_Alerts::prefs( array( 'alert_sectors' => array( 'stairlifts' ), 'alert_location' => 'Kent', 'alert_frequency' => 'daily' ) ), 'test' );
+$sub = $wpdb->get_row( "SELECT * FROM $st WHERE id = $id" );
+ok( $sub && 'pending' === $sub->status && 'candidate@example.test' === $sub->email && 'stairlifts' === $sub->sectors, 'Sign-up stored as pending with only email + preferences' );
+ok( mails( 'alert_confirm' ) >= 1, 'Double opt-in confirmation email sent' );
+wp_remote_get( add_query_arg( 'lmc_alert_confirm', $sub->token, home_url( '/' ) ), array( 'redirection' => 0 ) );
+$sub = $wpdb->get_row( "SELECT * FROM $st WHERE id = $id" );
+ok( 'active' === $sub->status && $sub->confirmed_at, 'Confirmation link activates the alert' );
+$n = mails( 'alert_manage' );
+LMC_Alerts::subscribe( 'candidate@example.test', LMC_Alerts::prefs( array() ) );
+ok( mails( 'alert_manage' ) === $n + 1 && 'active' === $wpdb->get_var( "SELECT status FROM $st WHERE id = $id" ) && 'stairlifts' === $wpdb->get_var( "SELECT sectors FROM $st WHERE id = $id" ), 'Re-signup of an active address sends a manage link (no silent overwrite)' );
+ok( is_wp_error( LMC_Alerts::subscribe( 'not-an-email', array() ) ), 'Invalid email rejected' );
+$id2 = LMC_Alerts::subscribe( 'leeds@example.test', LMC_Alerts::prefs( array( 'alert_location' => 'LS10', 'alert_radius' => 10 ) ) );
+$wpdb->update( $st, array( 'status' => 'active', 'confirmed_at' => lmc_mysql_time(), 'last_sent' => lmc_mysql_time() ), array( 'id' => $id2 ) );
+$s2 = $wpdb->get_row( "SELECT * FROM $st WHERE id = $id2" );
+ok( null !== $s2->lat, 'Postcode alert geocoded for radius matching' );
+
+// Timing.
+$tz = new DateTimeZone( 'Europe/London' );
+$tue8 = ( new DateTime( 'next tuesday 08:00', $tz ) )->getTimestamp();
+$tue6 = ( new DateTime( 'next tuesday 06:00', $tz ) )->getTimestamp();
+$mon8 = ( new DateTime( 'next monday 08:00', $tz ) )->getTimestamp();
+$fake = (object) array( 'frequency' => 'daily', 'last_sent' => lmc_mysql_time( $tue8 - DAY_IN_SECONDS ) );
+ok( LMC_Alerts::is_due( $fake, $tue8 ) && ! LMC_Alerts::is_due( $fake, $tue6 ), 'Daily alerts go out from 07:00 London time' );
+$fake->frequency = 'weekly';
+$fake->last_sent = lmc_mysql_time( $mon8 - 7 * DAY_IN_SECONDS );
+ok( LMC_Alerts::is_due( $fake, $mon8 ) && ! LMC_Alerts::is_due( $fake, $tue8 ), 'Weekly alerts only on Mondays' );
+
+// Matching + sending.
+$clock = $tue8 - 3 * HOUR_IN_SECONDS;
+$wpdb->update( $st, array( 'last_sent' => lmc_mysql_time( $clock - 60 ) ), array( 'id' => $id ) );
+$wpdb->update( $st, array( 'last_sent' => lmc_mysql_time( $clock - 60 ) ), array( 'id' => $id2 ) );
+$kentjob = make_job( $emp, 'Kent Stairlift Alert Test', 'draft' );
+LMC_Jobs::publish( $kentjob );
+$sub = $wpdb->get_row( "SELECT * FROM $st WHERE id = $id" );
+ok( LMC_Alerts::job_matches( $sub, $kentjob ), 'Kent stairlift job matches the Kent + stairlifts alert' );
+ok( ! LMC_Alerts::job_matches( $wpdb->get_row( "SELECT * FROM $st WHERE id = $id2" ), $kentjob ), '…but not a Leeds 10-mile alert' );
+$homejob = make_job( $emp, 'Kent Home Lift Engineer', 'draft' );
+wp_set_object_terms( $homejob, 'home-lifts', 'lmc_sector' );
+LMC_Jobs::publish( $homejob );
+ok( ! LMC_Alerts::job_matches( $sub, $homejob ), 'Sector filter respected (home lift job excluded)' );
+$clock = $tue8;
+$sent = LMC_Alerts::run();
+ok( 1 === $sent, 'Hourly run sends one digest (only to the matching subscriber)' );
+$log = file_get_contents( ( getenv( 'LMC_DEV_DIR' ) ?: '/tmp/lmc-dev' ) . '/mail.log' );
+ok( false !== strpos( $log, 'TO: candidate@example.test' ) && false !== strpos( $log, 'Kent Stairlift Alert Test' ) && false !== strpos( $log, 'utm_source=jobalert' ), 'Digest lists the job with tracked links' );
+ok( false !== strpos( $log, 'Unsubscribe' ), 'Digest has unsubscribe link' );
+ok( 0 === LMC_Alerts::run(), 'No duplicate digest on the next run the same day' );
+$wpdb->insert( $st, array( 'email' => 'old@example.test', 'status' => 'pending', 'token' => wp_generate_password( 40, false ), 'created_at' => lmc_mysql_time( $clock - 8 * DAY_IN_SECONDS ) ) );
+LMC_Alerts::run();
+ok( ! $wpdb->get_var( "SELECT id FROM $st WHERE email = 'old@example.test'" ), 'Unconfirmed sign-ups deleted after 7 days' );
+$sub = $wpdb->get_row( "SELECT * FROM $st WHERE id = $id" );
+wp_remote_get( LMC_Alerts::unsubscribe_url( $sub ) );
+ok( ! $wpdb->get_var( "SELECT id FROM $st WHERE id = $id" ), 'Unsubscribe link deletes the subscription and email' );
+$clock = $base;
+$html = wp_remote_retrieve_body( wp_remote_get( get_permalink( $kentjob ) ) );
+ok( false !== strpos( $html, 'lmc-alert-box' ) && false !== strpos( $html, 'name="alert_sectors[]" value="stairlifts"' ), 'Job page has a pre-filled job alert box' );
+$r = wp_remote_post( lmc_page_url( 'alerts' ), array( 'redirection' => 0, 'body' => array( 'lmc_action' => 'lmc_alert_signup', 'alert_email' => 'web@example.test', 'alert_consent' => 1, 'alert_sectors' => array( 'platform-lifts' ), 'alert_source' => 'job_page' ) ) );
+ok( 302 === wp_remote_retrieve_response_code( $r ) && 'pending' === $wpdb->get_var( "SELECT status FROM $st WHERE email = 'web@example.test'" ), 'Web sign-up form works (from a cached page – no nonce needed)' );
+$r = wp_remote_post( lmc_page_url( 'alerts' ), array( 'redirection' => 0, 'body' => array( 'lmc_action' => 'lmc_alert_signup', 'alert_email' => 'noconsent@example.test' ) ) );
+ok( ! $wpdb->get_var( "SELECT id FROM $st WHERE email = 'noconsent@example.test'" ), 'No subscription without the consent tick' );
+
+section( 'Social sharing & employer backlinks' );
+$html = wp_remote_retrieve_body( wp_remote_get( get_permalink( $kentjob ) ) );
+ok( false !== strpos( $html, 'linkedin.com/sharing' ) && false !== strpos( $html, 'wa.me' ) && false !== strpos( $html, 'facebook.com/sharer' ) && false !== strpos( $html, 'data-lmc-share="copy"' ), 'Job page has LinkedIn, Facebook, WhatsApp, X, email and copy-link sharing' );
+ok( false !== strpos( $html, '"BreadcrumbList"' ), 'BreadcrumbList structured data on job pages' );
+$curl = LMC_Employer_Share::company_url( $emp );
+$html = wp_remote_retrieve_body( wp_remote_get( $curl ) );
+ok( false !== strpos( $html, 'Kent Stairlift Alert Test' ) && false !== strpos( $html, 'rel="canonical"' ), 'Public company page lists the employer\'s live vacancies' );
+ok( false !== strpos( wp_remote_retrieve_body( wp_remote_get( home_url( '/wp-sitemap-companies-1.xml' ) ) ), $curl ), 'Company pages with live jobs are in the sitemap' );
+$kit = LMC_Employer_Share::render_kit( $emp, $kentjob );
+ok( false !== strpos( $kit, 'badge-advertised.svg' ) && false !== strpos( $kit, 'utm_source=employer' ) && false !== strpos( $kit, 're hiring: Kent Stairlift Alert Test' ), 'Share kit: tracked link, ready-written post, badge code' );
+file_put_contents( ABSPATH . 'fixture-linked.html', '<html><body><a href="' . esc_url( home_url( '/companies/x/' ) ) . '">Our jobs</a></body></html>' );
+file_put_contents( ABSPATH . 'fixture-unlinked.html', '<html><body><a href="https://example.com/">Elsewhere</a></body></html>' );
+list( $okl, $bonus ) = LMC_Employer_Share::check( $emp, home_url( '/fixture-unlinked.html' ) );
+ok( ! $okl && ! $bonus, 'Page without a link to us is not verified' );
+$before_f = LMC_Credits::balance( $emp )['featured'] ?? 0;
+list( $okl, $bonus ) = LMC_Employer_Share::check( $emp, home_url( '/fixture-linked.html' ) );
+ok( $okl && $bonus && ( LMC_Credits::balance( $emp )['featured'] ?? 0 ) === $before_f + 1, 'Verified backlink → free Featured credit' );
+list( , $bonus ) = LMC_Employer_Share::check( $emp, home_url( '/fixture-linked.html' ) );
+ok( ! $bonus, 'Backlink reward only once per employer' );
+ok( 1 === LMC_Employer_Share::live_backlink_count(), 'Live backlink count for reports' );
+unlink( ABSPATH . 'fixture-linked.html' );
+ok( 0 === LMC_Employer_Share::recheck_all(), 'Monthly re-check notices a removed link' );
+unlink( ABSPATH . 'fixture-unlinked.html' );
+
+section( 'Job feed for aggregators' );
+$xml = simplexml_load_string( wp_remote_retrieve_body( wp_remote_get( home_url( '/feeds/jobs.xml' ) ) ) );
+$live_n = count( get_posts( array( 'post_type' => 'lmc_job', 'post_status' => 'publish', 'numberposts' => -1, 'fields' => 'ids' ) ) );
+ok( $xml && count( $xml->job ) === $live_n, 'Valid XML feed with every live vacancy (' . $live_n . ')' );
+ok( $xml && false !== strpos( (string) $xml->job[0]->url, 'utm_source=aggregator' ) && 'GB' === (string) $xml->job[0]->country && (string) $xml->job[0]->salary, 'Feed jobs link back to us with salary and location' );
+
+section( 'Search engine integrations' );
+$key = openssl_pkey_new( array( 'private_key_bits' => 2048, 'private_key_type' => OPENSSL_KEYTYPE_RSA ) );
+openssl_pkey_export( $key, $pem );
+$jwt = LMC_Google::jwt( array( 'client_email' => 'svc@project.iam.gserviceaccount.com', 'private_key' => $pem ), 'https://www.googleapis.com/auth/indexing' );
+list( $h, $c, $sg ) = explode( '.', $jwt );
+$claims = json_decode( base64_decode( strtr( $c, '-_', '+/' ) ), true );
+ok( 1 === openssl_verify( "$h.$c", base64_decode( strtr( $sg, '-_', '+/' ) . str_repeat( '=', ( 4 - strlen( $sg ) % 4 ) % 4 ) ), openssl_pkey_get_details( $key )['key'], OPENSSL_ALGO_SHA256 ) && 'https://oauth2.googleapis.com/token' === $claims['aud'], 'Service-account JWT for Google APIs is correctly signed (RS256)' );
+ok( is_wp_error( LMC_Google::search_console( '2026-01-01', '2026-01-31' ) ), 'Search Console reports "not connected" cleanly until configured' );
+lmc_update_opts( array( 'indexnow_enabled' => 1, 'indexnow_key' => 'abc123testkey456' ) );
+ok( 'abc123testkey456' === trim( wp_remote_retrieve_body( wp_remote_get( home_url( '/abc123testkey456.txt' ) ) ) ), 'IndexNow key file served' );
+lmc_update_opts( array( 'indexnow_enabled' => 0 ) );
+
+section( 'SEO landing pages & content' );
+$roles = get_terms( array( 'taxonomy' => 'lmc_role', 'hide_empty' => false ) );
+ok( 13 === count( array_filter( $roles, array( 'LMC_SEO', 'term_indexable' ) ) ), 'All 13 job-category landing pages have curated copy and are indexable' );
+ok( 9 === count( array_filter( get_terms( array( 'taxonomy' => 'lmc_sector', 'hide_empty' => false ) ), array( 'LMC_SEO', 'term_indexable' ) ) ), 'All 9 sector landing pages indexable' );
+$g = wp_remote_retrieve_body( wp_remote_get( lmc_page_url( 'g_loler' ) ) );
+ok( false !== strpos( $g, '"@type":"Article"' ) && false !== strpos( $g, '"BreadcrumbList"' ), 'Career guides output Article + Breadcrumb schema' );
+ok( 5 === count( get_pages( array( 'parent' => (int) get_option( 'lmc_page_guides' ) ) ) ), '5 career guides published under /career-guides/' );
+$sal_before = LMC_Insights::salaries( 'lmc_role' );
+ok( ! isset( $sal_before['LOLER inspector'] ) || $sal_before['LOLER inspector']['n'] >= 5, 'Salary data hidden for categories with fewer than 5 adverts' );
+for ( $i = 0; $i < 5; $i++ ) {
+	$sj = make_job( $emp, 'LOLER sample ' . $i, 'draft', array( 'salary_min' => 30000 + $i * 2000, 'salary_max' => 34000 + $i * 2000 ) );
+	wp_set_object_terms( $sj, 'loler-inspector', 'lmc_role' );
+	LMC_Jobs::publish( $sj );
+}
+delete_transient( 'lmc_sal_' . md5( 'lmc_role' ) );
+$sal = LMC_Insights::salaries( 'lmc_role' );
+ok( isset( $sal['LOLER inspector'] ) && $sal['LOLER inspector']['n'] >= 5 && $sal['LOLER inspector']['low'] <= $sal['LOLER inspector']['median'] && $sal['LOLER inspector']['median'] <= $sal['LOLER inspector']['high'], 'Salary insights appear once 5+ real adverts exist (median £' . number_format( $sal['LOLER inspector']['median'] ?? 0 ) . ' from ' . ( $sal['LOLER inspector']['n'] ?? 0 ) . ' adverts)' );
+
+section( 'Monthly traffic & SEO report' );
+lmc_update_opts( array( 'launch_date' => wp_date( 'Y-m-01', lmc_now() ) ) );
+ok( 1 === LMC_Monthly_Report::month_number( lmc_now() ), 'Growth-plan month number from launch date' );
+ok( 12 === count( LMC_Monthly_Report::targets() ) && 450 === LMC_Monthly_Report::targets()[12]['subscribers'], '12-month targets loaded' );
+$md = LMC_Monthly_Report::data( wp_date( 'Y-m', lmc_now() ) );
+ok( $md['cur']['visits'] >= 2 && $md['cur']['job_views'] >= 1 && isset( $md['sources']['Organic search'] ), 'Monthly data: visits, job views, sources' );
+$html = LMC_Monthly_Report::render( $md );
+ok( false !== strpos( $html, 'Suggested actions' ) && false !== strpos( $html, 'target' ) && false !== strpos( $html, 'Traffic sources' ), 'Report shows targets, sources and suggested actions' );
+ok( LMC_Monthly_Report::send( wp_date( 'Y-m', lmc_now() ) ), 'Monthly report emailed' );
+
 echo "\n$pass passed, $fail failed\n";
 exit( $fail ? 1 : 0 );

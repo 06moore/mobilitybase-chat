@@ -25,6 +25,9 @@ class LMC_Install {
 	public static function maybe_upgrade() {
 		if ( get_option( 'lmc_db_version' ) !== LMC_DB_VERSION ) {
 			self::tables();
+			self::terms();
+			self::pages();
+			flush_rewrite_rules( false );
 			update_option( 'lmc_db_version', LMC_DB_VERSION );
 		}
 	}
@@ -197,6 +200,36 @@ class LMC_Install {
 			posted_at datetime NULL,
 			PRIMARY KEY  (id),
 			KEY status (status)
+		) $c;";
+
+		$sql[] = "CREATE TABLE {$t('subscribers')} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			email varchar(190) NOT NULL,
+			sectors varchar(500) NOT NULL DEFAULT '',
+			roles varchar(500) NOT NULL DEFAULT '',
+			location varchar(100) NOT NULL DEFAULT '',
+			lat decimal(9,6) NULL,
+			lng decimal(9,6) NULL,
+			radius int(11) NOT NULL DEFAULT 25,
+			frequency varchar(10) NOT NULL DEFAULT 'daily',
+			status varchar(15) NOT NULL DEFAULT 'pending',
+			token varchar(64) NOT NULL,
+			source varchar(40) NOT NULL DEFAULT '',
+			created_at datetime NOT NULL,
+			confirmed_at datetime NULL,
+			last_sent datetime NULL,
+			sent_count int(11) NOT NULL DEFAULT 0,
+			PRIMARY KEY  (id),
+			UNIQUE KEY email (email),
+			KEY status (status)
+		) $c;";
+
+		$sql[] = "CREATE TABLE {$t('traffic')} (
+			day date NOT NULL,
+			metric varchar(30) NOT NULL,
+			dim varchar(190) NOT NULL DEFAULT '',
+			n int(11) NOT NULL DEFAULT 0,
+			PRIMARY KEY  (day,metric,dim)
 		) $c;";
 
 		foreach ( $sql as $q ) {

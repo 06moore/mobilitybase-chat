@@ -33,6 +33,10 @@ $heading = $term ? ( 'lmc_location' === $term->taxonomy ? 'Lift engineer jobs in
 			<button class="lmc-btn lmc-btn--primary" type="submit">Apply filters</button>
 			<?php if ( LMC_Search::has_filters() ) : ?><a class="lmc-clear" href="<?php echo esc_url( $term ? get_term_link( $term ) : get_post_type_archive_link( 'lmc_job' ) ); ?>">Clear all</a><?php endif; ?>
 		</form>
+		<?php
+		$ab_loc = $filters['location'] ?: ( $term && 'lmc_location' === $term->taxonomy ? $term->name : '' );
+		echo do_shortcode( '[lmc_alert_box source="search" sector="' . esc_attr( $term && 'lmc_sector' === $term->taxonomy ? $term->slug : $filters['sector'] ) . '" role="' . esc_attr( $term && 'lmc_role' === $term->taxonomy ? $term->slug : $filters['role'] ) . '" location="' . esc_attr( $ab_loc ) . '"]' );
+		?>
 	</aside>
 	<div class="lmc-results__main">
 		<p class="lmc-results__count" role="status"><?php echo (int) $wp_query->found_posts; ?> live <?php echo esc_html( _n( 'vacancy', 'vacancies', $wp_query->found_posts ) ); ?><?php echo $filters['location'] ? ' near ' . esc_html( $filters['location'] ) : ''; ?></p>
@@ -51,6 +55,8 @@ $heading = $term ? ( 'lmc_location' === $term->taxonomy ? 'Lift engineer jobs in
 			<section class="lmc-term-intro">
 				<h2><?php echo esc_html( 'lmc_sector' === $term->taxonomy ? 'Working in ' . strtolower( $term->name ) : 'About ' . strtolower( $term->name ) . ' roles' ); ?></h2>
 				<?php echo wp_kses_post( wpautop( $term->description ) ); ?>
+				<?php $sal = LMC_Insights::term_summary( $term ); if ( $sal ) : ?><p class="lmc-salary-summary"><strong>Salaries:</strong> <?php echo esc_html( $sal ); ?> <a href="<?php echo esc_url( lmc_page_url( 'g_salary' ) ); ?>">Salary guide</a></p><?php endif; ?>
+				<p><a href="<?php echo esc_url( lmc_page_url( 'guides' ) ); ?>">Career guides for lift &amp; mobility engineers →</a></p>
 			</section>
 		<?php endif; ?>
 	</div>

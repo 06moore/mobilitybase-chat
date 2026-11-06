@@ -93,8 +93,16 @@ files["linkedin-cover.svg"] = cover(1128, 191, 0.72, "LinkedIn cover", 0.26)
 files["facebook-cover.svg"] = cover(1640, 624, 1.45, "Facebook cover")
 files["og-default.svg"] = cover(1200, 630, 1.25, "Lift and Mobility Careers")
 
+def badge():
+    a, _ = text_path("ADVERTISED ON", "manrope-latin-700-normal.woff2", 9.5, 58, 22, tracking=1.4)
+    b, _ = text_path("Lift and Mobility", "manrope-latin-800-normal.woff2", 15, 58, 39)
+    c, _ = text_path("CAREERS", "manrope-latin-700-normal.woff2", 9.5, 58, 51, tracking=3)
+    return svg(220, 60, f'<rect width="220" height="60" rx="8" fill="{NAVY}"/>' + mark(10, 10, 40, "#1E4258", WHITE, LIME, 9) + f'<path d="{a}" fill="#AFC0CA"/><path d="{b}" fill="{WHITE}"/><path d="{c}" fill="{LIME}"/>', "Advertised on Lift and Mobility Careers")
+
+files["badge-advertised.svg"] = badge()
+
 for name, data in files.items():
     (OUT / name).write_text(data)
-for name in ["logo-primary.svg", "logo-primary-reversed.svg", "mark.svg", "favicon.svg"]:
+for name in ["logo-primary.svg", "logo-primary-reversed.svg", "mark.svg", "favicon.svg", "badge-advertised.svg"]:
     (THEME_IMG / name).write_text(files[name])
 print("Wrote", len(files), "SVGs to", OUT)

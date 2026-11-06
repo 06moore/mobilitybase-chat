@@ -17,6 +17,7 @@ A complete, automated UK specialist job board for the stairlift, home lift, plat
 | `wordpress/…/lmc-core/data/legal/` | 8 draft legal documents (published automatically as site pages) |
 | `docs/marketing/` | Social profiles, 12-week content plan, post templates, outreach process, target employer list |
 | `docs/operations/` | Deployment guide, Stripe setup & test checklist |
+| `docs/growth/` | SEO strategy, 12-month growth plan with targets, Google/Bing/aggregator setup |
 | `docs/PROJECT-STATUS.md` | **Phase-by-phase record of what's done, tested and outstanding – start here** |
 | `tools/` | Local dev environment, test suites, brand asset builder, zip packager |
 
@@ -28,7 +29,7 @@ A complete, automated UK specialist job board for the stairlift, home lift, plat
 - One purpose-built plugin gives one dashboard, fewer plugins to update and fewer things to break, faster pages, and zero licence fees.
 - **Stripe Checkout** (hosted payment page) means card data never touches the site (lowest PCI scope), with Stripe receipts, refunds and optional invoices.
 - **Prices, durations, moderation, email wording and keys are all editable in WP Admin** – no rebuild needed.
-- Trade-off: you depend on this codebase rather than a large plugin community. Mitigation: plain WordPress APIs, documented, covered by 113 automated tests, and any WordPress developer can maintain it.
+- Trade-off: you depend on this codebase rather than a large plugin community. Mitigation: plain WordPress APIs, documented, covered by 172 automated tests, and any WordPress developer can maintain it.
 
 ## Feature summary
 
@@ -37,4 +38,5 @@ A complete, automated UK specialist job board for the stairlift, home lift, plat
 - **Automation:** moderation of first adverts and auto-flagged content; publish; 7-day & 2-day reminders; auto-expiry; renewal; "did you fill it?"; repeat-advertising nudge; weekly report; social post drafts; automation health warnings; all idempotent.
 - **Discovery:** monitored careers pages (structured data + link parsing), robots.txt, terms-review gate, relevance scoring, first/last seen, still-live tracking, failure flags, review queue → employer permission → original-summary draft.
 - **CRM & outreach:** prospect database with all requested fields, entity-type PECR rules, one-at-a-time sending, consent records, suppression list, one-click unsubscribe, follow-up tracking, free listing grants, CSV import/export.
+- **Audience growth:** free candidate job alerts (double opt-in, daily/weekly digests), share buttons on every advert, employer share kits/badges/company pages with verified-backlink rewards, aggregator XML feed, cookie-free traffic analytics (sources, landing pages, job views, Apply clicks, shares, consented returning visitors), career guides and real-data salary guide, monthly traffic & SEO report against 12-month targets, Google Indexing API, Search Console reporting and IndexNow.
 - **SEO:** titles/descriptions, canonicals, JobPosting + Organization/WebSite schema, XML sitemap, robots.txt, thin-page prevention, Open Graph, Search Console verification, consent-gated GA4.

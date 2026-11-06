@@ -61,6 +61,19 @@ function lmc_settings_schema() {
 			'social_webhook_url'     => array( 'Social automation webhook (Zapier/Make/Buffer)', 'Optional. Approved posts are POSTed here as JSON.' ),
 			'social_auto_send'       => array( 'Send social posts automatically (skip approval)', 'Not recommended at launch.', 'checkbox' ),
 		) ),
+		'growth'   => array( 'Growth', array(
+			'launch_date'          => array( 'Launch date (YYYY-MM-DD)', 'Month 1 of the 12-month growth plan – the monthly report compares against that month\'s targets.' ),
+			'monthly_report_email' => array( 'Monthly report email', 'Blank = admin/report email.' ),
+			'alerts_enabled'       => array( 'Send candidate job alerts', '', 'checkbox' ),
+			'alerts_max_per_run'   => array( 'Max job alert emails per hour', 'Keep within your SMTP plan\'s limits (e.g. Brevo free = 300/day).', 'number' ),
+			'track_returning'      => array( 'Measure returning visitors (asks for consent)', 'Shows the analytics consent banner even without GA4. Only visitors who accept are measured.', 'checkbox' ),
+			'feed_enabled'         => array( 'Publish XML job feed for aggregators', 'Feed URL: /feeds/jobs.xml – submit it to Adzuna, Jooble, Careerjet etc. (see growth docs).', 'checkbox' ),
+			'backlink_bonus'       => array( 'Reward employers who link to us', 'One free Featured advert credit per employer for a verified link.', 'checkbox' ),
+			'google_indexing'      => array( 'Notify Google Indexing API on publish/close', 'Needs the service account below with Owner access in Search Console.', 'checkbox' ),
+			'gsc_property'         => array( 'Search Console property', 'e.g. sc-domain:liftandmobilitycareers.co.uk or https://liftandmobilitycareers.co.uk/' ),
+			'google_sa_json'       => array( 'Google service account key', 'Prefer LMC_GOOGLE_SA_JSON in wp-config.php (path to the JSON file outside the web root).', 'password' ),
+			'indexnow_enabled'     => array( 'Notify Bing (IndexNow)', 'A key is generated automatically when enabled.', 'checkbox' ),
+		) ),
 		'seo'      => array( 'SEO & analytics', array(
 			'gsc_verification'  => array( 'Google Search Console verification code', 'The content="…" value of the HTML tag method.' ),
 			'bing_verification' => array( 'Bing Webmaster verification code' ),
@@ -101,6 +114,12 @@ add_action( 'lmc_admin_action_save_settings', function () {
 			lmc_update_opts( $vals );
 			lmc_admin_redirect( 'lmc-settings', 'Payments NOT enabled: add the ' . $mode . ' secret key and webhook signing secret first.', true, array( 'tab' => $tab ) );
 		}
+	}
+	if ( 'growth' === $tab && ! empty( $vals['indexnow_enabled'] ) && ! lmc_opt( 'indexnow_key' ) ) {
+		$vals['indexnow_key'] = strtolower( wp_generate_password( 32, false ) );
+	}
+	if ( isset( $vals['launch_date'] ) && $vals['launch_date'] && ! preg_match( '/^\d{4}-\d{2}-\d{2}$/', $vals['launch_date'] ) ) {
+		$vals['launch_date'] = '';
 	}
 	lmc_update_opts( $vals );
 	lmc_admin_redirect( 'lmc-settings', 'Settings saved.', false, array( 'tab' => $tab ) );

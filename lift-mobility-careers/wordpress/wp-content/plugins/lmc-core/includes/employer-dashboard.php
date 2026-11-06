@@ -58,8 +58,14 @@ class LMC_Employer_Dashboard {
 			}
 			$out .= lmc_notice( 'That vacancy can\'t be renewed right now.', 'info' );
 		}
+		if ( ! empty( $_GET['lmc_share'] ) ) {
+			$id = absint( $_GET['lmc_share'] );
+			if ( 'publish' === get_post_status( $id ) && (int) get_post_field( 'post_author', $id ) === $uid ) {
+				return $out . '<p class="lmc-eyebrow">Share kit</p><h2>' . esc_html( get_the_title( $id ) ) . '</h2>' . LMC_Employer_Share::render_kit( $uid, $id ) . '<p><a href="' . esc_url( lmc_page_url( 'dashboard' ) ) . '">← Back to dashboard</a></p>';
+			}
+		}
 		$tab = sanitize_key( $_GET['tab'] ?? 'vacancies' );
-		$tabs = array( 'vacancies' => 'Vacancies', 'credits' => 'Credits & packs', 'payments' => 'Payments', 'profile' => 'Company profile' );
+		$tabs = array( 'vacancies' => 'Vacancies', 'share' => 'Share & promote', 'credits' => 'Credits & packs', 'payments' => 'Payments', 'profile' => 'Company profile' );
 		$out .= '<div class="lmc-dash-head"><div><p class="lmc-eyebrow">' . esc_html( get_user_meta( $uid, 'lmc_company', true ) ) . '</p><h2>Employer dashboard</h2></div><a class="lmc-btn lmc-btn--primary" href="' . esc_url( lmc_page_url( 'submit' ) ) . '">+ Post a vacancy</a></div>';
 		$out .= '<nav class="lmc-tabs">';
 		foreach ( $tabs as $k => $l ) {
@@ -86,6 +92,7 @@ class LMC_Employer_Dashboard {
 			}
 			if ( 'publish' === $j->post_status ) {
 				$acts[] = '<a href="' . esc_url( get_permalink( $j ) ) . '">View</a>';
+				$acts[] = '<a href="' . esc_url( lmc_page_url( 'dashboard', array( 'lmc_share' => $j->ID ) ) ) . '"><strong>Share</strong></a>';
 			}
 			$acts[] = '<a href="' . esc_url( lmc_page_url( 'submit', array( 'job' => $j->ID ) ) ) . '">Edit</a>';
 			if ( in_array( $j->post_status, array( 'publish', 'lmc_expired', 'lmc_closed' ), true ) ) {
@@ -103,6 +110,10 @@ class LMC_Employer_Dashboard {
 				. '<td data-label="Actions" class="lmc-actions">' . implode( ' · ', $acts ) . '</td></tr>';
 		}
 		return $out . '</tbody></table></div><p class="lmc-muted">Adverts close automatically at the end date. We email you 7 days and 2 days before, with a one-click renewal link.</p>';
+	}
+
+	private static function tab_share( $uid ) {
+		return '<p>Every share brings more engineers to your adverts. Use these tools on LinkedIn, Facebook, WhatsApp groups and your own careers page.</p>' . LMC_Employer_Share::render_kit( $uid, 0 );
 	}
 
 	private static function tab_credits( $uid ) {
@@ -172,6 +183,7 @@ class LMC_Employer_Dashboard {
 		update_user_meta( $uid, 'lmc_company_website', esc_url_raw( $p['website'] ?? '' ) );
 		update_user_meta( $uid, 'lmc_phone', sanitize_text_field( $p['phone'] ?? '' ) );
 		update_user_meta( $uid, 'lmc_marketing_opt_out', empty( $p['marketing_opt_out'] ) ? 0 : 1 );
+		LMC_Employer_Share::ensure_slug( $uid );
 		lmc_flash( 'Profile saved.' );
 		wp_safe_redirect( add_query_arg( 'tab', 'profile', lmc_page_url( 'dashboard' ) ) );
 		exit;

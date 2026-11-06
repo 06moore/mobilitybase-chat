@@ -17,6 +17,7 @@
 		<nav id="lmc-nav" class="lmc-nav" aria-label="Main">
 			<?php lmc_theme_nav(); ?>
 			<div class="lmc-nav__cta">
+				<a class="lmc-nav__account" href="<?php echo esc_url( lmc_page_url( 'alerts' ) ); ?>">Job alerts</a>
 				<?php if ( is_user_logged_in() && lmc_is_employer() ) : ?>
 					<a class="lmc-nav__account" href="<?php echo esc_url( lmc_page_url( 'dashboard' ) ); ?>">My dashboard</a>
 				<?php else : ?>

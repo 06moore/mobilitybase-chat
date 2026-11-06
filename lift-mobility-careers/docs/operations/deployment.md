@@ -9,7 +9,7 @@ Nothing here has been purchased or published. Each step that costs money or goes
 | Domain | liftandmobilitycareers.co.uk (+ .com if available) – check availability first | £10–25 / year |
 | Hosting | UK/EU managed WordPress with SSH, real cron, daily backups, free SSL (e.g. Krystal, SiteGround, 20i, Hostinger Business) | £10–25 / month |
 | Business mailbox | Google Workspace or Microsoft 365 (1 user), or host email | £0–6 / month |
-| Transactional email (SMTP) | Brevo (free tier 300/day), Postmark or Mailgun | £0–15 / month |
+| Transactional email (SMTP) | Brevo (free tier 300/day), Postmark or Mailgun – job alerts grow volume; upgrade as subscribers grow | £0–20 / month |
 | Payments | Stripe account for the business | no monthly fee; per-transaction fees |
 | Analytics (optional) | Google Search Console (free), GA4 (free, consent banner auto-shown) | £0 |
 | Social automation (optional) | Zapier / Make / Buffer free tiers | £0 |
@@ -82,7 +82,7 @@ Follow `stripe-setup.md`. Payments stay off until you complete it.
 ```
 bash tools/dev/setup-local.sh                    # WordPress + SQLite, demo data
 php -S 127.0.0.1:8080 -t /tmp/lmc-dev/wp tools/dev/router.php
-php tools/tests/run.php                          # 87 integration tests
+php tools/tests/run.php                          # 146 integration tests
 node tools/tests/e2e.js                          # 26 browser tests
 ```
 Emails in dev are written to `/tmp/lmc-dev/mail.log`, never sent.
