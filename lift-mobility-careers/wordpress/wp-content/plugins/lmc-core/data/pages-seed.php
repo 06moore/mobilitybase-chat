@@ -65,7 +65,12 @@ function lmc_md_to_html( $md ) {
 			$flush();
 			$close();
 			$lvl   = max( 2, strlen( $m[1] ) );
-			$html .= "<h$lvl>" . $inline( $m[2] ) . "</h$lvl>\n";
+			$id    = '';
+			if ( preg_match( '/\s*\{#([a-z0-9\-]+)\}\s*$/', $m[2], $a ) ) {
+				$id   = ' id="' . $a[1] . '"';
+				$m[2] = substr( $m[2], 0, -strlen( $a[0] ) );
+			}
+			$html .= "<h$lvl$id>" . $inline( $m[2] ) . "</h$lvl>\n";
 		} elseif ( preg_match( '/^\s*([-*]|\d+\.)\s+(.*)$/', $line, $m ) ) {
 			$flush();
 			$type = ctype_digit( rtrim( $m[1], '.' ) ) ? 'ol' : 'ul';
@@ -128,7 +133,7 @@ function lmc_seed_pages() {
 			'order'     => 4,
 			'seo_title' => 'Advertise a Vacancy – Stairlift & Lift Engineer Job Adverts from £39',
 			'seo_desc'  => 'Post a stairlift, home lift, platform lift or hoist engineer vacancy from £39 for 30 days. Featured and premium options, multi-advert packs available.',
-			'content'   => "<p>Simple, fixed-price adverts for 30 days. No subscriptions, no placement fees and no long-term contract.</p>\n[lmc_pricing]\n<h2>Before you post</h2>\n<ul><li>You will need to confirm you are authorised to advertise the vacancy on behalf of the employer.</li><li>Every advert must show a genuine salary or salary range.</li><li>Adverts must comply with our <a href=\"/advertising-agreement/\">Employer Advertising Agreement</a>, including equality law.</li></ul>\n<p><a class=\"lmc-btn lmc-btn--primary\" href=\"/employer/submit-vacancy/\">Post a vacancy</a> <a class=\"lmc-btn lmc-btn--ghost\" href=\"/employer/register/\">Create an account</a></p>",
+			'content'   => "<p>Simple, fixed-price adverts for 30 days. No subscriptions, no placement fees and no long-term contract.</p>\n[lmc_pricing]\n<h2>Before you post</h2>\n<ul><li>You will need to confirm you are authorised to advertise the vacancy on behalf of the employer.</li><li>Every advert must show a genuine salary or salary range.</li><li>Adverts must comply with our <a href=\"/employer-terms/\">Employer Terms and Conditions</a>, including equality law.</li></ul>\n<p><a class=\"lmc-btn lmc-btn--primary\" href=\"/employer/submit-vacancy/\">Post a vacancy</a> <a class=\"lmc-btn lmc-btn--ghost\" href=\"/employer/register/\">Create an account</a></p>",
 		),
 		'about'         => array(
 			'title'     => 'About Us',
@@ -145,14 +150,10 @@ function lmc_seed_pages() {
 		'dashboard'     => array( 'title' => 'Employer dashboard', 'slug' => 'dashboard', 'parent' => 'account', 'content' => '[lmc_employer_dashboard]', 'noindex' => 1 ),
 		'submit'        => array( 'title' => 'Post a vacancy', 'slug' => 'submit-vacancy', 'parent' => 'account', 'content' => '[lmc_submit_job]', 'noindex' => 1 ),
 		'preferences'   => array( 'title' => 'Email preferences', 'slug' => 'email-preferences', 'content' => '[lmc_email_preferences]', 'noindex' => 1 ),
-		'terms'         => array( 'title' => 'Terms and Conditions', 'slug' => 'terms', 'content' => lmc_legal_page_content( 'terms-and-conditions' ) ),
-		'privacy'       => array( 'title' => 'Privacy Policy', 'slug' => 'privacy-policy', 'content' => lmc_legal_page_content( 'privacy-policy' ) ),
-		'cookies'       => array( 'title' => 'Cookie Policy', 'slug' => 'cookie-policy', 'content' => lmc_legal_page_content( 'cookie-policy' ) ),
-		'agreement'     => array( 'title' => 'Employer Advertising Agreement', 'slug' => 'advertising-agreement', 'content' => lmc_legal_page_content( 'employer-advertising-agreement' ) ),
-		'refunds'       => array( 'title' => 'Refund Policy', 'slug' => 'refund-policy', 'content' => lmc_legal_page_content( 'refund-policy' ) ),
-		'authorisation' => array( 'title' => 'Vacancy Authorisation Declaration', 'slug' => 'vacancy-authorisation', 'content' => lmc_legal_page_content( 'vacancy-authorisation-declaration' ) ),
-		'licence'       => array( 'title' => 'Employer Permission and Content Licence', 'slug' => 'content-licence', 'content' => lmc_legal_page_content( 'employer-content-licence' ) ),
-		'disclaimer'    => array( 'title' => 'Website Disclaimer', 'slug' => 'disclaimer', 'content' => lmc_legal_page_content( 'website-disclaimer' ) ),
+		// Three consolidated legal pages. Old keys (cookies, refunds, authorisation, licence, disclaimer) are now sections – see lmc_page_aliases().
+		'terms'         => array( 'title' => 'Website Terms of Use', 'slug' => 'terms', 'content' => lmc_legal_page_content( 'website-terms' ) ),
+		'privacy'       => array( 'title' => 'Privacy and Cookie Policy', 'slug' => 'privacy-policy', 'content' => lmc_legal_page_content( 'privacy-and-cookie-policy' ) ),
+		'agreement'     => array( 'title' => 'Employer Terms and Conditions', 'slug' => 'employer-terms', 'content' => lmc_legal_page_content( 'employer-terms' ) ),
 
 		// Growth: job alerts and career guides (original, evergreen content that earns search traffic and links).
 		'alerts'   => array(

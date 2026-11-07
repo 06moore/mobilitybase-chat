@@ -13,13 +13,13 @@
 defined( 'ABSPATH' ) || exit;
 
 define( 'LMC_VERSION', '1.0.0' );
-define( 'LMC_DB_VERSION', '5' );
+define( 'LMC_DB_VERSION', '6' );
 define( 'LMC_FILE', __FILE__ );
 define( 'LMC_DIR', plugin_dir_path( __FILE__ ) );
 define( 'LMC_URL', plugin_dir_url( __FILE__ ) );
 
 $lmc_includes = array(
-	'helpers', 'settings', 'install', 'post-types', 'logger', 'emails', 'jobs', 'credits', 'payments',
+	'helpers', 'settings', 'identity', 'install', 'post-types', 'logger', 'emails', 'jobs', 'credits', 'payments',
 	'search', 'location', 'forms', 'employer-dashboard', 'cron', 'reports', 'discovery', 'crm',
 	'social', 'seo', 'stats', 'analytics', 'alerts', 'google', 'employer-share', 'feeds', 'monthly-report', 'insights', 'security', 'launch', 'account',
 );

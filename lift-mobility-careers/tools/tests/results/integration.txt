@@ -13,11 +13,32 @@ Launch control (pre-launch is the default)
   ✓ Stripe is forced to TEST mode before launch, even if set to live
   ✓ Blockers: legal sign-off, placeholders, demo content, business details, domain/HTTPS, email
   ✓ Cannot go live while blockers remain
-  ✓ Placeholder scanner finds remaining [PLACEHOLDERS] page by page (8 pages)
+  ✓ Placeholder scanner finds unset business details in all three legal pages (3 pages)
   ✓ Dev seed vacancies are flagged as demo (9)
   ✓ Demo vacancy: noindex and no JobPosting even when live
   ✓ Demo vacancies excluded from the sitemap
   ✓ Demo vacancies excluded from the aggregator feed
+
+Business identity: sole trader now, limited company with one setting
+  ✓ Sole trader: Website Terms name the owner trading as Lift and Mobility Careers, with the trading address
+  ✓ Sole trader: no placeholders left once business details are filled in
+  ✓ Sole trader: business-details launch check passes
+  ✓ Sole trader: footer shows the trading-name statement
+  ✓ Switch to limited without company number/office: launch check blocks and names what is missing
+  ✓ …and the legal pages flag the missing company number
+  ✓ Limited: Website Terms name the company, number and registered office
+  ✓ Limited: Employer Terms and Privacy Policy name the company
+  ✓ Limited: owner's personal name no longer appears in any legal page
+  ✓ Limited: no "trading as" when the company name matches the brand
+  ✓ Limited: footer shows company registration details, not the owner
+  ✓ Limited: no placeholders and business check passes
+  ✓ Limited: email footers carry the company details
+  ✓ Switching back to sole trader restores the sole-trader wording
+  ✓ Old /cookie-policy/ address redirects permanently to /privacy-policy/#cookies
+  ✓ Old /refund-policy/ address redirects permanently to /employer-terms/#refunds
+  ✓ Old /advertising-agreement/ address redirects permanently to /employer-terms/
+  ✓ Old /disclaimer/ address redirects permanently to /terms/#accuracy
+  ✓ Only three legal pages exist (old separate policy pages removed)
 
 Stripe webhook signature
   ✓ Valid signature accepted
@@ -105,7 +126,7 @@ Vacancy discovery
   ✓ Unreachable careers page is flagged as failing
 
 Outreach CRM & PECR guard rails
-  ✓ Blocked until sender postal address configured
+  ✓ Blocked until sender trading address configured
   ✓ Sole trader without consent is blocked (PECR)
   ✓ Unknown entity type is treated as individual (blocked)
   ✓ Limited company contact can be emailed
@@ -258,8 +279,8 @@ Closed and expired vacancies leave search, sitemaps, feeds and structured data
   ✓ …and from live listings
 
 SEO validation
-  ✓ Every sitemap URL (51) has an absolute, self-referencing canonical on the site's own domain and is indexable
+  ✓ Every sitemap URL (46) has an absolute, self-referencing canonical on the site's own domain and is indexable
   ✓ JobPosting matches Google's required/recommended fields and the vacancy data
   ✓ All structured data on the job page is valid JSON
 
-207 passed, 0 failed
+226 passed, 0 failed

@@ -77,7 +77,7 @@ ok( isset( $bl['legal'], $bl['placeholders'], $bl['demo'], $bl['business'], $bl[
 ok( ! LMC_Launch::go_live() && ! LMC_Launch::is_live(), 'Cannot go live while blockers remain' );
 $ph = LMC_Launch::placeholders();
 $flat = implode( ' ', array_merge( ...array_values( $ph ) ) );
-ok( false !== strpos( $flat, '[LEGAL ENTITY NAME]' ) && false !== strpos( $flat, '[CONTACT EMAIL]' ) && isset( $ph['Cookie Policy'], $ph['Privacy Policy'] ), 'Placeholder scanner finds remaining [PLACEHOLDERS] page by page (' . count( $ph ) . ' pages)' );
+ok( false !== strpos( $flat, 'owner name' ) && false !== strpos( $flat, '[NOT SET: ICO registration number]' ) && isset( $ph['Website Terms of Use'], $ph['Privacy and Cookie Policy'], $ph['Employer Terms and Conditions'] ), 'Placeholder scanner finds unset business details in all three legal pages (' . count( $ph ) . ' pages)' );
 $demo_ids = get_posts( array( 'post_type' => 'lmc_job', 'post_status' => 'any', 'numberposts' => -1, 'fields' => 'ids', 'meta_key' => '_lmc_demo' ) );
 ok( 9 === count( $demo_ids ), 'Dev seed vacancies are flagged as demo (9)' );
 // From here on, functional tests run as if live (blockers bypassed deliberately for testing only).
@@ -88,6 +88,41 @@ ok( false !== strpos( $dh, 'noindex' ) && false === strpos( $dh, '"JobPosting"' 
 $sm = wp_remote_retrieve_body( wp_remote_get( home_url( '/wp-sitemap-posts-lmc_job-1.xml' ) ) );
 ok( false === strpos( $sm, get_permalink( $dj ) ), 'Demo vacancies excluded from the sitemap' );
 ok( false === strpos( wp_remote_retrieve_body( wp_remote_get( home_url( '/feeds/jobs.xml' ) ) ), 'LMC-' . $dj . ']' ), 'Demo vacancies excluded from the aggregator feed' );
+
+section( 'Business identity: sole trader now, limited company with one setting' );
+$page_text = function ( $key ) {
+	return html_entity_decode( wp_strip_all_tags( wp_remote_retrieve_body( wp_remote_get( lmc_page_url( $key ) ) ) ), ENT_QUOTES, 'UTF-8' );
+};
+lmc_update_opts( array( 'business_structure' => 'sole_trader', 'owner_name' => 'Tom Testperson', 'postal_address' => "Suite 1, 2 Virtual Street\nLondon, EC1A 1AA", 'contact_email' => 'hello@liftandmobilitycareers.co.uk', 'ico_number' => 'ZB123456', 'admin_report_email' => 'tom@liftandmobilitycareers.co.uk', 'email_provider' => 'Test Mail Ltd', 'legal_updated' => '2026-11-07' ) );
+$t = $page_text( 'terms' );
+ok( false !== strpos( $t, 'Tom Testperson, trading as Lift and Mobility Careers' ) && false !== strpos( $t, 'Suite 1, 2 Virtual Street, London, EC1A 1AA' ), 'Sole trader: Website Terms name the owner trading as Lift and Mobility Careers, with the trading address' );
+ok( ! LMC_Launch::placeholders(), 'Sole trader: no placeholders left once business details are filled in' );
+ok( ! isset( LMC_Launch::blockers()['business'] ), 'Sole trader: business-details launch check passes' );
+$hp = wp_remote_retrieve_body( wp_remote_get( home_url( '/' ) ) );
+ok( false !== strpos( $hp, 'Lift and Mobility Careers is a trading name of Tom Testperson' ), 'Sole trader: footer shows the trading-name statement' );
+lmc_update_opts( array( 'business_structure' => 'limited' ) );
+ok( isset( LMC_Launch::blockers()['business'] ) && false !== strpos( LMC_Launch::blockers()['business'][2], 'company number' ), 'Switch to limited without company number/office: launch check blocks and names what is missing' );
+ok( false !== strpos( implode( ' ', array_merge( ...array_values( LMC_Launch::placeholders() ) ) ), 'company number' ), '…and the legal pages flag the missing company number' );
+lmc_update_opts( array( 'company_number' => '12345678', 'registered_office' => '3 Office Road, Manchester, M1 1AA' ) );
+$t  = $page_text( 'terms' );
+$a  = $page_text( 'agreement' );
+$pp = $page_text( 'privacy' );
+ok( false !== strpos( $t, 'Lift & Mobility Careers Ltd, a company registered in England and Wales (company number 12345678), registered office: 3 Office Road, Manchester, M1 1AA' ), 'Limited: Website Terms name the company, number and registered office' );
+ok( false !== strpos( $a, 'Lift & Mobility Careers Ltd' ) && false !== strpos( $pp, 'Lift & Mobility Careers Ltd' ), 'Limited: Employer Terms and Privacy Policy name the company' );
+ok( false === strpos( $t . $a . $pp, 'Tom Testperson' ), 'Limited: owner\'s personal name no longer appears in any legal page' );
+ok( false === strpos( $t, 'trading as Lift and Mobility Careers' ), 'Limited: no "trading as" when the company name matches the brand' );
+$hp = wp_remote_retrieve_body( wp_remote_get( home_url( '/' ) ) );
+ok( false !== strpos( $hp, 'Registered in England and Wales no. 12345678' ) && false === strpos( $hp, 'Tom Testperson' ), 'Limited: footer shows company registration details, not the owner' );
+ok( ! LMC_Launch::placeholders() && ! isset( LMC_Launch::blockers()['business'] ), 'Limited: no placeholders and business check passes' );
+ok( false !== strpos( lmc_email_render( 'Body' ), 'Registered in England and Wales no. 12345678' ), 'Limited: email footers carry the company details' );
+lmc_update_opts( array( 'business_structure' => 'sole_trader' ) );
+ok( false !== strpos( $page_text( 'terms' ), 'Tom Testperson, trading as' ), 'Switching back to sole trader restores the sole-trader wording' );
+foreach ( array( 'cookie-policy' => '/privacy-policy/#cookies', 'refund-policy' => '/employer-terms/#refunds', 'advertising-agreement' => '/employer-terms/', 'disclaimer' => '/terms/#accuracy' ) as $old => $new ) {
+	$r = wp_remote_get( home_url( '/' . $old . '/' ), array( 'redirection' => 0 ) );
+	ok( 301 === wp_remote_retrieve_response_code( $r ) && str_ends_with( wp_remote_retrieve_header( $r, 'location' ), $new ), "Old /$old/ address redirects permanently to $new" );
+}
+$ids = array_map( fn( $k ) => (int) get_option( 'lmc_page_' . $k ), array( 'cookies', 'refunds', 'authorisation', 'licence', 'disclaimer' ) );
+ok( ! array_filter( $ids ), 'Only three legal pages exist (old separate policy pages removed)' );
 
 section( 'Stripe webhook signature' );
 $secret = 'whsec_test_123';
@@ -267,10 +302,10 @@ LMC_Discovery::run();
 ok( in_array( $wpdb->get_var( "SELECT status FROM " . lmc_table( 'sources' ) . " WHERE company = 'Broken Ltd'" ), array( 'error', 'no_parse' ), true ), 'Unreachable careers page is flagged as failing' );
 
 section( 'Outreach CRM & PECR guard rails' );
-lmc_update_opts( array( 'postal_address' => '' ) );
+lmc_update_opts( array( 'postal_address' => '', 'owner_name' => 'Test Owner' ) );
 $pc = LMC_CRM::save( array( 'company' => 'Corp Lifts Ltd', 'entity_type' => 'limited_company', 'contact_email' => 'careers@corp.example', 'status' => 'ready' ) );
 $r  = LMC_CRM::send_outreach( $pc, 'outreach_free_listing' );
-ok( is_string( $r ) && false !== stripos( $r, 'postal address' ), 'Blocked until sender postal address configured' );
+ok( is_string( $r ) && false !== stripos( $r, 'trading address' ), 'Blocked until sender trading address configured' );
 lmc_update_opts( array( 'postal_address' => '1 Example Street, Exampletown, EX1 1AA' ) );
 $ps = LMC_CRM::save( array( 'company' => 'Jo Bloggs Stairlifts', 'entity_type' => 'sole_trader', 'contact_email' => 'jo@solo.example' ) );
 $r  = LMC_CRM::send_outreach( $ps, 'outreach_free_listing' );

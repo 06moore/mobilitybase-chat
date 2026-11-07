@@ -1,18 +1,23 @@
 # Response to independent review – changes, outstanding issues, tests
 
-**Test totals (each suite on a freshly built site, `bash tools/tests/run-all.sh`):** integration **206/206**, browser (basic) **26/26**, browser (full employer journey) **50/50**, PHP warnings/notices **0**. Full output: `tools/tests/results/`.
+**Test totals (each suite on a freshly built site, `bash tools/tests/run-all.sh`):** integration **226/226**, browser (basic) **26/26**, browser (full employer journey) **50/50**, PHP warnings/notices **0**. Full output: `tools/tests/results/`.
 
 **A note on Priority 1.** The previous ZIP did include `REVIEW-GUIDE.md`, all 58 PHP files, the legal drafts and 13 screenshots (in nested folders), so the reviewing tool probably didn't unpack them fully. This pack adds a single flat `SOURCE-CODE.md` containing every custom code file, so nothing depends on unpacking folders.
 
 ---
 
+## Business identity: sole trader now, limited company later (one setting)
+- New `includes/identity.php` builds the operator wording from **Settings → Business details → Business structure**. It feeds the legal pages (`[lmc_business]` shortcode), site footer, email footers, the outreach sender check and the launch checklist.
+- The legal pages were merged from 8 to 3, with no DRAFT notices. Old URLs redirect with a 301. A v6 upgrade removes the old pages and refreshes the content.
+- Tests (integration): sole-trader wording, the switch to limited (missing number and office block launch), Ltd wording with no personal name, footer and email details, switching back, old-URL redirects.
+
 ## Launch blockers (must be cleared before going live)
 These are enforced in software: the site stays in pre-launch mode until they're done. See *Lift & Mobility → Launch checklist*.
 
 1. **Specialist review of the employment-agency position** (EAA 1973 / Conduct Regulations 2003) and all legal pages. Record the reviewer's name and date in the Launch checklist. *(Priority 8)*
-2. **Replace every placeholder** in the legal pages and remove the DRAFT notices (listed in `docs/legal/compliance-review.md`). *(Priority 8)*
+2. **Fill in Settings → Business details** so no `[NOT SET]` marker is left in the three legal pages (see `docs/legal/compliance-review.md`). *(Priority 8)*
 3. **Remove demo content** – one button on the Launch checklist. *(Priority 3)*
-4. **Business details** – legal entity, postal address, contact and admin emails.
+4. **Business details** – sole trader: owner name and trading address; limited company: company number and registered office. Both need the contact and admin emails and the ICO number.
 5. **Real domain over HTTPS.**
 6. **Email delivery** – SMTP account with SPF/DKIM.
 
@@ -78,7 +83,7 @@ Browser-tested journey: register → verify → authorisation required → uploa
 
 ## Outstanding issues (prioritised)
 1. ⛔ Specialist legal sign-off (blocker).
-2. ⛔ Fill in placeholders / remove DRAFT notices after sign-off (blocker).
+2. ⛔ Fill in business details so the legal pages have no [NOT SET] markers (blocker).
 3. ⛔ Business entity, addresses, emails; domain + HTTPS; SMTP (blockers – need your accounts and decisions).
 4. Real Stripe test-mode run with your account (`docs/operations/stripe-setup.md`). Only the fake Stripe has been tested so far.
 5. Verify on the live domain: canonicals, Google Rich Results Test for one vacancy, Search Console coverage, security headers scan (Mozilla Observatory), WPScan.
@@ -89,6 +94,6 @@ Browser-tested journey: register → verify → authorisation required → uploa
 ## Tests performed
 | Suite | Checks | Covers |
 |---|---|---|
-| `tools/tests/run.php` | 206 | Launch control, settings, payments/webhooks, duplicates/failures/refunds, credits, lifecycle (time travel), search, content checks, SEO (canonicals for every sitemap URL, JobPosting validation, index policy), discovery, CRM/PECR, reports, analytics, job alerts, sharing/backlinks, feed, Google JWT, security (roles, hashing, enumeration, headers, CSRF, honeypot, rate limits, login lockout, SQL/XSS payloads, signed links) |
+| `tools/tests/run.php` | 226 | Launch control, settings, payments/webhooks, duplicates/failures/refunds, credits, lifecycle (time travel), search, content checks, SEO (canonicals for every sitemap URL, JobPosting validation, index policy), discovery, CRM/PECR, reports, analytics, job alerts, sharing/backlinks, feed, Google JWT, security (roles, hashing, enumeration, headers, CSRF, honeypot, rate limits, login lockout, SQL/XSS payloads, signed links) |
 | `tools/tests/e2e.js` | 26 | Candidate search/apply, registration, validation, free-credit flow, approval, admin screens, mobile layout |
 | `tools/tests/e2e-employer.js` | 50 | Full paid employer journey with signed webhooks, uploads, access isolation, double payment, closure, consent/analytics |

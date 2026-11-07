@@ -24,7 +24,11 @@ class LMC_Install {
 	}
 
 	public static function maybe_upgrade() {
+		$from = (int) get_option( 'lmc_db_version' );
 		if ( get_option( 'lmc_db_version' ) !== LMC_DB_VERSION ) {
+			if ( $from && $from < 6 ) {
+				self::consolidate_legal_pages();
+			}
 			self::tables();
 			self::roles();
 			self::terms();
@@ -327,6 +331,29 @@ class LMC_Install {
 	}
 
 	/** Create the site's pages (only if they don't already exist). */
+	/**
+	 * v6: eight legal drafts became three pages whose business details come from settings
+	 * ([lmc_business] shortcodes). Old pages are removed; their addresses 301 to the new sections.
+	 */
+	public static function consolidate_legal_pages() {
+		require_once LMC_DIR . 'data/pages-seed.php';
+		foreach ( array_keys( lmc_page_aliases() ) as $old ) {
+			$id = (int) get_option( 'lmc_page_' . $old );
+			if ( $id ) {
+				wp_delete_post( $id, true );
+			}
+			delete_option( 'lmc_page_' . $old );
+		}
+		$seed = lmc_seed_pages();
+		foreach ( array( 'terms', 'privacy', 'agreement' ) as $k ) {
+			$id = (int) get_option( 'lmc_page_' . $k );
+			if ( $id && get_post( $id ) ) {
+				wp_update_post( array( 'ID' => $id, 'post_title' => $seed[ $k ]['title'], 'post_name' => $seed[ $k ]['slug'], 'post_content' => $seed[ $k ]['content'] ) );
+			}
+		}
+		lmc_log( 'info', 'install', 'Legal pages consolidated into Website Terms, Employer Terms and Privacy and Cookie Policy.' );
+	}
+
 	public static function pages() {
 		require_once LMC_DIR . 'data/pages-seed.php';
 		foreach ( lmc_seed_pages() as $key => $p ) {

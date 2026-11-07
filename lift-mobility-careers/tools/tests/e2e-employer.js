@@ -215,7 +215,7 @@ const choose = async (p, pkg) => { await wait3(p); await p.click(`input[name=pac
 	});
 	ok(conv.n === 1 && conv.forms === 1, 'Job alert conversion fires exactly once per submission (duplicate listener fixed)');
 	const cookieHref = await p.locator('.lmc-footer__legal a', { hasText: 'Cookie policy' }).getAttribute('href');
-	ok(/\/cookie-policy\/$/.test(cookieHref), 'Footer Cookie policy link points to /cookie-policy/');
+	ok(/\/privacy-policy\/#cookies$/.test(cookieHref), 'Footer Cookie policy link points to the cookies section of the Privacy and Cookie Policy');
 	await p.goto(cookieHref);
 	ok((await p.content()).includes('lmc_consent') && await p.locator('.lmc-prose table').count() >= 2, 'Cookie policy page lists every cookie and storage item in tables');
 	await p.screenshot({ path: SHOTS + '/mobile-cookie-policy.png', fullPage: true });

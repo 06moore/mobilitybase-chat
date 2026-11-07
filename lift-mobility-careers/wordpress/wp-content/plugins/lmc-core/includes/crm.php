@@ -202,8 +202,9 @@ class LMC_CRM {
 	 * Can we send this prospect a marketing email right now? Returns true or a reason string.
 	 */
 	public static function can_email( $p ) {
-		if ( ! lmc_opt( 'postal_address' ) ) {
-			return 'Add your business postal address in Settings first – every marketing email must identify the sender with a valid address.';
+		$lmc_id = lmc_identity();
+		if ( ! $lmc_id['address'] || in_array( 'owner name', $lmc_id['missing'], true ) || in_array( 'company name', $lmc_id['missing'], true ) ) {
+			return 'Add your business details (owner or company name and trading address) in Settings first – every marketing email must identify the sender with a valid address.';
 		}
 		if ( ! is_email( $p->contact_email ) ) {
 			return 'No valid contact email recorded.';

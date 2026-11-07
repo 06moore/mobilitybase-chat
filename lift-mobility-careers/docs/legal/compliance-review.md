@@ -14,7 +14,7 @@ Draft documents (rendered as website pages automatically): `wordpress/wp-content
 
 This is enforced in the software, not just written down:
 - The site is in **pre-launch mode** until the operator records the specialist's name and the review date in *Lift & Mobility → Launch checklist*. In pre-launch mode, every page is `noindex`, robots.txt blocks crawling, there is no sitemap or job feed, nothing is sent to search engines, and **Stripe is forced to test mode, so no real payment can be taken**.
-- The "Go live" button stays disabled while any blocker remains: legal sign-off, legal-page placeholders/DRAFT notices, demo content, incomplete business details, no HTTPS domain, no email delivery.
+- The "Go live" button stays disabled while any blocker remains: legal sign-off, unset business details shown as [NOT SET] in the legal pages, demo content, incomplete business details, no HTTPS domain, no email delivery.
 
 **Questions for the specialist** (bring this document):
 1. Is the business an "employment agency" under EAA s.13, given s.13(4)(a) excludes publications only if not "published wholly or mainly" to help people find work?
@@ -25,12 +25,32 @@ This is enforced in the software, not just written down:
 6. Online Safety Act 2023 scope (section 7), PECR/UK GDPR outreach approach (sections 2–3), Data (Use and Access) Act 2025 changes, and the liability/refund terms.
 7. Job alerts: confirm double opt-in consent and the privacy wording.
 
-## Remaining placeholders (all must be replaced after the review)
+## Legal pages and business details (settings-driven)
 
-The Launch checklist lists these live from the published pages. At the time of writing:
+The eight separate drafts have been merged into **three pages**: *Website Terms of Use* (`/terms/`), *Employer Terms and Conditions* (`/employer-terms/`) and *Privacy and Cookie Policy* (`/privacy-policy/`, cookies at `#cookies`). Old addresses (`/cookie-policy/`, `/refund-policy/`, `/vacancy-authorisation/`, `/content-licence/`, `/disclaimer/`, `/advertising-agreement/`) redirect permanently to the matching section.
 
-| Document | Placeholders |
-|---|---|
+There are no hand-typed placeholders any more. Every business detail is a `[lmc_business]` shortcode filled from **Settings → Business details**. Until a value is set, the page shows a visible `[NOT SET: …]` marker, and the Launch checklist blocks go-live.
+
+| Setting | Phase 1 – sole trader | Phase 2 – limited company |
+|---|---|---|
+| Business structure | Sole trader | **Limited company** (the one switch) |
+| Owner's full legal name | required | not shown publicly |
+| Company name | – | Lift & Mobility Careers Ltd (pre-filled) |
+| Company number, registered office | – | required |
+| Trading / correspondence address | required | optional (defaults to the registered office) |
+| Contact email, ICO number, email provider, legal-pages date | required | same |
+
+Changing the structure rewrites the operator wording in all three legal pages, the site footer and every email footer at once:
+- **Sole trader:** "[Owner], trading as Lift and Mobility Careers, of [address]"
+- **Limited:** "Lift & Mobility Careers Ltd, a company registered in England and Wales (company number N), registered office: X"
+
+The tests check both states and the switch back.
+
+**Before Phase 2 (payments) you must also:** check the name is available at Companies House, incorporate, and update the ICO registration to the company. Have a solicitor review the Employer Terms, since a contract for payment is with the company. Add the company's VAT number if registered. Stripe's account details must match the company.
+
+**Note on the soft launch without solicitor review:** you've decided to start with free listings in pre-launch mode. The pages stay noindexed and payments stay in test mode, so no paid contract is formed. The legal sign-off blocker still applies before switching to LIVE.
+
+---|---|
 | Terms and Conditions | [DATE], [LEGAL ENTITY NAME], [NUMBER], [ADDRESS], [CONTACT EMAIL], plus the instruction "Replace every [BRACKETED] item" |
 | Privacy Policy | [DATE], [LEGAL ENTITY NAME], [CONTACT EMAIL] ×2, [POSTAL ADDRESS], [ICO REFERENCE], [HOST NAME], [EMAIL PROVIDER] |
 | Cookie Policy | [DATE], [LEGAL ENTITY NAME], [CONTACT EMAIL] |

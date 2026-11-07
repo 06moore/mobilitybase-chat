@@ -9,10 +9,18 @@ function lmc_settings_defaults() {
 	return array(
 		// Business identity (shown in footer, emails and legal pages – required by the E-Commerce Regs / PECR).
 		'business_name'      => 'Lift and Mobility Careers',
-		'legal_entity'       => '',          // e.g. "LMC Digital Ltd" – the legal owner of the trading name.
+		// Who operates the business. ONE switch: sole_trader → limited (see includes/identity.php).
+		'business_structure' => 'sole_trader',
+		'owner_name'         => '',          // Sole trader: the owner's full legal name.
+		'company_name'       => 'Lift & Mobility Careers Ltd', // Limited company: exact name as registered.
 		'company_number'     => '',
 		'registered_office'  => '',
-		'postal_address'     => '',          // Required before any outreach email can be sent.
+		'postal_address'     => '',          // Trading / correspondence address (e.g. virtual office). Required before outreach.
+		'ico_number'         => '',
+		'hosting_provider'   => 'Krystal Hosting Ltd',
+		'email_provider'     => '',          // Named in the Privacy Policy, e.g. "Brevo (Sendinblue SAS)".
+		'legal_updated'      => '',          // YYYY-MM-DD shown as "Last updated" on the legal pages.
+		'legal_entity'       => '',          // Deprecated – replaced by business_structure/owner_name/company_name.
 		'vat_number'         => '',
 		'vat_registered'     => 0,           // When 1, 20% VAT is added at checkout and "+VAT" shown.
 		'vat_rate'           => 20,

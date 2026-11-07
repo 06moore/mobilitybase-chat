@@ -98,13 +98,13 @@ class LMC_Launch {
 	/** Every [BRACKETED PLACEHOLDER] and "DRAFT" marker still present on the site's legal pages. */
 	public static function placeholders() {
 		$out = array();
-		foreach ( array( 'terms', 'privacy', 'cookies', 'agreement', 'refunds', 'authorisation', 'licence', 'disclaimer' ) as $k ) {
+		foreach ( array( 'terms', 'privacy', 'agreement' ) as $k ) {
 			$id = (int) get_option( 'lmc_page_' . $k );
 			if ( ! $id ) {
 				continue;
 			}
-			$c = get_post_field( 'post_content', $id );
-			preg_match_all( '/\[[A-Z][A-Z0-9 \-\/]{2,}\]/', $c, $m );
+			$c = wp_strip_all_tags( do_shortcode( get_post_field( 'post_content', $id ) ) ); // Scan the page as visitors see it.
+			preg_match_all( '/\[(?:NOT SET: [^\]]+|[A-Z][A-Z0-9 \-\/]{2,})\]/', $c, $m );
 			$found = array_values( array_unique( $m[0] ) );
 			if ( false !== stripos( $c, 'DRAFT' ) ) {
 				$found[] = '"DRAFT" notice';
@@ -129,14 +129,14 @@ class LMC_Launch {
 		}, array_keys( $ph ), $ph ) ) : 'None found.', true );
 		$d = self::demo_counts();
 		$c['demo'] = array( 'Demo vacancies, employers and prospects removed', 0 === array_sum( $d ), array_sum( $d ) ? "{$d['jobs']} demo vacancies, {$d['users']} demo employers, {$d['prospects']} demo prospects." : 'None found.', true );
-		$missing = array();
-		foreach ( array( 'legal_entity' => 'legal entity', 'postal_address' => 'postal address', 'contact_email' => 'contact email', 'admin_report_email' => 'admin email' ) as $k => $l ) {
+		$missing = lmc_identity()['missing'];
+		foreach ( array( 'admin_report_email' => 'admin email', 'ico_number' => 'ICO registration number' ) as $k => $l ) {
 			$v = (string) lmc_opt( $k );
 			if ( '' === trim( $v ) || false !== strpos( $v, 'example.' ) ) {
 				$missing[] = $l;
 			}
 		}
-		$c['business'] = array( 'Business details complete (Settings → Business details)', ! $missing, $missing ? 'Missing: ' . implode( ', ', $missing ) : 'Complete.', true );
+		$c['business'] = array( 'Business details complete for a ' . ( lmc_is_limited() ? 'limited company' : 'sole trader' ) . ' (Settings → Business details)', ! $missing, $missing ? 'Missing: ' . implode( ', ', $missing ) : 'Complete.', true );
 		$https = 0 === strpos( $home, 'https://' ) && ! preg_match( '#//(localhost|127\.|10\.|192\.168\.)#', $home );
 		$c['domain'] = array( 'Site runs on its real domain over HTTPS', $https, 'Site address: ' . $home, true );
 		$c['email'] = array( 'Email delivery configured (SMTP with SPF/DKIM)', (bool) lmc_opt( 'smtp_host' ), lmc_opt( 'smtp_host' ) ? 'SMTP: ' . lmc_opt( 'smtp_host' ) : 'No SMTP server set – emails may go to spam or not arrive.', true );

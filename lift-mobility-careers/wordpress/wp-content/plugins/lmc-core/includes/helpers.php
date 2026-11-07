@@ -42,11 +42,40 @@ function lmc_verify_sign( $data, $sig ) {
 	return is_string( $sig ) && hash_equals( lmc_sign( $data ), $sig );
 }
 
+/** Old legal page keys now live as sections of the three consolidated legal pages. */
+function lmc_page_aliases() {
+	return array(
+		'cookies'       => array( 'privacy', 'cookies' ),
+		'refunds'       => array( 'agreement', 'refunds' ),
+		'authorisation' => array( 'agreement', 'your-adverts' ),
+		'licence'       => array( 'agreement', 'licence' ),
+		'disclaimer'    => array( 'terms', 'accuracy' ),
+	);
+}
+
 function lmc_page_url( $key, $args = array() ) {
+	$anchor = '';
+	if ( isset( lmc_page_aliases()[ $key ] ) && ! get_option( 'lmc_page_' . $key ) ) {
+		list( $key, $anchor ) = lmc_page_aliases()[ $key ];
+	}
 	$id  = (int) get_option( 'lmc_page_' . $key );
 	$url = $id ? get_permalink( $id ) : home_url( '/' );
-	return $args ? add_query_arg( $args, $url ) : $url;
+	$url = $args ? add_query_arg( $args, $url ) : $url;
+	return $anchor ? $url . '#' . $anchor : $url;
 }
+
+/** Permanent redirects from the old legal page addresses to their new sections. */
+add_action( 'template_redirect', function () {
+	if ( ! is_404() ) {
+		return;
+	}
+	$map  = array( 'cookie-policy' => 'cookies', 'refund-policy' => 'refunds', 'vacancy-authorisation' => 'authorisation', 'content-licence' => 'licence', 'disclaimer' => 'disclaimer', 'advertising-agreement' => 'agreement' );
+	$path = trim( (string) wp_parse_url( $_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH ), '/' );
+	if ( isset( $map[ $path ] ) ) {
+		wp_safe_redirect( lmc_page_url( $map[ $path ] ), 301 );
+		exit;
+	}
+}, 1 );
 
 function lmc_is_employer( $user_id = null ) {
 	$user = $user_id ? get_userdata( $user_id ) : wp_get_current_user();

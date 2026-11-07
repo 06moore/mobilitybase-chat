@@ -186,13 +186,14 @@ function lmc_email_render( $body, $footer_extra = '', $raw_html = null ) {
 			$html .= '<p style="margin:0 0 16px;line-height:1.6">' . nl2br( $txt ) . '</p>';
 		}
 	}
-	$identity = array_filter( array( lmc_opt( 'business_name' ), lmc_opt( 'legal_entity' ) ? 'a trading name of ' . lmc_opt( 'legal_entity' ) : '', lmc_opt( 'company_number' ) ? 'Company no. ' . lmc_opt( 'company_number' ) : '', lmc_opt( 'postal_address' ) ) );
+	$lmc_id   = lmc_identity();
+	$identity = array_filter( array( lmc_opt( 'business_name' ), $lmc_id['footer'], lmc_opt( 'contact_email' ) ) );
 	return '<!doctype html><html><body style="margin:0;background:#F4F6F7;font-family:Arial,Helvetica,sans-serif;color:#142F40">'
 		. '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#F4F6F7;padding:24px 0"><tr><td align="center">'
 		. '<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:8px;overflow:hidden">'
 		. '<tr><td style="background:#142F40;padding:20px 28px;color:#ffffff;font-size:18px;font-weight:700">Lift and Mobility <span style="color:#A7D943">Careers</span></td></tr>'
 		. '<tr><td style="padding:28px;font-size:15px">' . $html . '</td></tr>'
-		. '<tr><td style="padding:18px 28px;background:#F4F6F7;font-size:12px;color:#55636d;line-height:1.5">' . esc_html( implode( ' · ', $identity ) ) . ( $footer_extra ? '<br>' . $footer_extra : '' ) . '</td></tr>'
+		. '<tr><td style="padding:18px 28px;background:#F4F6F7;font-size:12px;color:#55636d;line-height:1.5">' . esc_html( implode( ' · ', array_unique( $identity ) ) ) . ( $footer_extra ? '<br>' . $footer_extra : '' ) . '</td></tr>'
 		. '</table></td></tr></table></body></html>';
 }
 

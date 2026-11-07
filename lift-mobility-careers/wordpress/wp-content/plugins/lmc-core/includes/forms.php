@@ -262,7 +262,7 @@ class LMC_Forms {
 			<?php self::input( 'email', 'Work email', array( 'type' => 'email', 'required' => 1, 'autocomplete' => 'email' ) ); ?>
 			<?php self::input( 'password', 'Password', array( 'type' => 'password', 'required' => 1, 'autocomplete' => 'new-password', 'help' => 'At least 10 characters.', 'no_old' => 1 ) ); ?>
 			<div class="lmc-check">
-				<label><input type="checkbox" name="agree" value="1" <?php checked( self::old( 'agree' ), '1' ); ?>> I accept the <a href="<?php echo esc_url( lmc_page_url( 'terms' ) ); ?>" target="_blank">Terms and Conditions</a> and <a href="<?php echo esc_url( lmc_page_url( 'agreement' ) ); ?>" target="_blank">Employer Advertising Agreement</a>, and I have read the <a href="<?php echo esc_url( lmc_page_url( 'privacy' ) ); ?>" target="_blank">Privacy Policy</a>.</label>
+				<label><input type="checkbox" name="agree" value="1" <?php checked( self::old( 'agree' ), '1' ); ?>> I accept the <a href="<?php echo esc_url( lmc_page_url( 'terms' ) ); ?>" target="_blank">Website Terms of Use</a> and <a href="<?php echo esc_url( lmc_page_url( 'agreement' ) ); ?>" target="_blank">Employer Terms and Conditions</a>, and I have read the <a href="<?php echo esc_url( lmc_page_url( 'privacy' ) ); ?>" target="_blank">Privacy and Cookie Policy</a>.</label>
 				<?php echo self::err( 'agree' ); ?>
 			</div>
 			<div class="lmc-check">
@@ -681,7 +681,7 @@ class LMC_Forms {
 				</div>
 			</fieldset>
 			<fieldset class="lmc-declaration"><legend>Declaration</legend>
-				<div class="lmc-check<?php echo isset( self::$errors['authorised'] ) ? ' has-error' : ''; ?>"><label><input type="checkbox" name="authorised" value="1" <?php checked( self::old( 'authorised' ), '1' ); ?>> I confirm that I am authorised by the employer to advertise this vacancy, that it is a genuine, current vacancy, that the information is accurate and lawful, and that I accept the <a href="<?php echo esc_url( lmc_page_url( 'authorisation' ) ); ?>" target="_blank">Vacancy Authorisation Declaration</a> and <a href="<?php echo esc_url( lmc_page_url( 'licence' ) ); ?>" target="_blank">Content Licence</a>.</label><?php echo self::err( 'authorised' ); ?></div>
+				<div class="lmc-check<?php echo isset( self::$errors['authorised'] ) ? ' has-error' : ''; ?>"><label><input type="checkbox" name="authorised" value="1" <?php checked( self::old( 'authorised' ), '1' ); ?>> I confirm that I am authorised by the employer to advertise this vacancy, that it is a genuine, current vacancy, that the information is accurate and lawful, and that I accept the <a href="<?php echo esc_url( lmc_page_url( 'authorisation' ) ); ?>" target="_blank">advert rules</a> and <a href="<?php echo esc_url( lmc_page_url( 'licence' ) ); ?>" target="_blank">content licence</a> in the Employer Terms.</label><?php echo self::err( 'authorised' ); ?></div>
 				<?php self::input( 'authoriser_name', 'Your full name', array( 'required' => 1 ) ); ?>
 				<div class="lmc-check"><label><input type="checkbox" name="social_ok" value="1" <?php checked( self::old( 'social_ok' ), '1' ); ?>> Lift and Mobility Careers may promote this vacancy on its LinkedIn and Facebook pages.</label></div>
 			</fieldset>
@@ -863,7 +863,7 @@ class LMC_Forms {
 			<?php self::input( 'company', 'Company (optional)', array( 'autocomplete' => 'organization' ) ); ?>
 			<?php self::select( 'topic', 'Topic', array( 'Advertising a vacancy' => 'Advertising a vacancy', 'My employer account' => 'My employer account', 'Report a problem with an advert' => 'Report a problem with an advert', 'Something else' => 'Something else' ) ); ?>
 			<?php self::input( 'message', 'Message', array( 'type' => 'textarea', 'required' => 1 ) ); ?>
-			<p class="lmc-muted">We use your details only to reply to your message. See our <a href="<?php echo esc_url( lmc_page_url( 'privacy' ) ); ?>">Privacy Policy</a>.</p>
+			<p class="lmc-muted">We use your details only to reply to your message. See our <a href="<?php echo esc_url( lmc_page_url( 'privacy' ) ); ?>">Privacy and Cookie Policy</a>.</p>
 			<button class="lmc-btn lmc-btn--primary" type="submit">Send message</button>
 		</form>
 		<?php

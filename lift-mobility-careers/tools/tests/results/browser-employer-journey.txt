@@ -67,7 +67,7 @@
   ✓ Footer "Cookie settings" reopens the choice
   ✓ Accept: analytics loads and returning-visitor marker set
   ✓ Job alert conversion fires exactly once per submission (duplicate listener fixed)
-  ✓ Footer Cookie policy link points to /cookie-policy/
+  ✓ Footer Cookie policy link points to the cookies section of the Privacy and Cookie Policy
   ✓ Cookie policy page lists every cookie and storage item in tables
   ✓ No JavaScript errors
 
