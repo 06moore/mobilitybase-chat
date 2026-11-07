@@ -38,6 +38,7 @@ function lmc_settings_defaults() {
 		'price_pack10'       => 30000,
 		'listing_days'       => 30,
 		'pack_validity_days' => 365,
+		'free_listing_tier'  => 'featured', // Introductory free listing offered through outreach (standard | featured | premium).
 
 		// Workflow.
 		'moderation'         => 'first',     // all | first | none – "first" = review each employer's first vacancy.

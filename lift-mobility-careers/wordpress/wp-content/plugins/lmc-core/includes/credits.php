@@ -57,6 +57,8 @@ class LMC_Credits {
 		}
 		update_user_meta( $user_id, 'lmc_free_listing_granted', lmc_now() );
 		lmc_log( 'info', 'credits', "Free listing granted to user $user_id" );
-		return self::add( $user_id, 'standard', 1, 'free', 0, $note, 90 );
+		$tier = lmc_opt( 'free_listing_tier' );
+		$tier = in_array( $tier, array( 'standard', 'featured', 'premium' ), true ) ? $tier : 'standard';
+		return self::add( $user_id, $tier, 1, 'free', 0, $note, 90 );
 	}
 }

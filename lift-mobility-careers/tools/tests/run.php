@@ -93,9 +93,9 @@ section( 'Business identity: sole trader now, limited company with one setting' 
 $page_text = function ( $key ) {
 	return html_entity_decode( wp_strip_all_tags( wp_remote_retrieve_body( wp_remote_get( lmc_page_url( $key ) ) ) ), ENT_QUOTES, 'UTF-8' );
 };
-lmc_update_opts( array( 'business_structure' => 'sole_trader', 'owner_name' => 'Tom Testperson', 'postal_address' => "Suite 1, 2 Virtual Street\nLondon, EC1A 1AA", 'contact_email' => 'hello@liftandmobilitycareers.co.uk', 'ico_number' => 'ZB123456', 'admin_report_email' => 'tom@liftandmobilitycareers.co.uk', 'email_provider' => 'Test Mail Ltd', 'legal_updated' => '2026-11-07' ) );
+lmc_update_opts( array( 'business_structure' => 'sole_trader', 'owner_name' => 'Tom Testperson', 'postal_address' => "Office 1, Izabella House\n24-26 Regent Place\nBirmingham, B1 3NJ", 'contact_email' => 'hello@liftandmobilitycareers.co.uk', 'ico_number' => 'ZB123456', 'admin_report_email' => 'tom@liftandmobilitycareers.co.uk', 'email_provider' => 'Brevo (Sendinblue SAS)', 'hosting_provider' => 'Krystal Hosting Ltd', 'legal_updated' => '2026-11-07' ) );
 $t = $page_text( 'terms' );
-ok( false !== strpos( $t, 'Tom Testperson, trading as Lift and Mobility Careers' ) && false !== strpos( $t, 'Suite 1, 2 Virtual Street, London, EC1A 1AA' ), 'Sole trader: Website Terms name the owner trading as Lift and Mobility Careers, with the trading address' );
+ok( false !== strpos( $t, 'Tom Testperson, trading as Lift and Mobility Careers' ) && false !== strpos( $t, 'Office 1, Izabella House, 24-26 Regent Place, Birmingham, B1 3NJ' ), 'Sole trader: Website Terms name the owner trading as Lift and Mobility Careers, with the trading address' );
 ok( ! LMC_Launch::placeholders(), 'Sole trader: no placeholders left once business details are filled in' );
 ok( ! isset( LMC_Launch::blockers()['business'] ), 'Sole trader: business-details launch check passes' );
 $hp = wp_remote_retrieve_body( wp_remote_get( home_url( '/' ) ) );
@@ -174,6 +174,7 @@ LMC_Payments::fulfil_session( array( 'id' => 'cs_test_C', 'payment_status' => 'p
 ok( 4 === ( LMC_Credits::balance( $emp2 )['standard'] ?? 0 ), 'Five-pack: 5 credits, 1 used for the vacancy, 4 left' );
 ok( LMC_Credits::grant_free_listing( $emp2 ) > 0, 'Free introductory listing granted' );
 ok( 0 === LMC_Credits::grant_free_listing( $emp2 ), '…only once per employer' );
+ok( 1 === ( LMC_Credits::balance( $emp2 )['featured'] ?? 0 ), 'Free introductory listing is a Featured advert by default (Settings → Introductory free listing)' );
 ok( 0 === LMC_Credits::consume( $emp2, 'premium' ), 'Cannot consume a credit tier you don\'t have' );
 ok( LMC_Payments::revenue( lmc_now() - DAY_IN_SECONDS ) === 6900 + 3900 + 17500, 'Revenue totals paid net amounts (£283.00)' );
 

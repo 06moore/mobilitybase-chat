@@ -102,21 +102,23 @@ function lmc_email_templates_default() {
 
 		// Employer outreach (sent individually by the operator, never in bulk – see CRM).
 		'outreach_free_listing' => array(
-			'name'      => 'Outreach: introductory free listing offer',
-			'subject'   => 'A free 30-day vacancy advert for {company}',
-			'body'      => "Hello {contact_greeting},\n\nI'm getting in touch from {site_name}, a new UK job board dedicated solely to engineering roles in the stairlift, home lift, platform lift and patient handling sector.\n\nWe're inviting a small number of employers in the industry to try the board, and I'd like to offer {company} one free 30-day vacancy advert. There's no payment, no card details and no obligation to buy anything afterwards.\n\nIf you have an engineering role open now or coming up – installation, service, LOLER inspection, trainees or supervisors – simply reply to this email and we'll set it up, or create an account here:\n\n{register_url}\n\nCandidates apply directly to you, every advert shows salary, and we never charge placement fees.\n\nKind regards,\n{sender_name}\n{site_name}",
+			'name'      => 'Outreach: introductory free featured listing offer',
+			'subject'   => 'A free featured vacancy advert for {company}',
+			'body'      => "Hello {contact_greeting},\n\nI'm getting in touch from {site_name}, a new UK job board dedicated solely to engineering roles in the stairlift, home lift, platform lift and patient handling sector.\n\nWe're inviting a small number of employers in the industry to try the board, and I'd like to offer {company} one free featured vacancy advert for 30 days. There's no payment, no card details and no obligation to buy anything afterwards.\n\nIf you have an engineering role open now or coming up – installation, service, LOLER inspection, trainees or supervisors – simply reply to this email and we'll set it up, or create an account here:\n\n{register_url}\n\nCandidates apply directly to you, every advert shows salary, and we never charge placement fees.\n\nKind regards,\n{sender_name}\n{site_name}",
 			'marketing' => true,
 		),
+		// Template A – one-to-one permission request about a vacancy the employer is advertising now.
 		'outreach_vacancy_feature' => array(
-			'name'      => 'Outreach: may we feature your vacancy?',
-			'subject'   => 'Your {opportunity_title} vacancy – may we feature it?',
-			'body'      => "Hello {contact_greeting},\n\nI noticed {company} is currently recruiting for a {opportunity_title}{opportunity_location}. I run {site_name}, a UK job board focused only on the stairlift, lift and patient handling engineering sector.\n\nWith your permission, we would like to feature this vacancy free of charge for 30 days. We would write a short original summary and link candidates straight to your own application page – we wouldn't copy your advert or use your logo unless you ask us to.\n\nIf you're happy for us to go ahead, just reply \"yes\" and we'll send you the summary to check before anything is published. If not, no problem at all – we won't contact you about it again.\n\nKind regards,\n{sender_name}\n{site_name}",
+			'name'      => 'Outreach A: permission to feature your vacancy (free)',
+			'subject'   => 'Your {opportunity_title} vacancy – free featured listing?',
+			'body'      => "Hello {contact_greeting},\n\nI noticed {company} is recruiting for a {opportunity_title}{opportunity_location}. I run {site_name}, a new UK job board just for engineers in the stairlift, home lift, platform lift and patient handling sector.\n\nWith your permission, I'd like to feature this vacancy on the site free of charge for 30 days. I'd write a short original summary and send candidates straight to your own application page. I won't copy your advert or use your logo unless you ask me to.\n\nThere's no cost, no card details and no obligation afterwards. Candidates apply directly to you, and we never charge placement fees.\n\nIf you're happy for me to go ahead, just reply \"yes\" and I'll send you the summary to approve before anything is published. If not, no problem – I won't contact you about it again.\n\nKind regards,\n{sender_name}\n{site_name}",
 			'marketing' => true,
 		),
+		// Template B – the single follow-up (the CRM blocks any further contact without a reply).
 		'outreach_followup'     => array(
-			'name'      => 'Outreach: single polite follow-up',
+			'name'      => 'Outreach B: single polite follow-up',
 			'subject'   => 'Re: {original_subject}',
-			'body'      => "Hello {contact_greeting},\n\nJust following up on my note last week about a free 30-day vacancy advert for {company} on {site_name}. If it's useful, the offer stands – simply reply and we'll set it up.\n\nIf it isn't relevant, I won't follow up again.\n\nKind regards,\n{sender_name}\n{site_name}",
+			'body'      => "Hello {contact_greeting},\n\nJust a quick follow-up to my note last week offering {company} a free featured vacancy advert on {site_name} for 30 days.\n\nIf it's useful, the offer stands – simply reply and I'll set it up, and you'll approve the wording before anything goes live.\n\nIf it isn't relevant, I won't follow up again.\n\nKind regards,\n{sender_name}\n{site_name}",
 			'marketing' => true,
 		),
 	);

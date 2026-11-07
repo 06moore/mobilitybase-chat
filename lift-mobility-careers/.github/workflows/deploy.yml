@@ -1,0 +1,142 @@
+# Test, then deploy the plugin and theme to Krystal over SSH.
+#
+# - Every push and pull request runs the full test suite (integration + two browser suites, each on a
+#   fresh WordPress) and fails on any failed check or any PHP warning/notice.
+# - Deployment runs only for pushes to main (or a manual run), only after the tests job passes, and
+#   only after you approve it: the "production" environment should have you as a required reviewer
+#   (Settings → Environments → production → Required reviewers).
+# - Only wp-content/plugins/lmc-core and wp-content/themes/lmc are uploaded. WordPress core, uploads,
+#   wp-config.php and the database on the server are never touched. The dev-only demo seed is excluded.
+#
+# Repository secrets (Settings → Secrets and variables → Actions) – see docs/operations/deployment.md:
+#   KRYSTAL_HOST         server hostname from cPanel (e.g. xxx.krystal.uk)
+#   KRYSTAL_PORT         SSH port (Krystal cPanel uses 722 – confirm in cPanel → SSH Access)
+#   KRYSTAL_USER         cPanel username
+#   KRYSTAL_SSH_KEY      private key (ed25519) whose public half is authorised in cPanel → SSH Access
+#   KRYSTAL_KNOWN_HOSTS  output of: ssh-keyscan -p 722 <host>  (verified against cPanel's fingerprint)
+#   KRYSTAL_WP_PATH      absolute path to the WordPress folder, e.g. /home/<user>/public_html
+# Repository variable (Variables tab, not a secret):
+#   SITE_URL             e.g. https://liftandmobilitycareers.co.uk (used for the post-deploy check)
+name: Test and deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Full test suite
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, intl, pdo_sqlite, sqlite3, gd, curl, zip
+          tools: composer
+          coverage: none
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Playwright and Chromium
+        run: |
+          npm install --no-save --no-audit --no-fund playwright@1.63.0
+          npx playwright install --with-deps chromium
+
+      - name: Run every suite on a fresh site
+        run: bash tools/tests/run-all.sh
+
+      - name: Fail on any PHP warning or notice
+        run: |
+          if [ -s tools/tests/results/php-warnings.txt ]; then
+            echo "::error::PHP warnings/notices were logged during the tests"
+            cat tools/tests/results/php-warnings.txt
+            exit 1
+          fi
+
+      - name: Keep the test output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: tools/tests/results/
+          retention-days: 30
+
+  deploy:
+    name: Deploy to Krystal
+    needs: test
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    environment:
+      name: production
+      url: ${{ vars.SITE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check the deployment secrets are set
+        env:
+          HOST: ${{ secrets.KRYSTAL_HOST }}
+          PORT: ${{ secrets.KRYSTAL_PORT }}
+          USER: ${{ secrets.KRYSTAL_USER }}
+          KEY: ${{ secrets.KRYSTAL_SSH_KEY }}
+          KNOWN: ${{ secrets.KRYSTAL_KNOWN_HOSTS }}
+          WP_PATH: ${{ secrets.KRYSTAL_WP_PATH }}
+        run: |
+          missing=""
+          for v in HOST PORT USER KEY KNOWN WP_PATH; do [ -n "${!v}" ] || missing="$missing $v"; done
+          if [ -n "$missing" ]; then echo "::error::Missing secrets:$missing"; exit 1; fi
+
+      - name: Set up SSH (host key pinned, no trust-on-first-use)
+        env:
+          KEY: ${{ secrets.KRYSTAL_SSH_KEY }}
+          KNOWN: ${{ secrets.KRYSTAL_KNOWN_HOSTS }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$KEY" > ~/.ssh/deploy_key && chmod 600 ~/.ssh/deploy_key
+          printf '%s\n' "$KNOWN" > ~/.ssh/known_hosts && chmod 644 ~/.ssh/known_hosts
+
+      - name: Upload plugin and theme
+        env:
+          HOST: ${{ secrets.KRYSTAL_HOST }}
+          PORT: ${{ secrets.KRYSTAL_PORT }}
+          USER: ${{ secrets.KRYSTAL_USER }}
+          WP_PATH: ${{ secrets.KRYSTAL_WP_PATH }}
+        run: |
+          SSH="ssh -p $PORT -i $HOME/.ssh/deploy_key -o StrictHostKeyChecking=yes -o BatchMode=yes"
+          $SSH "$USER@$HOST" "test -f '$WP_PATH/wp-config.php'" || { echo "::error::No wp-config.php at KRYSTAL_WP_PATH – check the path"; exit 1; }
+          rsync -rlz --delete --checksum -e "$SSH" \
+            --exclude '.DS_Store' --exclude 'includes/dev-seed.php' \
+            wordpress/wp-content/plugins/lmc-core/ "$USER@$HOST:$WP_PATH/wp-content/plugins/lmc-core/"
+          rsync -rlz --delete --checksum -e "$SSH" \
+            --exclude '.DS_Store' \
+            wordpress/wp-content/themes/lmc/ "$USER@$HOST:$WP_PATH/wp-content/themes/lmc/"
+
+      - name: Check the site responds
+        env:
+          SITE_URL: ${{ vars.SITE_URL }}
+        run: |
+          [ -n "$SITE_URL" ] || { echo "SITE_URL not set – skipping"; exit 0; }
+          for i in 1 2 3; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' "$SITE_URL/")
+            [ "$code" = "200" ] && { echo "Home page OK ($code)"; exit 0; }
+            sleep 10
+          done
+          echo "::error::Home page returned $code after deploy"; exit 1
+
+      - name: Remove the key
+        if: always()
+        run: rm -f ~/.ssh/deploy_key

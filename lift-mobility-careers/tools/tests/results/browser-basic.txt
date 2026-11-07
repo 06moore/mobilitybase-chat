@@ -13,7 +13,7 @@ Vacancy submission
   ✓ Valid vacancy saved → advert options step
   ✓ Payments switched off: clear message, no charge possible
 Operator grants free listing; employer uses credit
-  ✓ Admin grants free 30-day listing
+  ✓ Admin grants free 30-day listing (Featured by default)
   ✓ Credit used → vacancy sent for approval (first vacancy)
 Operator approves from the dashboard
   ✓ One-click approval

@@ -33,6 +33,7 @@ function lmc_settings_schema() {
 			'price_pack10'       => array( 'Ten standard adverts (pence)', '', 'number' ),
 			'listing_days'       => array( 'Listing length (days)', '', 'number' ),
 			'pack_validity_days' => array( 'Pack credits valid for (days)', '', 'number' ),
+			'free_listing_tier'  => array( 'Introductory free listing', 'The advert type given by the "Free listing" button in the CRM and Employers screens (one per employer).', 'select', array( 'standard' => 'Standard', 'featured' => 'Featured', 'premium' => 'Premium' ) ),
 			'moderation'         => array( 'Approval before publishing', '', 'select', array( 'first' => 'Review each employer\'s first vacancy (recommended)', 'all' => 'Review every vacancy', 'none' => 'Publish automatically (flagged content still held)' ) ),
 			'require_verified'   => array( 'Employers must confirm email before posting', '', 'checkbox' ),
 		) ),

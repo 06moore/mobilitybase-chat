@@ -40,7 +40,7 @@ add_action( 'lmc_admin_action_grant_free', function () {
 	if ( $c ) {
 		$wpdb->update( lmc_table( 'prospects' ), array( 'status' => 'free_listing_active', 'free_listing_used' => 1 ), array( 'id' => $p->id ) );
 	}
-	lmc_admin_redirect( 'lmc-crm', $c ? 'Free 30-day standard listing credit added to their account (valid 90 days).' : 'This employer has already had a free listing.', ! $c, array( 'edit' => $p->id ) );
+	lmc_admin_redirect( 'lmc-crm', $c ? 'Free 30-day ' . lmc_opt( 'free_listing_tier' ) . ' listing credit added to their account (valid 90 days).' : 'This employer has already had a free listing.', ! $c, array( 'edit' => $p->id ) );
 } );
 
 add_action( 'lmc_admin_action_suppress', function () {

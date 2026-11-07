@@ -1,6 +1,6 @@
 # Response to independent review – changes, outstanding issues, tests
 
-**Test totals (each suite on a freshly built site, `bash tools/tests/run-all.sh`):** integration **226/226**, browser (basic) **26/26**, browser (full employer journey) **50/50**, PHP warnings/notices **0**. Full output: `tools/tests/results/`.
+**Test totals (each suite on a freshly built site, `bash tools/tests/run-all.sh`):** integration **227/227**, browser (basic) **26/26**, browser (full employer journey) **50/50**, PHP warnings/notices **0**. Full output: `tools/tests/results/`.
 
 **A note on Priority 1.** The previous ZIP did include `REVIEW-GUIDE.md`, all 58 PHP files, the legal drafts and 13 screenshots (in nested folders), so the reviewing tool probably didn't unpack them fully. This pack adds a single flat `SOURCE-CODE.md` containing every custom code file, so nothing depends on unpacking folders.
 
@@ -94,6 +94,6 @@ Browser-tested journey: register → verify → authorisation required → uploa
 ## Tests performed
 | Suite | Checks | Covers |
 |---|---|---|
-| `tools/tests/run.php` | 226 | Launch control, settings, payments/webhooks, duplicates/failures/refunds, credits, lifecycle (time travel), search, content checks, SEO (canonicals for every sitemap URL, JobPosting validation, index policy), discovery, CRM/PECR, reports, analytics, job alerts, sharing/backlinks, feed, Google JWT, security (roles, hashing, enumeration, headers, CSRF, honeypot, rate limits, login lockout, SQL/XSS payloads, signed links) |
+| `tools/tests/run.php` | 227 | Launch control, settings, payments/webhooks, duplicates/failures/refunds, credits, lifecycle (time travel), search, content checks, SEO (canonicals for every sitemap URL, JobPosting validation, index policy), discovery, CRM/PECR, reports, analytics, job alerts, sharing/backlinks, feed, Google JWT, security (roles, hashing, enumeration, headers, CSRF, honeypot, rate limits, login lockout, SQL/XSS payloads, signed links) |
 | `tools/tests/e2e.js` | 26 | Candidate search/apply, registration, validation, free-credit flow, approval, admin screens, mobile layout |
 | `tools/tests/e2e-employer.js` | 50 | Full paid employer journey with signed webhooks, uploads, access isolation, double payment, closure, consent/analytics |

@@ -66,6 +66,7 @@ Packs and credits
   ✓ Five-pack: 5 credits, 1 used for the vacancy, 4 left
   ✓ Free introductory listing granted
   ✓ …only once per employer
+  ✓ Free introductory listing is a Featured advert by default (Settings → Introductory free listing)
   ✓ Cannot consume a credit tier you don't have
   ✓ Revenue totals paid net amounts (£283.00)
 
@@ -283,4 +284,4 @@ SEO validation
   ✓ JobPosting matches Google's required/recommended fields and the vacancy data
   ✓ All structured data on the job page is valid JSON
 
-226 passed, 0 failed
+227 passed, 0 failed

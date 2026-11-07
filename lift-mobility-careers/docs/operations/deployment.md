@@ -2,7 +2,7 @@
 
 Nothing here has been purchased or published. Each step that costs money or goes public needs your go-ahead.
 
-## 1. Accounts you need (all in the business's name, not your personal identity)
+## 1. Accounts you need (in your name as a sole trader for Phase 1; move them to the Ltd at Phase 2)
 
 | Item | Suggested | Approx. cost* |
 |---|---|---|
@@ -62,7 +62,22 @@ The dashboard shows a red warning if expiry/reminders haven't run for 2 hours, d
 
 ## 6. Business details
 
-Lift & Mobility → Settings → Business details: legal entity, company number, registered office, **postal address** (needed before outreach works), VAT status, contact email, admin/report email, social URLs. These populate the footer, emails and legal pages.
+Lift & Mobility → Settings → Business details. These values fill the three legal pages, the footer, every email footer and the outreach sender details, so nothing is typed into the pages by hand.
+
+| Field | Phase 1 value |
+|---|---|
+| Business structure | Sole trader |
+| Owner's full legal name | your full name |
+| Trading / correspondence address | Office 1, Izabella House, 24-26 Regent Place, Birmingham, B1 3NJ |
+| Contact email | your Hotmail address for now; switch to hello@liftandmobilitycareers.co.uk once the domain mailbox exists |
+| Admin / report email | your own inbox |
+| ICO registration number | as soon as it's issued; until then the privacy policy shows [NOT SET] |
+| Hosting provider / email provider | Krystal Hosting Ltd / Brevo (Sendinblue SAS) |
+| Legal pages last updated | the date you publish them |
+
+**Phase 2:** change *Business structure* to **Limited company** and add the company number and registered office. The company name is already filled in as Lift & Mobility Careers Ltd. The pages, footer and emails update immediately.
+
+**Brevo (SMTP), Settings → Email delivery:** host `smtp-relay.brevo.com`, port 587, TLS, and the username is the SMTP login shown in Brevo → *SMTP & API*. Put the SMTP key in wp-config.php as `LMC_SMTP_PASS`, never in the database. In Brevo → *Senders, domains* authenticate the domain and add the DNS records Brevo gives you (DKIM, Brevo code, DMARC). The free tier allows 300 emails a day.
 
 ## 7. Payments
 
@@ -90,3 +105,26 @@ php tools/tests/run.php                          # 146 integration tests
 node tools/tests/e2e.js                          # 26 browser tests
 ```
 Emails in dev are written to `/tmp/lmc-dev/mail.log`, never sent.
+
+
+## 11. Automatic deployment from GitHub (Krystal)
+
+`.github/workflows/deploy.yml` runs every test suite on each push. If **every** check passes with no PHP warnings, and you approve the run, it uploads the plugin and theme to Krystal over SSH. It never touches WordPress core, uploads, `wp-config.php` or the database.
+
+One-off setup:
+1. **Krystal cPanel → SSH Access:** enable SSH and note the host and port (Krystal uses **722**).
+2. **On your own computer:** `ssh-keygen -t ed25519 -C "github-deploy" -f lmc_deploy` (no passphrase). In cPanel → SSH Access → *Import key*, paste the contents of `lmc_deploy.pub`, then *Authorize* it.
+3. **On your own computer:** `ssh-keyscan -p 722 <your-server-host>`. Check that the fingerprint matches the one in cPanel.
+4. **GitHub → repository → Settings → Secrets and variables → Actions:**
+   - Secrets:
+     - `KRYSTAL_HOST`
+     - `KRYSTAL_PORT` (722)
+     - `KRYSTAL_USER` (cPanel username)
+     - `KRYSTAL_SSH_KEY` (the whole contents of the private `lmc_deploy` file)
+     - `KRYSTAL_KNOWN_HOSTS` (the ssh-keyscan output)
+     - `KRYSTAL_WP_PATH` (e.g. `/home/<cpanel-user>/public_html`)
+   - Variable: `SITE_URL`.
+5. **GitHub → Settings → Environments → New environment `production`:** add yourself under *Required reviewers*, so nothing is published without your click.
+6. Install WordPress on Krystal (Softaculous) and upload the plugin and theme once with the zips (section 2). From then on, pushing to `main` and clicking *Approve* deploys.
+
+Delete the private key file from your computer once it's stored in GitHub (keep a backup in your password manager if you prefer). Never paste it into a chat.
