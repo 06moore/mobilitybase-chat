@@ -1,0 +1,63 @@
+name: Deploy website theme
+
+# Uploads the WordPress theme in website/theme/mobilitybase to the live host (Krystal)
+# whenever it changes on main, or when run by hand from the Actions tab.
+#
+# Needs these repository secrets (Settings → Secrets and variables → Actions):
+#   KRYSTAL_HOST      e.g. yourserver.krystal.uk
+#   KRYSTAL_PORT      SSH port (Krystal uses 722)
+#   KRYSTAL_USER      cPanel username
+#   KRYSTAL_SSH_KEY   private key whose public half is authorised in cPanel → SSH Access
+#   KRYSTAL_THEME_DIR full path to the theme folder, e.g. /home/USER/public_html/wp-content/themes/mobilitybase
+# Until they are set, the job skips itself.
+
+on:
+  push:
+    branches: [main]
+    paths: ['website/theme/**']
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-website
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check deployment secrets
+        id: check
+        env:
+          HOST: ${{ secrets.KRYSTAL_HOST }}
+        run: |
+          if [ -z "$HOST" ]; then
+            echo "Deployment secrets not set yet — skipping."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.check.outputs.ready == 'true'
+
+      - name: Check PHP syntax
+        if: steps.check.outputs.ready == 'true'
+        run: find website/theme/mobilitybase -name '*.php' -print0 | xargs -0 -n1 php -l > /dev/null
+
+      - name: Upload theme
+        if: steps.check.outputs.ready == 'true'
+        env:
+          SSH_KEY: ${{ secrets.KRYSTAL_SSH_KEY }}
+          HOST: ${{ secrets.KRYSTAL_HOST }}
+          PORT: ${{ secrets.KRYSTAL_PORT }}
+          USER: ${{ secrets.KRYSTAL_USER }}
+          DIR: ${{ secrets.KRYSTAL_THEME_DIR }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/id_deploy
+          chmod 600 ~/.ssh/id_deploy
+          ssh-keyscan -p "${PORT:-722}" "$HOST" >> ~/.ssh/known_hosts 2>/dev/null
+          rsync -az --delete \
+            -e "ssh -i ~/.ssh/id_deploy -p ${PORT:-722}" \
+            website/theme/mobilitybase/ "$USER@$HOST:$DIR/"
+          echo "Theme deployed."

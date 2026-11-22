@@ -1,0 +1,1399 @@
+{
+ "pages": [
+  {
+   "slug": "about-us",
+   "file": "about-us.html",
+   "title": "About us",
+   "h1": "A FAMILY-RUN BUSINESS BUILT ON DOING THINGS PROPERLY",
+   "seo_title": "About Us | MobilityBase Lift & Stairlift Specialists",
+   "seo_desc": "Learn more about Mobilitybase, a specialist provider of stairlifts, home lifts and platform lifts across Kent and London, offering installation, servicing and expert advice.",
+   "template": "content",
+   "schema": []
+  },
+  {
+   "slug": "aftercare-warranty",
+   "file": "aftercare-warranty.html",
+   "title": "Aftercare & Warranty",
+   "h1": "WHICH PRODUCT DO YOU HAVE?",
+   "seo_title": "Stairlift & Home Lift Warranty Support | Mobilitybase",
+   "seo_desc": "Mobilitybase provides aftercare and warranty cover for stairlifts, home lifts, platform lifts and ceiling hoists across Kent and London, including servicing, callouts and repairs.",
+   "template": "custom",
+   "schema": []
+  },
+  {
+   "slug": "blog",
+   "file": "blog.html",
+   "title": "Articles",
+   "h1": "Articles",
+   "seo_title": "Stairlift & Home Lift Advice Articles | Mobilitybase",
+   "seo_desc": "Read articles and advice from Mobilitybase about stairlifts, home lifts and mobility solutions. Helpful guides, tips and information for homeowners across Kent and London.",
+   "template": "custom",
+   "schema": []
+  },
+  {
+   "slug": "book-your-visit",
+   "file": "book-your-visit.html",
+   "title": "Book a Lift Survey Kent & London",
+   "h1": "GET IN TOUCH",
+   "seo_title": "Book a Lift Survey Kent & London | Mobilitybase",
+   "seo_desc": "Book a home visit with Mobilitybase for a stairlift or home lift survey. Our engineers assess your property and recommend the best solution across Kent and London.",
+   "template": "custom",
+   "schema": []
+  },
+  {
+   "slug": "ceiling-hoist-range",
+   "file": "ceiling-hoist-range.html",
+   "title": "Ceiling Hoists Kent & London",
+   "h1": "Ceiling Hoist Supplied & Installed",
+   "seo_title": "Ceiling Hoists Kent & London | Mobilitybase",
+   "seo_desc": "Mobilitybase supplies and installs ceiling hoists across Kent and London. Safe and reliable hoist systems for moving and transferring with professional installation and support.",
+   "template": "custom",
+   "schema": []
+  },
+  {
+   "slug": "ceiling-hoist-warranty",
+   "file": "ceiling-hoist-warranty.html",
+   "title": "Ceiling Hoist Warranty Kent & London",
+   "h1": "CEILING HOIST WARRANTY PLANS",
+   "seo_title": "Ceiling Hoist Warranty Kent & London | Mobilitybase",
+   "seo_desc": "Mobilitybase provides warranty cover for ceiling hoists across Kent and London. Our plans include servicing, callouts and repairs to keep your hoist working safely and reliably.",
+   "template": "custom",
+   "schema": []
+  },
+  {
+   "slug": "contact",
+   "file": "contact.html",
+   "title": "Contact",
+   "h1": "CONTACT US TODAY!",
+   "seo_title": "Contact Mobilitybase | Stairlift & Lift Specialists",
+   "seo_desc": "Contact Mobilitybase for stairlifts, home lifts, platform lifts and ceiling hoists across Kent and London. Speak to our team to book a survey or request a quote.",
+   "template": "custom",
+   "schema": []
+  },
+  {
+   "slug": "curved-stairlift-range",
+   "file": "curved-stairlift-range.html",
+   "title": "Curved Stairlifts Kent & London",
+   "h1": "Curved Stairlifts Supplied & Installed",
+   "seo_title": "Curved Stairlifts Kent & London | Mobilitybase",
+   "seo_desc": "Mobilitybase supplies and installs curved stairlifts across Kent and London. Designed for curved or multi-turn staircases with professional installation and support.",
+   "template": "custom",
+   "schema": []
+  },
+  {
+   "slug": "curved-stairlift-warranty",
+   "file": "curved-stairlift-warranty.html",
+   "title": "Curved Stairlift Warranty Kent & London",
+   "h1": "CURVED STAIRLIFT WARRANTY PLANS",
+   "seo_title": "Curved Stairlift Warranty Kent & London | Mobilitybase",
+   "seo_desc": "Mobilitybase provides warranty cover for curved stairlifts across Kent and London. Our plans include servicing, callouts and repairs to keep your stairlift running safely.",
+   "template": "custom",
+   "schema": []
+  },
+  {
+   "slug": "",
+   "file": "home.html",
+   "title": "Home",
+   "h1": "Regain Your Independence.\nStairlifts, Home Lifts & More.",
+   "seo_title": "Stairlifts & Home Lifts Kent & London | Mobilitybase",
+   "seo_desc": "MobilityBase installs stairlifts and home lifts across Kent and London. Straight and curved stairlifts, through floor lifts, servicing, repairs and removals.",
+   "template": "custom",
+   "schema": [
+    {
+     "@context": "https://schema.org/",
+     "@type": "LocalBusiness",
+     "name": "Mobilitybase",
+     "url": "https://www.mobilitybase.co.uk",
+     "image": "https://static.wixstatic.com/media/b55e4e_baed86e727cb4f7da1278713b54b4653~mv2.png",
+     "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "GB",
+      "addressLocality": "East Peckham",
+      "addressRegion": "ENG",
+      "postalCode": "TN12 5HF",
+      "streetAddress": "29 Branbridges Road"
+     },
+     "telephone": "0208 936 3060"
+    },
+    {
+     "@context": "https://schema.org/",
+     "@type": "WebSite",
+     "name": "Mobilitybase",
+     "url": "https://www.mobilitybase.co.uk"
+    }
+   ]
+  },
+  {
+   "slug": "homelift-range",
+   "file": "homelift-range.html",
+   "title": "Homelift Range",
+   "h1": "Home Lifts Supplied & Installed",
+   "seo_title": "Homelift Range | Mobilitybase",
+   "seo_desc": "Explore the range of home lifts supplied and installed by Mobilitybase across Kent and London. Safe, reliable lifts designed to provide easy access between floors.",
+   "template": "custom",
+   "schema": []
+  },
+  {
+   "slug": "homelift-warranty",
+   "file": "homelift-warranty.html",
+   "title": "Home Lift Warranty Kent & London",
+   "h1": "HOMELIFT WARRANTY PLANS",
+   "seo_title": "Home Lift Warranty Kent & London | Mobilitybase",
+   "seo_desc": "Mobilitybase provides warranty cover for home lifts across Kent and London. Our plans include servicing, callouts and repairs to keep your lift operating safely and reliably.",
+   "template": "custom",
+   "schema": []
+  },
+  {
+   "slug": "inquiry-services-page",
+   "file": "inquiry-services-page.html",
+   "title": "Inquiry Services Page",
+   "h1": "Explore our services and get in touch",
+   "seo_title": "Inquiry Services Page | Mobilitybase",
+   "seo_desc": "",
+   "template": "custom",
+   "schema": []
+  },
+  {
+   "slug": "lift-installations",
+   "file": "lift-installations.html",
+   "title": "Lift Installation Kent & London",
+   "h1": "Lift Supply & Installation Across London, Kent & the South East",
+   "seo_title": "Lift Installation Kent & London | Mobilitybase",
+   "seo_desc": "Mobilitybase provides professional lift installation across Kent and London. We install stairlifts, home lifts and platform lifts with reliable service from experienced engineers.",
+   "template": "content",
+   "schema": []
+  },
+  {
+   "slug": "lift-removals",
+   "file": "lift-removals.html",
+   "title": "Stairlift & Lift Removals Kent & London",
+   "h1": "Lift Removals Across London, Kent & the South East",
+   "seo_title": "Stairlift & Lift Removals Kent & London | Mobilitybase",
+   "seo_desc": "Mobilitybase provides stairlift and lift removals across Kent and London. Safe removal of stairlifts, home lifts and platform lifts by experienced engineers.",
+   "template": "content",
+   "schema": []
+  },
+  {
+   "slug": "lift-repairs-kent",
+   "file": "lift-repairs-kent.html",
+   "title": "Lift Repairs Kent",
+   "h1": "Lift Repairs Across Kent — Stairlifts, Homelifts, Platform Lifts and Ceiling Hoists",
+   "seo_title": "Lift Repairs Kent | Stairlifts, Homelifts & Platform Lifts | Mobilitybase",
+   "seo_desc": "Lift broken in Kent? Mobilitybase repairs stairlifts, homelifts, platform lifts and ceiling hoists across Maidstone, Tunbridge Wells, Sevenoaks, Tonbridge and all of Kent. All makes and models.",
+   "template": "content",
+   "schema": []
+  },
+  {
+   "slug": "lift-servicing-kent",
+   "file": "lift-servicing-kent.html",
+   "title": "Lift Servicing Kent",
+   "h1": "Lift Servicing Across Kent — Stairlifts, Homelifts, Platform Lifts and Ceiling Hoists",
+   "seo_title": "Lift Servicing Kent | Stairlifts, Homelifts & Platform Lifts | Mobilitybase",
+   "seo_desc": "Annual lift servicing across Kent from Mobilitybase. We service stairlifts, homelifts, platform lifts and ceiling hoists in Maidstone, Tunbridge Wells, Sevenoaks, Tonbridge and all of Kent. All makes serviced.",
+   "template": "content",
+   "schema": []
+  },
+  {
+   "slug": "loler-examinations",
+   "file": "loler-examinations.html",
+   "title": "LOLER Examinations for Lifts Kent & London",
+   "h1": "LOLER Examinations for Lifts & Hoists Across London, Kent & the South East",
+   "seo_title": "LOLER Examinations for Lifts Kent & London | Mobilitybase",
+   "seo_desc": "Mobilitybase provides LOLER inspections for stairlifts, platform lifts and home lifts across Kent and London. Thorough safety examinations carried out by qualified engineers.",
+   "template": "content",
+   "schema": []
+  },
+  {
+   "slug": "platform-lift-range",
+   "file": "platform-lift-range.html",
+   "title": "Platform Lifts Kent & London",
+   "h1": "Platform Lifts Supplied & Installed",
+   "seo_title": "Platform Lifts Kent & London | Mobilitybase",
+   "seo_desc": "Mobilitybase supplies and installs platform lifts across Kent and London. Safe and reliable lift solutions for homes and businesses, with professional installation and support.",
+   "template": "custom",
+   "schema": []
+  },
+  {
+   "slug": "products",
+   "file": "products.html",
+   "title": "Products",
+   "h1": "FIND THE PERFECT LIFT FOR YOU",
+   "seo_title": "Our Lift Products | Stairlifts & Home Lifts | Mobilitybase",
+   "seo_desc": "Explore the range of stairlifts, home lifts, platform lifts and ceiling hoists supplied by Mobilitybase across Kent and London. Reliable mobility solutions with professional installation.",
+   "template": "custom",
+   "schema": []
+  },
+  {
+   "slug": "service-agreement-terms",
+   "file": "service-agreement-terms.html",
+   "title": "Service Agreement Terms",
+   "h1": "Service Agreement Terms",
+   "seo_title": "Service Agreement Terms | Mobilitybase",
+   "seo_desc": "Read the service agreement terms from Mobilitybase covering lift servicing, maintenance, callouts and warranty conditions.",
+   "template": "content",
+   "schema": []
+  },
+  {
+   "slug": "services",
+   "file": "services.html",
+   "title": "Services",
+   "h1": "WHICH SERVICE DO YOU NEED?",
+   "seo_title": "Lift Services Kent & London | Servicing, Repairs & LOLER | Mobilitybase",
+   "seo_desc": "Mobilitybase provides stairlift and home lift services across Kent and London, including installation, servicing, repairs, LOLER inspections and lift removals by experienced engineers.",
+   "template": "custom",
+   "schema": []
+  },
+  {
+   "slug": "stairlift-installation-aylesford",
+   "file": "stairlift-installation-aylesford.html",
+   "title": "Stairlift Installation Aylesford",
+   "h1": "Stairlift Installation in Aylesford",
+   "seo_title": "Stairlift Installation Aylesford | Mobilitybase",
+   "seo_desc": "Professional stairlift installation in Aylesford. Mobilitybase installs straight and curved stairlifts across Aylesford and the surrounding Kent area.",
+   "template": "location",
+   "schema": []
+  },
+  {
+   "slug": "stairlift-installation-cranbrook",
+   "file": "stairlift-installation-cranbrook.html",
+   "title": "Stairlift Installation Cranbrook",
+   "h1": "Stairlift Installation in Cranbrook",
+   "seo_title": "Stairlift Installation Cranbrook | Mobilitybase",
+   "seo_desc": "Professional stairlift installation in Cranbrook. Mobilitybase installs straight and curved stairlifts across Cranbrook and the surrounding Kent area.",
+   "template": "location",
+   "schema": []
+  },
+  {
+   "slug": "stairlift-installation-crowborough",
+   "file": "stairlift-installation-crowborough.html",
+   "title": "Stairlift Installation Crowborough",
+   "h1": "Stairlift Installation in Crowborough",
+   "seo_title": "Stairlift Installation Crowborough | Mobilitybase",
+   "seo_desc": "Professional stairlift installation in Crowborough. Mobilitybase installs straight and curved stairlifts across Crowborough and the surrounding East Sussex area.",
+   "template": "location",
+   "schema": []
+  },
+  {
+   "slug": "stairlift-installation-east-peckham",
+   "file": "stairlift-installation-east-peckham.html",
+   "title": "Stairlift Installation East Peckham",
+   "h1": "Stairlift Installation in East Peckham",
+   "seo_title": "Stairlift Installation East Peckham | Mobilitybase",
+   "seo_desc": "Professional stairlift installation in East Peckham. Mobilitybase installs straight and curved stairlifts across East Peckham and the surrounding Kent area.",
+   "template": "location",
+   "schema": []
+  },
+  {
+   "slug": "stairlift-installation-edenbridge",
+   "file": "stairlift-installation-edenbridge.html",
+   "title": "Stairlift Installation Edenbridge",
+   "h1": "Stairlift Installation in Edenbridge",
+   "seo_title": "Stairlift Installation Edenbridge | Mobilitybase",
+   "seo_desc": "Professional stairlift installation in Edenbridge. Mobilitybase installs straight and curved stairlifts across Edenbridge and the surrounding Kent area.",
+   "template": "location",
+   "schema": []
+  },
+  {
+   "slug": "stairlift-installation-kent",
+   "file": "stairlift-installation-kent.html",
+   "title": "Stairlift Installation Kent",
+   "h1": "Stairlift Installation in Kent",
+   "seo_title": "Stairlift Installation Kent | Mobilitybase",
+   "seo_desc": "Professional stairlift installation across Kent. Mobilitybase supplies and installs straight and curved stairlifts throughout the county with home surveys available.",
+   "template": "location",
+   "schema": []
+  },
+  {
+   "slug": "stairlift-installation-kings-hill",
+   "file": "stairlift-installation-kings-hill.html",
+   "title": "Stairlift Installation Kings Hill",
+   "h1": "Stairlift Installation in Kings Hill",
+   "seo_title": "Stairlift Installation Kings Hill | Mobilitybase",
+   "seo_desc": "Professional stairlift installation in Kings Hill. Mobilitybase installs straight and curved stairlifts across Kings Hill and the surrounding Kent area.",
+   "template": "location",
+   "schema": []
+  },
+  {
+   "slug": "stairlift-installation-maidstone",
+   "file": "stairlift-installation-maidstone.html",
+   "title": "Stairlift Installation Maidstone",
+   "h1": "Stairlift Installation in Maidstone",
+   "seo_title": "Stairlift Installation Maidstone | Mobilitybase",
+   "seo_desc": "Professional stairlift installation in Maidstone. Mobilitybase installs straight and curved stairlifts across Maidstone and the surrounding Kent area.",
+   "template": "location",
+   "schema": []
+  },
+  {
+   "slug": "stairlift-installation-marden",
+   "file": "stairlift-installation-marden.html",
+   "title": "Stairlift Installation Marden",
+   "h1": "Stairlift Installation in Marden",
+   "seo_title": "Stairlift Installation Marden | Mobilitybase",
+   "seo_desc": "Professional stairlift installation in Marden. Mobilitybase installs straight and curved stairlifts across Marden and the surrounding Kent area.",
+   "template": "location",
+   "schema": []
+  },
+  {
+   "slug": "stairlift-installation-paddock-wood",
+   "file": "stairlift-installation-paddock-wood.html",
+   "title": "Stairlift Installation Paddock Wood",
+   "h1": "Stairlift Installation in Paddock Wood",
+   "seo_title": "Stairlift Installation Paddock Wood | Mobilitybase",
+   "seo_desc": "Professional stairlift installation in Paddock Wood. Mobilitybase installs straight and curved stairlifts across Paddock Wood and the surrounding Kent area.",
+   "template": "location",
+   "schema": []
+  },
+  {
+   "slug": "stairlift-installation-sevenoaks",
+   "file": "stairlift-installation-sevenoaks.html",
+   "title": "Stairlift Installation Sevenoaks",
+   "h1": "Stairlift Installation in Sevenoaks",
+   "seo_title": "Stairlift Installation Sevenoaks | Mobilitybase",
+   "seo_desc": "Professional stairlift installation in Sevenoaks. Mobilitybase installs straight and curved stairlifts across Sevenoaks and the surrounding Kent area.",
+   "template": "location",
+   "schema": []
+  },
+  {
+   "slug": "stairlift-installation-staplehurst",
+   "file": "stairlift-installation-staplehurst.html",
+   "title": "Stairlift Installation Staplehurst",
+   "h1": "Stairlift Installation in Staplehurst",
+   "seo_title": "Stairlift Installation Staplehurst | Mobilitybase",
+   "seo_desc": "Professional stairlift installation in Staplehurst. Mobilitybase installs straight and curved stairlifts across Staplehurst and the surrounding Kent area.",
+   "template": "location",
+   "schema": []
+  },
+  {
+   "slug": "stairlift-installation-tenterden",
+   "file": "stairlift-installation-tenterden.html",
+   "title": "Stairlift Installation Tenterden",
+   "h1": "Stairlift Installation in Tenterden",
+   "seo_title": "Stairlift Installation Tenterden | Mobilitybase",
+   "seo_desc": "Professional stairlift installation in Tenterden. Mobilitybase installs straight and curved stairlifts across Tenterden and the surrounding Kent area.",
+   "template": "location",
+   "schema": []
+  },
+  {
+   "slug": "stairlift-installation-tonbridge",
+   "file": "stairlift-installation-tonbridge.html",
+   "title": "Stairlift Installation Tonbridge",
+   "h1": "Stairlift Installation in Tonbridge",
+   "seo_title": "Stairlift Installation Tonbridge | Mobilitybase",
+   "seo_desc": "Professional stairlift installation in Tonbridge. Mobilitybase installs straight and curved stairlifts across Tonbridge and the surrounding Kent area.",
+   "template": "location",
+   "schema": []
+  },
+  {
+   "slug": "stairlift-installation-tunbridge-wells",
+   "file": "stairlift-installation-tunbridge-wells.html",
+   "title": "Stairlift Installation Tunbridge Wells",
+   "h1": "Stairlift Installation in Tunbridge Wells",
+   "seo_title": "Stairlift Installation Tunbridge Wells | Mobilitybase",
+   "seo_desc": "Professional stairlift installation in Tunbridge Wells. Mobilitybase installs straight and curved stairlifts across Tunbridge Wells and the surrounding Kent area.",
+   "template": "location",
+   "schema": []
+  },
+  {
+   "slug": "stairlift-installation-west-malling",
+   "file": "stairlift-installation-west-malling.html",
+   "title": "Stairlift Installation West Malling",
+   "h1": "Stairlift Installation in West Mailing",
+   "seo_title": "Stairlift Installation West Malling | Mobilitybase",
+   "seo_desc": "Professional stairlift installation in West Malling. We supply and install straight and curved stairlifts across West Malling and the surrounding Kent area.",
+   "template": "location",
+   "schema": []
+  },
+  {
+   "slug": "stairlift-removal-aylesford",
+   "file": "stairlift-removal-aylesford.html",
+   "title": "Stairlift Removal Aylesford",
+   "h1": "Stairlift Removal in Aylesford",
+   "seo_title": "Stairlift Removal Aylesford | Stairlift Removal Kent | Mobilitybase",
+   "seo_desc": "Stairlift removal in Aylesford, Kent. Mobilitybase safely removes straight and curved stairlifts from homes across Aylesford and nearby areas. Contact us for a quotation.",
+   "template": "location",
+   "schema": []
+  },
+  {
+   "slug": "stairlift-removal-cranbrook",
+   "file": "stairlift-removal-cranbrook.html",
+   "title": "Stairlift Removal Cranbrook",
+   "h1": "Stairlift Removal in Cranbrook",
+   "seo_title": "Stairlift Removal Cranbrook | Stairlift Removal Kent | Mobilitybase",
+   "seo_desc": "Stairlift removal in Cranbrook, Kent. Mobilitybase safely removes straight and curved stairlifts from homes across Cranbrook and surrounding villages. Contact us for a quotation.",
+   "template": "location",
+   "schema": []
+  },
+  {
+   "slug": "stairlift-removal-crowborough",
+   "file": "stairlift-removal-crowborough.html",
+   "title": "Stairlift Removal Crowborough",
+   "h1": "Stairlift Removal in Crowborough",
+   "seo_title": "Stairlift Removal Crowborough | Stairlift Removal East Sussex | Mobilitybase",
+   "seo_desc": "Stairlift removal in Crowborough. Mobilitybase safely removes straight and curved stairlifts from homes across Crowborough and surrounding areas. Contact us for a quotation.",
+   "template": "location",
+   "schema": []
+  },
+  {
+   "slug": "stairlift-removal-east-peckham",
+   "file": "stairlift-removal-east-peckham.html",
+   "title": "Stairlift Removal East Peckham",
+   "h1": "Stairlift Removal in East Peckham",
+   "seo_title": "Stairlift Removal East Peckham | Fast Stairlift Removal Kent",
+   "seo_desc": "Professional stairlift removal in East Peckham. We safely remove straight and curved stairlifts across East Peckham and the surrounding Kent area. Fast response and free quotes.",
+   "template": "location",
+   "schema": []
+  },
+  {
+   "slug": "stairlift-removal-edenbridge",
+   "file": "stairlift-removal-edenbridge.html",
+   "title": "Stairlift Removal Edenbridge",
+   "h1": "Stairlift Removal in Edenbridge",
+   "seo_title": "Stairlift Removal Edenbridge | Stairlift Removal Kent | Mobilitybase",
+   "seo_desc": "Stairlift removal in Edenbridge, Kent. Mobilitybase safely removes straight and curved stairlifts from homes across Edenbridge and surrounding villages. Contact us for a quotation.",
+   "template": "location",
+   "schema": []
+  },
+  {
+   "slug": "stairlift-removal-kent",
+   "file": "stairlift-removal-kent.html",
+   "title": "Stairlift Removal Kent",
+   "h1": "Stairlift Removals\nin Kent",
+   "seo_title": "Stairlift Removal Kent | Fast Stairlift Removal | MobilityBase",
+   "seo_desc": "Need a stairlift removed in Kent? MobilityBase provides fast and safe stairlift removal for straight and curved lifts across Kent. Contact our engineers today.",
+   "template": "location",
+   "schema": [
+    {
+     "@context": "https://schema.org",
+     "@type": "FAQPage",
+     "mainEntity": [
+      {
+       "@type": "Question",
+       "name": "How long does stairlift removal take?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Most straight stairlift removals take around 1 hour from start to finish. Curved stairlifts typically take 1–2 hours depending on the complexity of the rail system. Our engineer will always advise you on timing before starting."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "Do you remove stairlifts you didn't install?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes — absolutely. We remove all makes and models regardless of who originally installed them. Acorn, Stannah, Handicare, Brooks, Thyssen or any other brand — we can remove it safely."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "Will removal damage my staircase or walls?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Our engineers take care to protect your walls, skirting boards and flooring throughout. Your staircase will be left clean and ready to use when the job is done."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "Can you remove a stairlift that has stopped working?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. A faulty or broken stairlift is no more difficult to remove than a working one. We don't need the unit to be operational to carry out the removal."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "How quickly can you come out?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We aim for same-week appointments across Kent. For urgent situations — property sales or bereavements — get in touch directly and we'll prioritise your booking wherever possible."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "What happens to the stairlift once it's removed?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Once removed we assess the unit. Where it's in good condition we look to rehome it where possible. Where it's beyond use we arrange responsible disposal. We never simply leave you to deal with it — removal means we take it away completely."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "Do you cover my area in Kent?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We cover the whole of Kent including Maidstone, Canterbury, Tunbridge Wells, Medway, Folkestone, Dover, Margate, Dartford and everywhere in between. If you're unsure, get in touch and we'll confirm."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "How much does stairlift removal cost?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Straight stairlift removal starts from £174 and curved stairlift removal starts from £270. All prices are confirmed upfront before any work begins — no hidden fees."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "Do you remove all brands of stairlift?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. We remove all major brands including Acorn, Stannah, Handicare, Brooks, Thyssen, Companion and Minivator — even if we didn't install it originally."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "Do you remove stairlifts ahead of a property sale?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes — this is one of the most common reasons people contact us. We understand property sales move fast and we'll work around your timeline to get it done promptly."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "stairlift-removal-kings-hill",
+   "file": "stairlift-removal-kings-hill.html",
+   "title": "Stairlift Removal Kings Hill",
+   "h1": "Stairlift Removal in Kings Hill",
+   "seo_title": "Stairlift Removal Kings Hill | Fast Stairlift Removal Kent",
+   "seo_desc": "Professional stairlift removal in Kings Hill. We safely remove straight and curved stairlifts across Kings Hill and the surrounding Kent area. Fast response and free quotes.",
+   "template": "location",
+   "schema": []
+  },
+  {
+   "slug": "stairlift-removal-maidstone",
+   "file": "stairlift-removal-maidstone.html",
+   "title": "Stairlift Removal Maidstone",
+   "h1": "Stairlift Removal in Maidstone",
+   "seo_title": "Stairlift Removal Maidstone | Fast Stairlift Removal Kent",
+   "seo_desc": "Professional stairlift removal in Maidstone. We safely remove straight and curved stairlifts across Maidstone and the surrounding Kent area. Fast response and free quotes.",
+   "template": "location",
+   "schema": []
+  },
+  {
+   "slug": "stairlift-removal-paddock-wood",
+   "file": "stairlift-removal-paddock-wood.html",
+   "title": "Stairlift Removal Paddock Wood",
+   "h1": "Stairlift Removal in Paddock Wood",
+   "seo_title": "Stairlift Removal Paddock Wood | Fast Stairlift Removal Kent",
+   "seo_desc": "Professional stairlift removal in Paddock Wood. We safely remove straight and curved stairlifts across Paddock Wood and the surrounding Kent area. Fast response and free quotes.",
+   "template": "location",
+   "schema": []
+  },
+  {
+   "slug": "stairlift-removal-sevenoaks",
+   "file": "stairlift-removal-sevenoaks.html",
+   "title": "Stairlift Removal Sevenoaks",
+   "h1": "Stairlift Removal in Sevenoaks",
+   "seo_title": "Stairlift Removal Sevenoaks | Fast Stairlift Removal Kent",
+   "seo_desc": "Professional stairlift removal in Sevenoaks. We safely remove straight and curved stairlifts across Sevenoaks and the surrounding Kent area. Fast response and free quotes.",
+   "template": "location",
+   "schema": []
+  },
+  {
+   "slug": "stairlift-removal-staplehurst",
+   "file": "stairlift-removal-staplehurst.html",
+   "title": "Stairlift Removal Staplehurst",
+   "h1": "Stairlift Removal in Staplehurst",
+   "seo_title": "Stairlift Removal Staplehurst | Stairlift Removal Kent | MobilityBase",
+   "seo_desc": "Professional stairlift removal in Staplehurst, Kent. MobilityBase safely removes straight and curved stairlifts from homes across Staplehurst and surrounding villages. Contact us for a quotation.",
+   "template": "location",
+   "schema": []
+  },
+  {
+   "slug": "stairlift-removal-tenterden",
+   "file": "stairlift-removal-tenterden.html",
+   "title": "Stairlift Removal Tenterden",
+   "h1": "Stairlift Removal in Tenterden",
+   "seo_title": "Stairlift Removal Tenterden | Stairlift Removal Kent | Mobilitybase",
+   "seo_desc": "Stairlift removal in Tenterden, Kent. Mobilitybase safely removes straight and curved stairlifts from homes across Tenterden and surrounding villages. Contact us for a quotation.",
+   "template": "location",
+   "schema": []
+  },
+  {
+   "slug": "stairlift-removal-tonbridge",
+   "file": "stairlift-removal-tonbridge.html",
+   "title": "Stairlift Removal Tonbridge",
+   "h1": "Stairlift Removal in Tonbridge",
+   "seo_title": "Stairlift Removal Tonbridge | Fast Stairlift Removal Kent",
+   "seo_desc": "Professional stairlift removal in Tonbridge. We safely remove straight and curved stairlifts across Tonbridge and the surrounding Kent area. Fast response and free quotes.",
+   "template": "location",
+   "schema": []
+  },
+  {
+   "slug": "stairlift-removal-tunbridge-wells",
+   "file": "stairlift-removal-tunbridge-wells.html",
+   "title": "Stairlift Removal Tunbridge Wells",
+   "h1": "Stairlift Removal in Tunbridge Wells",
+   "seo_title": "Stairlift Removal Tunbridge Wells | MobilityBase",
+   "seo_desc": "MobilityBase provides professional stairlift removal in Tunbridge Wells and surrounding areas. Safe removal by experienced engineers. Free quotes available.",
+   "template": "location",
+   "schema": []
+  },
+  {
+   "slug": "stairlift-removal-west-malling",
+   "file": "stairlift-removal-west-malling.html",
+   "title": "Stairlift Removal West Malling",
+   "h1": "Stairlift Removal in West Malling",
+   "seo_title": "Stairlift Removal West Malling | Stairlift Removal Service Kent | Mobilitybase",
+   "seo_desc": "Professional stairlift removal in West Malling and surrounding areas. Mobilitybase safely removes straight and curved stairlifts across Kent. Contact our team today for a quotation.",
+   "template": "location",
+   "schema": []
+  },
+  {
+   "slug": "straight-stairlift-range",
+   "file": "straight-stairlift-range.html",
+   "title": "Straight Stairlifts Kent & London",
+   "h1": "Straight Stairlifts Supplied & Installed",
+   "seo_title": "Straight Stairlifts Kent & London | Mobilitybase",
+   "seo_desc": "Mobilitybase supplies and installs straight stairlifts across Kent and London. Reliable stairlifts for straight staircases with professional installation and support.",
+   "template": "custom",
+   "schema": []
+  },
+  {
+   "slug": "straight-stairlift-warranty",
+   "file": "straight-stairlift-warranty.html",
+   "title": "Straight Stairlift Warranty Kent & London",
+   "h1": "STRAIGHT STAIRLIFT WARRANTY PLANS",
+   "seo_title": "Straight Stairlift Warranty Kent & London | Mobilitybase",
+   "seo_desc": "Mobilitybase provides warranty cover for straight stairlifts across Kent and London. Our plans include servicing, callouts and repairs to keep your stairlift running safely.",
+   "template": "custom",
+   "schema": []
+  },
+  {
+   "slug": "survey-advice",
+   "file": "survey-advice.html",
+   "title": "Stairlift & Home Lift Surveys Kent & London",
+   "h1": "Lift Surveys & Advice Across London, Kent & the South East",
+   "seo_title": "Stairlift & Home Lift Surveys Kent & London | Mobilitybase",
+   "seo_desc": "Mobilitybase provides stairlift and home lift surveys across Kent and London. Our engineers assess your staircase or property and recommend the best lift solution.",
+   "template": "content",
+   "schema": []
+  }
+ ],
+ "posts": [
+  {
+   "slug": "are-stairlifts-really-worth-it-here-s-what-you-need-to-know",
+   "file": "are-stairlifts-really-worth-it-here-s-what-you-need-to-know.html",
+   "title": "Are Stairlifts Really Worth It? Here's What You Need to Know",
+   "seo_title": "Are Stairlifts Really Worth It? Here's What You Need to Know",
+   "seo_desc": "Are stairlifts worth it? Discover the benefits, costs, and features of stairlifts to improve mobility and safety at home. Make an informed decision today!",
+   "date": "2025-01-15T21:58:02.921Z",
+   "modified": "2026-03-18T16:58:41.952Z",
+   "featured": "ccb1388f74524a5a.webp",
+   "schema": []
+  },
+  {
+   "slug": "handicare-curved-stairlift-fault-codes",
+   "file": "handicare-curved-stairlift-fault-codes.html",
+   "title": "Handicare Curved Stairlift Fault Codes — 2000 & 4000 Models",
+   "seo_title": "Handicare Curved Stairlift Fault Codes — 2000 & 4000 | Mobilitybase",
+   "seo_desc": "Handicare curved stairlift fault codes explained for the 2000 and 4000 models. Find out what each code means and what to do next. Local engineers covering Kent, London and the South East.",
+   "date": "2026-05-11T23:00:00.000Z",
+   "modified": "2026-05-11T23:00:00.000Z",
+   "featured": "7d3d5a91ef7043a4.webp",
+   "schema": [
+    {
+     "@context": "https://schema.org",
+     "@type": "Article",
+     "headline": "Handicare Curved Stairlift Fault Codes — 2000 & 4000 Models",
+     "image": "https://static.wixstatic.com/media/b55e4e_7d3d5a91ef7043a4b2f32d12a69380fa~mv2.jpg",
+     "description": "If your Handicare curved stairlift is showing a fault code on its display, this guide will help you understand what it means. Find your model below, check the code, and follow the simple steps. If you're still stuck, give us a call.",
+     "author": {
+      "@type": "Organization",
+      "name": "Mobilitybase"
+     }
+    },
+    {
+     "@context": "https://schema.org",
+     "@type": "HowTo",
+     "name": "Before You Call — Quick Checks",
+     "description": "These resolve a lot of faults before an engineer is needed:",
+     "step": [
+      {
+       "@type": "HowToStep",
+       "text": "Is the key switch turned to ON?"
+      },
+      {
+       "@type": "HowToStep",
+       "text": "Is the emergency stop button released?"
+      },
+      {
+       "@type": "HowToStep",
+       "text": "Is the seat fully swivelled forward to the drive position?"
+      },
+      {
+       "@type": "HowToStep",
+       "text": "Are both armrests fully lowered?"
+      },
+      {
+       "@type": "HowToStep",
+       "text": "Is the charger plugged in with the socket switched on?"
+      },
+      {
+       "@type": "HowToStep",
+       "text": "Have you tried a reset? Turn the main switch off for 10 seconds, then back on."
+      }
+     ]
+    },
+    {
+     "@context": "https://schema.org",
+     "@type": "LocalBusiness",
+     "name": "Mobilitybase",
+     "description": "Mobilitybase services and repairs Handicare curved stairlifts across Kent, London and the South East.",
+     "telephone": "0208 936 3060",
+     "url": "https://www.mobilitybase.co.uk/contact"
+    }
+   ]
+  },
+  {
+   "slug": "handicare-stairlift-fault-codes",
+   "file": "handicare-stairlift-fault-codes.html",
+   "title": "Handicare Straight Stairlift Fault Codes — 950, 1000 & 1100",
+   "seo_title": "Handicare Stairlift Fault Codes — 950, 1000 & 1100 | Mobilitybase",
+   "seo_desc": "Handicare stairlift fault codes explained for the 950, 1000 and 1100 models. Find out what each code means and what to do next. Local engineers covering Kent, London and the South East.",
+   "date": "2026-05-11T23:00:00.000Z",
+   "modified": "2026-05-11T23:00:00.000Z",
+   "featured": "aa292053a2f64f1f.webp",
+   "schema": [
+    {
+     "@context": "https://schema.org",
+     "@type": "Article",
+     "headline": "Handicare Straight Stairlift Fault Codes — 950, 1000 & 1100",
+     "description": "If your Handicare straight stairlift is showing a fault code on its display, this guide will help you understand what it means. Find your model below, check the code, and follow the simple steps. If you're still stuck, give us a call.",
+     "image": "https://static.wixstatic.com/media/b55e4e_aa292053a2f64f1faf39bab304597685~mv2.jpg",
+     "author": {
+      "@type": "Organization",
+      "name": "Mobilitybase"
+     }
+    },
+    {
+     "@context": "https://schema.org",
+     "@type": "LocalBusiness",
+     "name": "Mobilitybase",
+     "telephone": "0208 936 3060",
+     "url": "https://www.mobilitybase.co.uk/contact",
+     "description": "Mobilitybase services and repairs Handicare straight stairlifts across Kent, London and the South East.",
+     "areaServed": [
+      {
+       "@type": "Place",
+       "name": "Kent"
+      },
+      {
+       "@type": "Place",
+       "name": "London"
+      },
+      {
+       "@type": "Place",
+       "name": "South East"
+      }
+     ]
+    },
+    {
+     "@context": "https://schema.org",
+     "@type": "HowTo",
+     "name": "Before You Call — Quick Checks",
+     "description": "These resolve a lot of faults before an engineer is needed:",
+     "step": [
+      {
+       "@type": "HowToStep",
+       "text": "Is the key switch turned to ON?"
+      },
+      {
+       "@type": "HowToStep",
+       "text": "Is the emergency stop button released?"
+      },
+      {
+       "@type": "HowToStep",
+       "text": "Is the seat fully swivelled forward to the drive position?"
+      },
+      {
+       "@type": "HowToStep",
+       "text": "Are both armrests fully lowered? (1100 only)"
+      },
+      {
+       "@type": "HowToStep",
+       "text": "Is the charger plugged in with the socket switched on?"
+      },
+      {
+       "@type": "HowToStep",
+       "text": "Have you tried a reset? Turn the main switch off for 10 seconds, then back on."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "mobilitybase-sponsors-paddock-wood-bowls-club-stairlifts-in-kent",
+   "file": "mobilitybase-sponsors-paddock-wood-bowls-club-stairlifts-in-kent.html",
+   "title": "Mobilitybase Partners with Paddock Wood Bowls Club Supporting Our Local Community and Stairlifts in Kent",
+   "seo_title": "Mobilitybase Partners with Paddock Wood Bowls Club Supporting Our Local Community and Stairlifts in Kent",
+   "seo_desc": "Mobilitybase sponsors Paddock Wood Bowls Club, supporting active lifestyles. We provide stairlifts in Kent to help people stay mobile and independent.",
+   "date": "2025-02-19T13:29:09.558Z",
+   "modified": "2025-02-19T15:44:43.735Z",
+   "featured": "7c05e0c61f134d11.webp",
+   "schema": []
+  },
+  {
+   "slug": "pollock-home-lift-20-25-series-lcd-fault-codes",
+   "file": "pollock-home-lift-20-25-series-lcd-fault-codes.html",
+   "title": "Pollock Home Lift 20/25 Series LCD Fault Codes",
+   "seo_title": "Pollock Home Lift 20/25 Series LCD Fault Codes",
+   "seo_desc": "Discover essential Pollock lift fault codes for the 20/25 Series LCD. Troubleshoot common issues and keep your lift running smoothly with our guide.",
+   "date": "2025-01-19T22:30:16.596Z",
+   "modified": "2026-05-12T16:12:24.494Z",
+   "featured": "bffbe8e712e2496a.webp",
+   "schema": [
+    {
+     "@context": "https://schema.org",
+     "@type": "Article",
+     "headline": "Pollock Home Lift 20/25 Series LCD Fault Codes",
+     "description": "If you have a Pollock home lift from 2016 onwards, you may have noticed a 4-line LCD screen located at the back of the lift. Depending on the model, this may be integrated within the mirror or back panel. The LCD screen displays the status of your lift and helps identify any issues. When a fault occurs, it will show a Pollock lift fault code, which is essential for both you and the service engineers in keeping your lift running smoothly.",
+     "image": "https://static.wixstatic.com/media/b55e4e_bffbe8e712e2496a8029275f59f2c63b~mv2.jpg",
+     "mainEntityOfPage": {
+      "@type": "WebPage"
+     }
+    },
+    {
+     "@context": "https://schema.org",
+     "@type": "FAQPage",
+     "mainEntity": [
+      {
+       "@type": "Question",
+       "name": "Stop Button Pressed",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Meaning: Emergency stop button is engaged.\n\nWhat to Do: Ensure stop buttons (in-car or remote) are not activated. Contact a service engineer if unresolved."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "Door Opened",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Meaning: Lift door is open.\n\nWhat to Do: Ensure the lift door is closed. Contact a service engineer if unresolved."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "Door Not Closed",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Meaning: Lift door is detected as not closed.\n\nWhat to Do: Ensure the lift door is closed. Contact a service engineer if unresolved."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "Door Unlocked",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Meaning: Door lock mechanism is disengaged.\n\nWhat to Do: Ensure the lift door is closed. Contact a service engineer if unresolved."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "Carrier Safety",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Meaning: Carrier safety brake disengaged.\n\nWhat to Do: Contact a service engineer."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "Slack Ropes",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Meaning: Lift ropes have lost tension.\n\nWhat to Do: Contact a service engineer."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "Final Limit Switch",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Meaning: Final safety switch triggered.\n\nWhat to Do: Locate and reset the pin based on lift type. Contact a service engineer if unresolved."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "Over Speed Switch",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Meaning: Over-speed switch activated.\n\nWhat to Do: Contact a service engineer."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "Hand-Wind Switch",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Meaning: Cover removed for manual winding.\n\nWhat to Do: Refit the cover. Contact a service engineer if unresolved."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "Drive Fault",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Meaning: Motor or drive system fault.\n\nWhat to Do: Contact a service engineer."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "Over Travel Switch",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Meaning: Over travel limit switch engaged.\n\nWhat to Do: Contact a service engineer."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "Up Stop Switch",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Meaning: Upward stop switch engaged.\n\nWhat to Do: Contact a service engineer."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "Up Edge Left",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Meaning: Left edge safety switch triggered.\n\nWhat to Do: Check for obstructions. Contact a service engineer if unresolved."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "Up Edge Back",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Meaning: Back edge safety switch triggered.\n\nWhat to Do: Check for obstructions. Contact a service engineer if unresolved."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "Up Edge Right",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Meaning: Right edge safety switch triggered.\n\nWhat to Do: Check for obstructions. Contact a service engineer if unresolved."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "Up Edge Door",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Meaning: Door edge safety switch triggered.\n\nWhat to Do: Check for obstructions. Contact a service engineer if unresolved."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "Trapdoor Up Switch",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Meaning: Trapdoor upward switch triggered.\n\nWhat to Do: Check for obstructions. Contact a service engineer if unresolved."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "Tray Separation Left",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Meaning: Left tray separation switch activated.\n\nWhat to Do: Check for obstructions. Contact a service engineer if unresolved."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "Tray Separation Right",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Meaning: Right tray separation switch activated.\n\nWhat to Do: Check for obstructions. Contact a service engineer if unresolved."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "Pressure Switch",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Meaning: Pressure switch issue detected.\n\nWhat to Do: Contact a service engineer."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "Trapdoor Fault",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Meaning: Trapdoor not picked up during up travel.\n\nWhat to Do: Contact a service engineer."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "Low Over Travel",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Meaning: Lift travelled too low.\n\nWhat to Do: Lift remains operational; contact a service engineer."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "Tray Safety Left",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Meaning: Left tray safety issue.\n\nWhat to Do: Check for obstructions. Contact a service engineer if unresolved."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "Tray Safety Right",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Meaning: Right tray safety issue.\n\nWhat to Do: Check for obstructions. Contact a service engineer if unresolved."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "Trapdoor Down Switch",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Meaning: Trapdoor downward switch triggered.\n\nWhat to Do: Check for obstructions. Contact a service engineer if unresolved."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "Power Up Reset",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Meaning: Lift is powering up after a reset.\n\nWhat to Do: Allow completion; contact a service engineer if unresolved."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "Door Lock Fault",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Meaning: Door lock not functioning within time frame.\n\nWhat to Do: Hold the alarm cancel button for 10 seconds; contact a service engineer if unresolved."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "Contactor 1 Fault",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Meaning: Contactor fault detected.\n\nWhat to Do: Contact a service engineer."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "Contactor 2 Fault",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Meaning: Contactor fault detected.\n\nWhat to Do: Contact a service engineer."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "Lift Locked",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Meaning: Lift operation is locked.\n\nWhat to Do: Press and hold the UP or DOWN button to unlock. Contact a service engineer if unresolved."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "UPS Fault",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Meaning: Uninterruptible Power Supply fault.\n\nWhat to Do: Contact a service engineer."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "24V PSU Fault",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Meaning: 24V power supply unit fault.\n\nWhat to Do: Contact a service engineer."
+       }
+      }
+     ]
+    },
+    {
+     "@context": "https://schema.org",
+     "@type": "LocalBusiness",
+     "name": "Mobilitybase",
+     "telephone": "0208 936 3060",
+     "areaServed": [
+      "Kent",
+      "London",
+      "South East"
+     ],
+     "description": "Mobilitybase services and repairs Pollock home lifts across Kent, London and the South East — including Gold and Silver aftercare plans for ongoing cover."
+    }
+   ]
+  },
+  {
+   "slug": "stairlift-beeping",
+   "file": "stairlift-beeping.html",
+   "title": "Why Is My Stairlift Beeping? What It Means (and When to Get It Checked)",
+   "seo_title": "Why Is My Stairlift Beeping? Common Causes and Fixes | Mobilitybase",
+   "seo_desc": "Stairlift beeping? Learn the common causes, what to check, and when to get it fixed. Simple advice from a local engineer covering Kent, London and the South East.",
+   "date": "2026-03-28T14:18:24.698Z",
+   "modified": "2026-03-28T14:18:24.698Z",
+   "featured": "a8a4d63e43404dce.webp",
+   "schema": []
+  },
+  {
+   "slug": "stairlift-cost-uk",
+   "file": "stairlift-cost-uk.html",
+   "title": "How Much Does a Stairlift Cost in the UK? (2026 Price Guide)",
+   "seo_title": "How Much Does a Stairlift Cost in the UK? Prices for Straight, Curved & Rental Stairlifts",
+   "seo_desc": "How much does a stairlift cost in the UK? Learn the average price for straight, curved, reconditioned and rental stairlifts and what affects the cost.",
+   "date": "2026-03-18T16:55:03.090Z",
+   "modified": "2026-04-12T21:44:38.067Z",
+   "featured": "d7c2a67b3cc5427a.webp",
+   "schema": [
+    {
+     "@context": "https://schema.org",
+     "@type": "Article",
+     "headline": "How Much Does a Stairlift Cost in the UK? (2026 Price Guide)",
+     "description": "The cost of a stairlift depends mainly on the type of staircase your home has and the model of lift you choose. In 2026, the price of a stairlift in the UK typically ranges from around £2,200 to £3,500 for a straight model.",
+     "image": "https://static.wixstatic.com/media/b55e4e_50e48aed39544c09ae586dd81758a46f~mv2.jpg",
+     "author": {
+      "@type": "Organization",
+      "name": "Mobilitybase"
+     },
+     "publisher": {
+      "@type": "Organization",
+      "name": "Mobilitybase",
+      "telephone": "0208 936 3060"
+     }
+    },
+    {
+     "@context": "https://schema.org",
+     "@type": "FAQPage",
+     "mainEntity": [
+      {
+       "@type": "Question",
+       "name": "How long does a stairlift installation take?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Most straight stairlifts can be installed in a few hours, while curved stairlifts may take slightly longer due to the custom rail design."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "Do stairlifts run on electricity?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Most stairlifts run on rechargeable batteries that are charged through the rail. This means they will continue to work even during a short power cut."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "Can stairlifts be removed if no longer needed?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Stairlifts can be removed safely by trained engineers. Many companies also offer stairlift removal services if the lift is no longer required or the property is being sold."
+       }
+      }
+     ]
+    },
+    {
+     "@context": "https://schema.org",
+     "@type": "HowTo",
+     "name": "How to Get a Stairlift Quote",
+     "step": [
+      {
+       "@type": "HowToStep",
+       "text": "Getting a stairlift quote in the UK usually starts with an enquiry by phone or email."
+      },
+      {
+       "@type": "HowToStep",
+       "text": "A home survey is then arranged so the supplier can assess your staircase and recommend the most suitable solution."
+      },
+      {
+       "@type": "HowToStep",
+       "text": "During the survey, a specialist will take precise measurements of your staircase, including its length, width, and any bends or landings."
+      },
+      {
+       "@type": "HowToStep",
+       "text": "They will also discuss the user’s mobility needs, such as balance, strength, and ease of movement."
+      },
+      {
+       "@type": "HowToStep",
+       "text": "Based on this assessment, the supplier will recommend suitable models and features."
+      }
+     ]
+    },
+    {
+     "@context": "https://schema.org",
+     "@type": "LocalBusiness",
+     "name": "Mobilitybase",
+     "telephone": "0208 936 3060",
+     "areaServed": "Kent and the South East"
+    }
+   ]
+  },
+  {
+   "slug": "stairlift-not-charging-common-causes-and-what-you-can-do",
+   "file": "stairlift-not-charging-common-causes-and-what-you-can-do.html",
+   "title": "Stairlift Not Charging? Common Causes and What You Can Do",
+   "seo_title": "Stairlift Not Charging? Common Causes and What You Can Do",
+   "seo_desc": "Stairlift not charging? Learn the common causes, simple checks you can do, and when to call an engineer in Kent, London and the South East.",
+   "date": "2026-04-12T22:01:49.533Z",
+   "modified": "2026-04-12T22:01:49.533Z",
+   "featured": "c0fa0662e65246b7.webp",
+   "schema": [
+    {
+     "@context": "https://schema.org",
+     "@type": "Article",
+     "headline": "Stairlift Not Charging? Common Causes and What You Can Do",
+     "description": "If your stairlift isn’t charging, it will eventually stop working. In most cases, this comes down to one thing: the stairlift isn’t charging properly.",
+     "image": [
+      "https://static.wixstatic.com/media/b55e4e_c0fa0662e65246b7b65a3bf72b735ae3~mv2.png",
+      "https://static.wixstatic.com/media/b55e4e_dcaa1b7f0fc847abad959be8390a913b~mv2.png"
+     ],
+     "author": {
+      "@type": "Organization",
+      "name": "Kent, London and the South East"
+     },
+     "articleSection": "Maintenance and Troubleshooting",
+     "bodySize": "800",
+     "about": {
+      "@type": "Thing",
+      "name": "Stairlift"
+     }
+    },
+    {
+     "@context": "https://schema.org",
+     "@type": "HowTo",
+     "name": "How to check why a stairlift is not charging",
+     "description": "A guide to checking common issues when a stairlift fails to charge.",
+     "step": [
+      {
+       "@type": "HowToStep",
+       "name": "Check positioning",
+       "text": "Check if the lift is parked fully at the top or bottom and sits firmly in position on its charging point."
+      },
+      {
+       "@type": "HowToStep",
+       "name": "Test movement",
+       "text": "Try moving the lift slightly using the remote to ensure it makes contact with the charging pins."
+      },
+      {
+       "@type": "HowToStep",
+       "name": "Verify power supply",
+       "text": "Check if the power is switched on at the wall, nothing has been unplugged, and no fuses have tripped."
+      },
+      {
+       "@type": "HowToStep",
+       "name": "Identify warning signs",
+       "text": "Look for signs of battery failure such as slowing down, struggling on journeys, or stopping part way."
+      }
+     ]
+    },
+    {
+     "@context": "https://schema.org",
+     "@type": "FAQPage",
+     "mainEntity": [
+      {
+       "@type": "Question",
+       "name": "Why does my stairlift stop halfway?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "This is usually because the batteries do not have enough charge to complete the journey."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "Can a stairlift work without charging?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Only temporarily. Once the batteries run out, the lift will stop."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "How long do stairlift batteries last?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Most batteries last a few years depending on usage."
+       }
+      },
+      {
+       "@type": "Question",
+       "name": "Can I fix a stairlift myself?",
+       "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Basic checks are fine, but internal faults should always be looked at properly."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "stairlift-removal-how-it-works-costs-and-what-to-expect",
+   "file": "stairlift-removal-how-it-works-costs-and-what-to-expect.html",
+   "title": "Stairlift Removal UK: How It Works, Costs & What to Expect",
+   "seo_title": "Stairlift Removal UK: How It Works, Costs & What to Expect",
+   "seo_desc": "Need a stairlift removed? Learn how stairlift removal works, typical removal costs in the UK, and what happens to the equipment after removal.",
+   "date": "2026-03-18T15:41:03.094Z",
+   "modified": "2026-03-18T16:57:31.087Z",
+   "featured": "169359e2081443c0.webp",
+   "schema": []
+  }
+ ],
+ "images": {
+  "b55e4e_bc6a2b8a840945409e2b18060f945ee0~mv2.jpg": "bc6a2b8a84094540.webp",
+  "b55e4e_197509fe0a784a618baafd08a46ca0be~mv2.png": "197509fe0a784a61.webp",
+  "b55e4e_7d3d5a91ef7043a4b2f32d12a69380fa~mv2.jpg": "7d3d5a91ef7043a4.webp",
+  "b55e4e_aa292053a2f64f1faf39bab304597685~mv2.jpg": "aa292053a2f64f1f.webp",
+  "b55e4e_c0fa0662e65246b7b65a3bf72b735ae3~mv2.png": "c0fa0662e65246b7.webp",
+  "b55e4e_a8a4d63e43404dce8bfc364d2f614bea~mv2.png": "a8a4d63e43404dce.webp",
+  "b55e4e_d7c2a67b3cc5427aba8c3660a495c9ae~mv2.jpg": "d7c2a67b3cc5427a.webp",
+  "b55e4e_169359e2081443c09f3b0576a7ea27e8~mv2.png": "169359e2081443c0.webp",
+  "b55e4e_7c05e0c61f134d11b567e8dcd735fc9d~mv2.png": "7c05e0c61f134d11.webp",
+  "b55e4e_bffbe8e712e2496a8029275f59f2c63b~mv2.jpg": "bffbe8e712e2496a.webp",
+  "b55e4e_ccb1388f74524a5aa125ae03a45e861d~mv2.jpg": "ccb1388f74524a5a.webp",
+  "b55e4e_437ec0729ae6415ab152ebbd3b68899c~mv2.jpg": "437ec0729ae6415a.webp",
+  "b55e4e_7ac87c3ef4144be184e75265f673f6e0~mv2.jpeg": "7ac87c3ef4144be1.webp",
+  "b55e4e_c183aa407a584b368e952961c7f6e97d~mv2.webp": "c183aa407a584b36.webp",
+  "b55e4e_13b4ad69e4514301aa19a5d0f2de2ac2~mv2.jpg": "13b4ad69e4514301.webp",
+  "b55e4e_d0215bb86f4a402183b84476055d250b~mv2.jpeg": "d0215bb86f4a4021.webp",
+  "b55e4e_8b332689969e4286b10347d2f6225ad5~mv2.jpeg": "8b332689969e4286.webp",
+  "b55e4e_12eee1d0ab304517bd7930992b6a55f6~mv2.jpeg": "12eee1d0ab304517.webp",
+  "b55e4e_32a1699136194f51a5bc636494456d3a~mv2.png": "32a1699136194f51.webp",
+  "b55e4e_f377b01ade6148598767370f1331aec0~mv2.jpg": "f377b01ade614859.webp",
+  "b55e4e_37777dd120194d1c986698aea0e9abb5~mv2.png": "37777dd120194d1c.webp",
+  "b55e4e_d44927b15530433e93b933177254dfe1~mv2.png": "d44927b15530433e.webp",
+  "b55e4e_4fa8ffc0fb584eb88712333f4b94bf22~mv2.png": "4fa8ffc0fb584eb8.webp",
+  "b55e4e_a8d0ac9a2711404494ab00a8b4d1ab04~mv2.webp": "a8d0ac9a27114044.webp",
+  "b55e4e_71da667fc0a3418da77a49817512d863~mv2.jpeg": "71da667fc0a3418d.webp",
+  "b55e4e_d4bdfa3388cc4843ada2f928fd4e1e10~mv2.jpeg": "d4bdfa3388cc4843.webp",
+  "b55e4e_58d58892e8c14f82878428c9b537188d~mv2.jpeg": "58d58892e8c14f82.webp",
+  "b55e4e_264afb5dc6804925b3f8fbe5bf0b4765~mv2.jpeg": "264afb5dc6804925.webp",
+  "b55e4e_c0b7ddee9ede4a0bab86dbef85793076~mv2.jpeg": "c0b7ddee9ede4a0b.webp",
+  "b55e4e_1c117770724443aa9e2b23e226b6c26b~mv2.jpeg": "1c117770724443aa.webp",
+  "b55e4e_7f5928a6ff134f93bc052fb2c3804b67~mv2.jpeg": "7f5928a6ff134f93.webp",
+  "b55e4e_a5e5a3e86b9040e5ae7d4047c4d4b5b5~mv2.jpeg": "a5e5a3e86b9040e5.webp",
+  "b55e4e_6b31182ec0a54c9ea4af6d790b4b8bbb~mv2.jpeg": "6b31182ec0a54c9e.webp",
+  "b55e4e_8d0f92577e83468fb2316e4eeeea9afa~mv2.jpeg": "8d0f92577e83468f.webp",
+  "b55e4e_df39ed80a7d7434db5f21c8bf3d27ce9~mv2.jpeg": "df39ed80a7d7434d.webp",
+  "b55e4e_77675b2739df4cca9f1781240c25d998~mv2.jpeg": "77675b2739df4cca.webp",
+  "b55e4e_ed6998ad9dc7472f99212834779bd32f~mv2.jpeg": "ed6998ad9dc7472f.webp",
+  "b55e4e_bac30f4d12f14711a5675461359e476a~mv2.jpeg": "bac30f4d12f14711.webp",
+  "b55e4e_68b3050398874e2783c3198ebe2ec8ed~mv2.jpeg": "68b3050398874e27.webp",
+  "b55e4e_edfa82ec3845483eaaea1dcfd3ea9b66~mv2.jpeg": "edfa82ec3845483e.webp",
+  "b55e4e_6d2d0d017a4b4a4ea5834e7866efeb47~mv2.jpeg": "6d2d0d017a4b4a4e.webp",
+  "b55e4e_9e5139031a1d4fdb86da480f41c8f355~mv2.jpeg": "9e5139031a1d4fdb.webp",
+  "b55e4e_a00f3c9655104cddb6b18a7c3ec4a79b~mv2.jpeg": "a00f3c9655104cdd.webp",
+  "b55e4e_40120e0ddc6d498bbfb0537f3484e91e~mv2.jpeg": "40120e0ddc6d498b.webp",
+  "b55e4e_816916a9f8f34187a9292c5943dda590~mv2.jpeg": "816916a9f8f34187.webp",
+  "b55e4e_de7173f4eb7448bd90288e1c047bb2d6~mv2.jpeg": "de7173f4eb7448bd.webp",
+  "b55e4e_12382f7f0c994f6c912fb39f8e5f1f06~mv2.jpg": "12382f7f0c994f6c.webp",
+  "b55e4e_5c5d03734bca4239bafbf7451c2d6b3d~mv2.jpg": "5c5d03734bca4239.webp",
+  "b55e4e_60adcfbb5e514f34bd93711937dab7cc~mv2.png": "60adcfbb5e514f34.webp",
+  "b55e4e_34d624b112c14cf787e4d8d858845429~mv2.jpg": "34d624b112c14cf7.webp",
+  "b55e4e_cb2415c719fe4cd9a52cb8ec429ada32~mv2.jpg": "cb2415c719fe4cd9.webp"
+ }
+}
