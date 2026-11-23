@@ -321,7 +321,7 @@ function mb_landings() {
 	return array(
 		'lift-servicing-kent' => array(
 			'ticks' => array( 'All major makes serviced', 'Clear price before any extra work', 'Annual plans with 24/7 breakdown cover' ),
-			'price' => $p['plan_from'] ? 'Stairlift service £' . $p['service_oneoff'] . ' + VAT · plans from £' . $p['plan_from'] . ' a year' : '',
+			'price' => $p['plan_from'] ? 'Stairlift service £' . $p['service_oneoff'] . ' + VAT · plans from £' . $p['plan_from'] . ' a year + VAT' : '',
 			'form'  => sprintf( $service_form, 'Service booking', 'Book my service' ),
 			'form_title' => 'Book a service',
 		),

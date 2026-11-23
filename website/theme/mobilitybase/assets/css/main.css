@@ -634,3 +634,12 @@ h1, h2, h3, h4 { letter-spacing: -.01em; }
 .mb-compare__col h3 { margin:0 0 4px; font-size:1.25rem; }
 .mb-compare__price { color:var(--green-dark); font-weight:700; margin:0 0 12px; }
 @media (max-width: 700px) { .mb-compare__grid { grid-template-columns:1fr; } }
+.mb-towns { list-style:none; margin:24px auto 0; padding:0; max-width:980px; display:grid; gap:10px; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); }
+.mb-towns li { background:#fff; border:1px solid #e1e7e4; border-radius:12px; padding:10px 14px; display:flex; flex-direction:column; }
+.mb-towns strong { color:var(--heading); }
+.mb-towns span { font-size:14px; }
+.mb-towns a { color:var(--green-dark); }
+@media (max-width: 640px) {
+	.mb-towns { grid-template-columns: 1fr 1fr; }
+	.mb-footmain__inner > div:nth-child(3) { display:none; } /* town list already shown in the page */
+}
