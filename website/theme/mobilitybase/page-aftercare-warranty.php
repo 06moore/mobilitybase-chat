@@ -1,7 +1,7 @@
 <?php
 /**
  * Aftercare & Warranty — the page for putting an existing lift on a Mobilitybase plan,
- * including lifts installed by other companies.
+ * Already have a lift and need a service plan?
  */
 get_header();
 $from = mb_prices()['plan_from'];
@@ -11,7 +11,7 @@ $from = mb_prices()['plan_from'];
 		<div class="mb-lochero__text">
 			<?php if ( $from ) : ?><p class="mb-pricebadge">Plans from £<?php echo esc_html( $from ); ?> a year + VAT</p><?php endif; ?>
 			<h1>Warranty &amp; Service Plans for Your Lift</h1>
-			<p class="mb-lead">Stairlifts, homelifts and ceiling hoists across Kent, London and the South East — <strong>including lifts installed by other companies</strong>.</p>
+			<p class="mb-lead">Stairlifts, homelifts and ceiling hoists across Kent, London and the South East. <strong>Already have a lift and need a service plan?</strong> Choose the cover that suits you.</p>
 			<ul class="mb-ticks">
 				<li>Annual service included in every plan</li>
 				<li>Priority 24/7 breakdown cover on Silver &amp; Gold</li>
@@ -30,8 +30,8 @@ $from = mb_prices()['plan_from'];
 
 <section class="mb-section mb-section--grey">
 	<div class="mb-wrap">
-		<h2 class="mb-title">Lift fitted by another company?</h2>
-		<p class="mb-section__intro">If your original installer has stopped servicing your lift, gone out of business or is simply too far away, you can move your cover to a local team. Here’s how it works.</p>
+		<h2 class="mb-title">Joining a plan is simple</h2>
+		<p class="mb-section__intro">Already have a lift and need a service plan? Here’s how it works.</p>
 		<ol class="mb-steps">
 			<li><strong>Tell us about your lift</strong><span>The make, roughly when it was installed and who fitted it. Call us or use the form above.</span></li>
 			<li><strong>Initial service &amp; safety check</strong><span>An engineer services the lift and checks it’s in safe working order. Any parts it needs first are quoted before we do anything. This is charged as a standard service visit, from £<?php echo esc_html( mb_prices()['service_oneoff'] ); ?> + VAT.</span></li>

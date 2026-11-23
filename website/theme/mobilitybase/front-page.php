@@ -9,7 +9,7 @@ $prices = mb_prices();
 <section class="mb-hero">
 	<div class="mb-hero__text">
 		<h1 class="mb-hero__title">Stairlifts &amp; Home Lifts Across Kent &amp; London <span class="mb-hero__titlesub">Supplied, installed &amp; looked after</span></h1>
-		<p class="mb-hero__lead">Expert advice, professional installation and ongoing support from your local family-run team. Every new lift starts with a <strong>free home survey and a written quote</strong>, and if you already have a lift, we can look after it even if another company installed it.</p>
+		<p class="mb-hero__lead">Expert advice, professional installation and ongoing support from your local family-run team. Every new lift starts with a <strong>free home survey and a written quote</strong>. Already have a lift and need a service plan? We can help with that too.</p>
 		<p class="mb-hero__ctas">
 			<a class="mb-btn" href="<?php echo esc_url( home_url( '/book-your-visit' ) ); ?>">Book a Free Home Survey</a>
 			<a class="mb-btn mb-btn--outline" href="<?php echo esc_url( home_url( '/aftercare-warranty#join' ) ); ?>">Cover My Existing Lift</a>
@@ -39,7 +39,7 @@ $prices = mb_prices();
 				<span class="mb-path__icon"><?php echo mb_icon( 'shield' ); // phpcs:ignore ?></span>
 				<span class="mb-path__kicker">Already have a lift?</span>
 				<span class="mb-path__title">Warranty &amp; service plans</span>
-				<span class="mb-path__text">Annual servicing and breakdown cover for stairlifts, homelifts and hoists — including lifts fitted by other companies.</span>
+				<span class="mb-path__text">Already have a lift and need a service plan? Annual servicing and breakdown cover for stairlifts, homelifts and hoists.</span>
 				<?php if ( $prices['plan_from'] ) : ?><span class="mb-path__price">Plans from £<?php echo esc_html( $prices['plan_from'] ); ?> a year + VAT</span><?php endif; ?>
 				<span class="mb-path__btn">Cover my lift</span>
 			</a>
@@ -94,7 +94,7 @@ $prices = mb_prices();
 		<div class="mb-spot__text">
 			<p class="mb-eyebrow">Warranty &amp; service plans</p>
 			<h2>Already have a lift? Let us look after it</h2>
-			<p>Whether we installed your lift or another company did, you can move its servicing and warranty cover to us. After an initial service and safety check, choose the plan that suits you — from an annual service to full parts-and-labour cover with 24/7 breakdown support.</p>
+			<p>Already have a lift and need a service plan? After an initial service and safety check, choose the plan that suits you — from an annual service to full parts-and-labour cover with 24/7 breakdown support.</p>
 			<p class="mb-spot__brands"><strong>We service all major makes, including:</strong> <?php echo esc_html( implode( ', ', mb_serviced_brands() ) ); ?>.</p>
 			<?php
 			$plans = mb_warranties()['straight-stairlift-warranty']['plans'];

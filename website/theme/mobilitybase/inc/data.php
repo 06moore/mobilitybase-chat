@@ -333,14 +333,14 @@ function mb_landings() {
 			'urgent' => true,
 		),
 		'stairlift-repairs-kent' => array(
-			'ticks' => array( 'All major stairlift makes repaired', 'Including lifts fitted by other companies', 'Price agreed before any parts are fitted' ),
+			'ticks' => array( 'All major stairlift makes repaired', 'Weekday call-outs, plus evenings & weekends on Silver and Gold', 'Price agreed before any parts are fitted' ),
 			'price' => $p['callout'] ? 'Call-out from £' . $p['callout'] . ' + VAT' : '',
 			'form'  => 'fields="name,phone,email,postcode,message" title="Stairlift repair request" options="Straight stairlift|Curved stairlift|Not sure" options_label="What type of stairlift is it?" button="Request a repair"',
 			'form_title' => 'Report a stairlift fault',
 			'urgent' => true,
 		),
 		'stairlift-servicing-kent' => array(
-			'ticks' => array( 'All major stairlift makes serviced', 'Including lifts fitted by other companies', 'Annual plans for the same price as a service' ),
+			'ticks' => array( 'All major stairlift makes serviced', 'One-off services or annual plans', 'Annual plans for the same price as a service' ),
 			'price' => 'Stairlift service £' . $p['service_oneoff'] . ' + VAT',
 			'form'  => 'fields="name,phone,email,postcode,message" title="Stairlift service booking" options="Straight stairlift|Curved stairlift|Not sure" options_label="What type of stairlift is it?" button="Book my service"',
 			'form_title' => 'Book a stairlift service',

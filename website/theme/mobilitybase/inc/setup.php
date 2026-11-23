@@ -56,7 +56,7 @@ function mb_default_menu() {
 function mb_footer_services() {
 	return array(
 		array( 'Lift Servicing & Maintenance', '/lift-servicing-kent' ),
-		array( 'Lift Repairs & Emergency Callouts', '/lift-repairs-kent' ),
+		array( 'Lift Repairs & Breakdowns', '/lift-repairs-kent' ),
 		array( 'Stairlift Repairs', '/stairlift-repairs-kent' ),
 		array( 'Stairlift Servicing', '/stairlift-servicing-kent' ),
 		array( 'Warranty & Service Plans', '/aftercare-warranty' ),
