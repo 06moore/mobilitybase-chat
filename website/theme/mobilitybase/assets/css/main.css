@@ -571,3 +571,27 @@ a.mb-card:hover, .mb-card:focus-within { box-shadow: var(--shadow); transform: t
 .mb-included__list svg { flex:0 0 22px; width:22px; height:22px; color:#14a95a; margin-top:2px; }
 .mb-included__list strong { display:block; font-size:.95rem; }
 .mb-card__price--quote { color:#5b6670 !important; font-weight:600; }
+
+/* ==========================================================================
+   v1.5 — polish pass: confident headings, softer surfaces, modern buttons
+   ========================================================================== */
+:root { --grey-bg: #f3f5f4; --radius: 10px; --heading: #0f1720; --shadow: 0 1px 2px rgba(16,24,32,.04), 0 8px 28px rgba(16,24,32,.07); }
+h1, h2, h3, h4 { letter-spacing: -.01em; }
+.mb-title { font-size: clamp(26px, 3vw, 36px); letter-spacing: -.015em; text-transform: none; color: var(--heading); }
+.mb-pagetitle { font-size: clamp(30px, 3.6vw, 44px); letter-spacing: -.02em; color: var(--heading); }
+.mb-hero__title { font-size: clamp(32px, 3.4vw, 48px); line-height: 1.12; letter-spacing: -.025em; color: var(--heading); }
+.mb-hero__lead { font-size: 18px; line-height: 1.7; color: #4b5560; }
+.mb-section__intro { color: #4b5560; }
+.mb-btn { border-radius: 8px; font-weight: 700; letter-spacing: .01em; padding-top: 14px; padding-bottom: 14px; transition: background .15s, box-shadow .15s, transform .15s; }
+.mb-btn:hover { box-shadow: 0 6px 18px rgba(19,170,89,.25); transform: translateY(-1px); }
+.mb-hero__ctas .mb-btn { font-weight: 700; letter-spacing: .01em; }
+.mb-card, .mb-path, .mb-review, .mb-plan, .mb-panel, .mb-miniplan { border-radius: 14px; }
+.mb-card, .mb-review, .mb-plan, .mb-panel { box-shadow: var(--shadow); border-color: #e6eae8; }
+.mb-card__img img, .mb-model__img img, .mb-spot__media img { border-radius: 0; }
+.mb-model__img, .mb-spot__media { border-radius: 14px; overflow: hidden; }
+.mb-section--grey { background: var(--grey-bg); }
+.mb-trust { background: #0f1720; }
+.mb-eyebrow { letter-spacing: .12em; }
+.mb-hero__titlesub { display: block; margin-top: .35em; font-size: .62em; line-height: 1.25; font-weight: 600; letter-spacing: -.01em; color: var(--green-dark); }
+.mb-model__body h2 { font-weight: 700; letter-spacing: -.015em; }
+.mb-included { margin-bottom: 40px; }

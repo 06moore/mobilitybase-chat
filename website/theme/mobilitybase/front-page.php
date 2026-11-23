@@ -8,7 +8,7 @@ $prices = mb_prices();
 ?>
 <section class="mb-hero">
 	<div class="mb-hero__text">
-		<h1 class="mb-hero__title">Stairlifts &amp; Home Lifts Across Kent &amp; London —<br>Supplied, Installed &amp; Looked After</h1>
+		<h1 class="mb-hero__title">Stairlifts &amp; Home Lifts Across Kent &amp; London <span class="mb-hero__titlesub">Supplied, installed &amp; looked after</span></h1>
 		<p class="mb-hero__lead">Family-run engineers based in Kent. Already have a lift? We can look after it — <strong>even if another company installed it</strong>.</p>
 		<p class="mb-hero__ctas">
 			<a class="mb-btn" href="<?php echo esc_url( home_url( '/book-your-visit' ) ); ?>">Get a Free Quote</a>
