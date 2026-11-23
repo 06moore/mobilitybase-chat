@@ -348,16 +348,21 @@ function mb_landing( $slug ) {
  */
 function mb_reviews() {
 	return apply_filters( 'mb_reviews', array(
-		// array( 'Jane S.', 5, 'Review text exactly as written on Google.', 'March 2026', 'Curved stairlift installation' ),
+		// Copied word for word from Google. Texts ending in … are Google's shortened preview –
+		// replace with the full review text when available.
+		array( 'Wendi Austin-Joseph', 5, 'Excellent Customer Service & Care Always!! I highly recommend this company.', 'August 2026', '' ),
+		array( 'Craig Matthews', 5, 'Mobilitybase service 2 hoists and a lift for us. The team of people from office staff to engineers are professional and…', 'August 2026', 'Hoist & lift servicing' ),
+		array( 'Adrian Hanstock', 5, 'We recently needed extensive diagnostic and repair work to resolve a fault, and Tom at Mobility Base was exceptional…', 'June 2026', 'Lift repair' ),
+		array( 'Janet', 5, 'I cannot tell you how impressed we were with service wehad from your technician that can out on Sunday evening to…', 'August 2026', 'Out-of-hours call-out' ),
 	) );
 }
 
 /** Overall Google rating. Leave 'rating' empty to hide the summary. */
 function mb_review_summary() {
 	return apply_filters( 'mb_review_summary', array(
-		'rating' => '',   // e.g. 4.9
-		'count'  => '',   // e.g. 37
-		'url'    => '',   // link to the Google reviews, e.g. https://g.page/r/XXXX
+		'rating' => '5.0',
+		'count'  => '28',
+		'url'    => 'https://www.google.com/maps/search/?api=1&query=Mobilitybase+Ltd+East+Peckham',   // link to the Google reviews, e.g. https://g.page/r/XXXX
 		'write'  => '',   // "write a review" link to text to customers, e.g. https://g.page/r/XXXX/review
 	) );
 }
