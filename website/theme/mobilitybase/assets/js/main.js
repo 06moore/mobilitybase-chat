@@ -152,3 +152,30 @@ document.querySelectorAll('.mb-review__more').forEach(function (btn) {
 		btn.textContent = open ? 'Show less' : 'Read the full review';
 	});
 });
+
+// Home page hero photos: fade every 5 seconds, arrows and dots, pause on hover/focus.
+document.querySelectorAll('[data-mb-slider]').forEach(function (el) {
+	var slides = el.querySelectorAll('.mb-slide');
+	var dots = el.querySelectorAll('.mb-slider__dots button');
+	if (slides.length < 2) return;
+	var i = 0, timer = null;
+	var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+	function show(n) {
+		i = (n + slides.length) % slides.length;
+		slides.forEach(function (s, k) {
+			s.classList.toggle('is-active', k === i);
+			if (k === i) s.removeAttribute('aria-hidden'); else s.setAttribute('aria-hidden', 'true');
+		});
+		dots.forEach(function (d, k) { if (k === i) d.setAttribute('aria-current', 'true'); else d.removeAttribute('aria-current'); });
+	}
+	function start() { if (!still) { stop(); timer = setInterval(function () { show(i + 1); }, 5000); } }
+	function stop() { if (timer) clearInterval(timer); timer = null; }
+	el.querySelector('.mb-slider__btn--prev').addEventListener('click', function () { show(i - 1); start(); });
+	el.querySelector('.mb-slider__btn--next').addEventListener('click', function () { show(i + 1); start(); });
+	dots.forEach(function (d, k) { d.addEventListener('click', function () { show(k); start(); }); });
+	el.addEventListener('mouseenter', stop);
+	el.addEventListener('mouseleave', start);
+	el.addEventListener('focusin', stop);
+	el.addEventListener('focusout', start);
+	start();
+});

@@ -16,9 +16,23 @@ $prices = mb_prices();
 		</p>
 		<p class="mb-hero__call">Or call us today on <?php echo mb_tel(); // phpcs:ignore ?></p>
 	</div>
-	<div class="mb-hero__media">
-		<?php echo mb_img( 'install-homelift-crawley.webp', 'Through-floor home lift installed by Mobilitybase in a home in Crawley, Sussex', array( 'loading' => false, 'fetchpriority' => 'high' ) ); // phpcs:ignore ?>
-		<p class="mb-hero__tag"><?php echo mb_icon( 'check' ); // phpcs:ignore ?> Installed by Mobilitybase · Crawley, Sussex</p>
+	<?php $mb_slides = mb_hero_slides(); ?>
+	<div class="mb-hero__media mb-slider" data-mb-slider aria-roledescription="carousel" aria-label="Recent Mobilitybase installations">
+		<?php foreach ( $mb_slides as $i => $sl ) : ?>
+			<div class="mb-slide<?php echo 0 === $i ? ' is-active' : ''; ?>" role="group" aria-roledescription="slide" aria-label="<?php echo esc_attr( ( $i + 1 ) . ' of ' . count( $mb_slides ) ); ?>"<?php echo 0 === $i ? '' : ' aria-hidden="true"'; ?>>
+				<?php echo mb_img( $sl[0], $sl[1], 0 === $i ? array( 'loading' => false, 'fetchpriority' => 'high' ) : array( 'loading' => false ) ); // phpcs:ignore ?>
+				<p class="mb-hero__tag"><?php echo mb_icon( 'check' ); // phpcs:ignore ?> <?php echo esc_html( $sl[2] ); ?></p>
+			</div>
+		<?php endforeach; ?>
+		<?php if ( count( $mb_slides ) > 1 ) : ?>
+			<button type="button" class="mb-slider__btn mb-slider__btn--prev" aria-label="Previous photo">&#8249;</button>
+			<button type="button" class="mb-slider__btn mb-slider__btn--next" aria-label="Next photo">&#8250;</button>
+			<div class="mb-slider__dots">
+				<?php foreach ( $mb_slides as $i => $sl ) : ?>
+					<button type="button" aria-label="<?php echo esc_attr( 'Show photo ' . ( $i + 1 ) ); ?>"<?php echo 0 === $i ? ' aria-current="true"' : ''; ?>></button>
+				<?php endforeach; ?>
+			</div>
+		<?php endif; ?>
 	</div>
 </section>
 

@@ -49,6 +49,7 @@ function mb_ranges() {
 		'straight-stairlift-range' => array(
 			'h1'     => 'Straight Stairlifts Supplied & Installed',
 			'intro'  => 'Select the straight stairlift you’re interested in below and send us your enquiry. One of our team will review the information and contact you to arrange a survey or answer any questions.',
+			'install' => array( 'install-stairlift-dartford.webp', 'Straight stairlift installed by Mobilitybase in Dartford, Kent', 'Straight stairlift fitted by our engineers in a home in Dartford, Kent.' ),
 			'models' => array(
 				array( 'HomeGlide', 'd0215bb86f4a4021.webp', 'Access HomeGlide straight stairlift', array(
 					'The Access HomeGlide is a compact, easy-to-use straight stairlift that fits neatly onto your staircase. It provides a smooth and secure ride, helping you move safely and confidently around your home.',
@@ -434,4 +435,16 @@ function mb_review_summary() {
 		'url'    => 'https://share.google/gGAWaCYnCdwy9BHJo',   // link to the Google reviews, e.g. https://g.page/r/XXXX
 		'write'  => 'https://g.page/r/Cdg6xKzOXrn6EAE/review',   // "write a review" link to text to customers, e.g. https://g.page/r/XXXX/review
 	) );
+}
+
+/**
+ * Home page hero photos (real installations). They fade every 5 seconds.
+ * Format: array( 'file in assets/img/content', 'alt text', 'label shown on the photo' ),
+ */
+function mb_hero_slides() {
+	return array(
+		array( 'install-stairlift-dartford.webp', 'Straight stairlift installed by Mobilitybase in a home in Dartford, Kent', 'Installed by Mobilitybase · Dartford, Kent' ),
+		array( 'install-homelift-crawley.webp', 'Through-floor home lift installed by Mobilitybase in a home in Crawley, Sussex', 'Installed by Mobilitybase · Crawley, Sussex' ),
+		array( 'install-homelift-london.webp', 'Through-floor home lift with fold-down seat installed by Mobilitybase in London', 'Installed by Mobilitybase · London' ),
+	);
 }

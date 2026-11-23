@@ -652,3 +652,18 @@ h1, h2, h3, h4 { letter-spacing: -.01em; }
 .mb-recent figcaption { padding:20px 24px 20px 0; font-size:1.05rem; color:#33404a; }
 .mb-recent figcaption strong { display:block; color:var(--green-dark); font-size:.85rem; letter-spacing:.1em; text-transform:uppercase; margin-bottom:6px; }
 @media (max-width: 640px) { .mb-recent { grid-template-columns:1fr; } .mb-recent figcaption { padding:0 20px 20px; } .mb-hero__tag { left:12px; bottom:12px; font-size:13px; } }
+/* Hero photo slider */
+.mb-slider { position: relative; overflow: hidden; }
+.mb-slide { position: absolute; inset: 0; opacity: 0; transition: opacity .9s ease; }
+.mb-slide:first-child { position: relative; height: 100%; }
+.mb-slide.is-active { opacity: 1; z-index: 1; }
+.mb-slide img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 62%; display: block; }
+.mb-slider__btn { position: absolute; top: 50%; transform: translateY(-50%); z-index: 3; width: 46px; height: 46px; border-radius: 50%; border: 0; background: rgba(255,255,255,.92); color: var(--heading); font-size: 30px; line-height: 1; cursor: pointer; box-shadow: 0 4px 14px rgba(0,0,0,.15); display: flex; align-items: center; justify-content: center; padding-bottom: 4px; }
+.mb-slider__btn:hover, .mb-slider__btn:focus-visible { background: #fff; color: var(--green-dark); }
+.mb-slider__btn--prev { left: 16px; }
+.mb-slider__btn--next { right: 16px; }
+.mb-slider__dots { position: absolute; right: 20px; bottom: 26px; z-index: 3; display: flex; gap: 8px; }
+.mb-slider__dots button { width: 10px; height: 10px; border-radius: 50%; border: 0; padding: 0; background: rgba(255,255,255,.6); cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,.3); }
+.mb-slider__dots button[aria-current] { background: #fff; width: 24px; border-radius: 6px; }
+@media (max-width: 640px) { .mb-slider__btn { width: 38px; height: 38px; font-size: 24px; } .mb-slider__dots { bottom: 18px; right: 14px; } }
+@media (prefers-reduced-motion: reduce) { .mb-slide { transition: none; } }
