@@ -35,7 +35,7 @@ $from = mb_prices()['plan_from'];
 		<p class="mb-section__intro">Choose your lift to see the Bronze, Silver and Gold plans and prices.</p>
 		<div class="mb-cards mb-cards--wide">
 			<?php foreach ( mb_warranty_products() as $w ) : ?>
-				<article class="mb-card mb-card--warranty<?php echo $w[1] ? '' : ' is-soon'; ?>">
+				<article class="mb-card mb-card--warranty">
 					<div class="mb-card__img"><?php echo mb_img( $w[4], $w[0] ); // phpcs:ignore ?></div>
 					<div class="mb-card__body">
 						<h3 class="mb-card__title"><?php echo $w[1] ? '<a href="' . esc_url( home_url( $w[1] ) ) . '">' . esc_html( $w[0] ) . '</a>' : esc_html( $w[0] ); ?></h3>
@@ -45,7 +45,7 @@ $from = mb_prices()['plan_from'];
 						<?php if ( $w[1] ) : ?>
 							<p><a class="mb-btn mb-btn--caps mb-btn--sm" href="<?php echo esc_url( home_url( $w[1] ) ); ?>">See plans<span class="mb-sr"> for <?php echo esc_html( $w[0] ); ?></span></a></p>
 						<?php else : ?>
-							<p><a class="mb-btn mb-btn--caps mb-btn--sm mb-btn--grey" href="<?php echo esc_url( home_url( '/lift-servicing-kent#quote' ) ); ?>">Ask about servicing</a></p>
+							<p><a class="mb-btn mb-btn--caps mb-btn--sm" href="<?php echo esc_url( home_url( '/lift-servicing-kent#quote' ) ); ?>">Get a service quote</a></p>
 						<?php endif; ?>
 					</div>
 				</article>

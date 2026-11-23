@@ -34,7 +34,16 @@ $stars   = function ( $n ) {
 			<?php foreach ( array_slice( $reviews, 0, $limit ) as $r ) : ?>
 				<figure class="mb-review">
 					<?php echo $stars( $r[1] ); // phpcs:ignore ?>
-					<?php $mb_long = mb_strlen( $r[2] ) > 420; ?><blockquote<?php echo $mb_long ? ' class="is-long"' : ''; ?>><?php foreach ( preg_split( '/\n\s*\n/', $r[2] ) as $mb_para ) : ?><p><?php echo esc_html( $mb_para ); ?></p><?php endforeach; ?></blockquote><?php if ( $mb_long ) : ?><button type="button" class="mb-review__more" aria-expanded="false">Read more</button><?php endif; ?>
+					<?php
+					$mb_paras = preg_split( '/\n\s*\n/', $r[2] );
+					$mb_long  = count( $mb_paras ) > 1 && mb_strlen( $r[2] ) > 600;
+					?>
+					<blockquote>
+						<?php foreach ( $mb_paras as $mb_i => $mb_para ) : ?>
+							<p<?php echo $mb_long && $mb_i > 0 ? ' class="mb-review__rest" hidden' : ''; ?>><?php echo esc_html( $mb_para ); ?></p>
+						<?php endforeach; ?>
+					</blockquote>
+					<?php if ( $mb_long ) : ?><button type="button" class="mb-review__more" aria-expanded="false">Read the full review</button><?php endif; ?>
 					<figcaption><strong><?php echo esc_html( $r[0] ); ?></strong><?php echo ! empty( $r[4] ) ? ' · ' . esc_html( $r[4] ) : ''; ?><?php echo ! empty( $r[3] ) ? '<br><span>' . esc_html( $r[3] ) . ' · Google review</span>' : ''; ?></figcaption>
 				</figure>
 			<?php endforeach; ?>

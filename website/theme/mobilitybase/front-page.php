@@ -9,10 +9,10 @@ $prices = mb_prices();
 <section class="mb-hero">
 	<div class="mb-hero__text">
 		<h1 class="mb-hero__title">Stairlifts &amp; Home Lifts Across Kent &amp; London —<br>Supplied, Installed &amp; Looked After</h1>
-		<p class="mb-hero__lead">Honest advice, professional installation and reliable aftercare from a family-run team of engineers based in Kent. Already have a lift? We can take over its servicing and warranty cover — <strong>even if another company installed it</strong>.</p>
+		<p class="mb-hero__lead">Family-run engineers based in Kent. Already have a lift? We can look after it — <strong>even if another company installed it</strong>.</p>
 		<p class="mb-hero__ctas">
 			<a class="mb-btn" href="<?php echo esc_url( home_url( '/book-your-visit' ) ); ?>">Get a Free Quote</a>
-			<a class="mb-btn mb-btn--grey" href="<?php echo esc_url( home_url( '/aftercare-warranty#join' ) ); ?>">Cover My Existing Lift</a>
+			<a class="mb-btn mb-btn--outline" href="<?php echo esc_url( home_url( '/aftercare-warranty#join' ) ); ?>">Cover My Existing Lift</a>
 		</p>
 		<p class="mb-hero__call">Or call us today on <?php echo mb_tel(); // phpcs:ignore ?></p>
 	</div>

@@ -22,7 +22,7 @@ function mb_form_fields() {
 		'first_name' => array( 'First name', 'text', 'given-name', true ),
 		'last_name'  => array( 'Last name', 'text', 'family-name', false ),
 		'phone'      => array( 'Phone number', 'tel', 'tel', true ),
-		'email'      => array( 'Email address', 'email', 'email', true ),
+		'email'      => array( 'Email address (optional)', 'email', 'email', false ),
 		'postcode'   => array( 'Postcode', 'text', 'postal-code', true ),
 		'subject'    => array( 'Subject', 'text', 'off', true ),
 		'lift_details' => array( 'Make of lift, who installed it and roughly when (if known)', 'text', 'off', false ),
@@ -190,6 +190,14 @@ function mb_form_render( $atts = array() ) {
 						<input id="<?php echo esc_attr( $id ); ?>" type="<?php echo esc_attr( $type ); ?>" name="<?php echo esc_attr( $f ); ?>" autocomplete="<?php echo esc_attr( $ac ); ?>"<?php echo $req ? ' required' : ''; ?><?php echo 'postcode' === $f ? ' autocapitalize="characters"' : ''; ?>>
 					<?php endif; ?>
 				</div>
+				<?php if ( 'phone' === $f ) : ?>
+					<div class="mb-field">
+						<label for="<?php echo esc_attr( $fid ); ?>-callback">Best time to call</label>
+						<select id="<?php echo esc_attr( $fid ); ?>-callback" name="mb_callback">
+							<?php foreach ( mb_callback_times() as $t ) : ?><option><?php echo esc_html( $t ); ?></option><?php endforeach; ?>
+						</select>
+					</div>
+				<?php endif; ?>
 			<?php endforeach; ?>
 			<?php if ( $a['options'] && ! in_array( 'message', $fields, true ) ) : ?>
 				<fieldset class="mb-field mb-field--wide mb-field--radios">
@@ -207,6 +215,11 @@ function mb_form_render( $atts = array() ) {
 	</form>
 	<?php
 	return ob_get_clean();
+}
+
+/** Choices for the "Best time to call" drop-down. */
+function mb_callback_times() {
+	return array( 'Any time', 'Morning (9am–12pm)', 'Afternoon (12pm–5pm)' );
 }
 
 /* ------------------------------------------------------------------ handler */
@@ -263,6 +276,10 @@ function mb_form_handle() {
 	if ( $option ) {
 		$data[ sanitize_text_field( wp_unslash( $_POST['mb_options_label'] ?? '' ) ) ?: 'Option' ] = $option;
 	}
+	$callback = sanitize_text_field( wp_unslash( $_POST['mb_callback'] ?? '' ) );
+	if ( $callback && in_array( $callback, mb_callback_times(), true ) ) {
+		$data['Best time to call'] = $callback;
+	}
 	if ( $product ) {
 		$data['Interested in'] = $product;
 	}
@@ -286,7 +303,7 @@ function mb_form_handle() {
 	}
 	$body .= "Sent from: {$page}\nReceived: " . wp_date( 'D j M Y, H:i' ) . "\n";
 	$headers = array( 'Content-Type: text/plain; charset=UTF-8' );
-	$email   = $data['Email address'] ?? '';
+	$email   = $data['Email address (optional)'] ?? ( $data['Email address'] ?? '' );
 	if ( is_email( $email ) ) {
 		$headers[] = 'Reply-To: ' . str_replace( array( "\r", "\n", '<', '>', ',' ), '', $who ) . ' <' . $email . '>';
 	}
