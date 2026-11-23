@@ -64,15 +64,14 @@ $prices = mb_prices();
 		<p class="mb-section__intro">Every new lift starts with a free home survey by one of our engineers, so you get the right solution for your stairs, your space and your budget.</p>
 		<div class="mb-cards mb-cards--5">
 			<?php
-			$from = array( 'straight-stairlift-range' => 'straight_from', 'curved-stairlift-range' => 'curved_from', 'homelift-range' => 'homelift_from', 'platform-lift-range' => 'platform_from' );
 			foreach ( mb_products() as $slug => $p ) :
-				$price = isset( $from[ $slug ] ) ? mb_price( $from[ $slug ] ) : '';
+				$price = mb_range_price( $slug, true );
 				?>
 				<a class="mb-card" href="<?php echo esc_url( home_url( '/' . $slug ) ); ?>">
 					<span class="mb-card__img"><?php echo mb_img( $p['gallery'][0], $p['name'] ); // phpcs:ignore ?></span>
 					<span class="mb-card__body">
 						<span class="mb-card__title"><?php echo esc_html( $p['name'] ); ?></span>
-						<?php if ( $price ) : ?><span class="mb-card__price"><?php echo esc_html( $price ); ?></span><?php endif; ?>
+						<?php if ( $price ) : ?><span class="mb-card__price"><?php echo nl2br( esc_html( $price ) ); // phpcs:ignore ?></span><?php endif; ?>
 						<span class="mb-card__link">View range <?php echo mb_icon( 'arrow' ); // phpcs:ignore ?></span>
 					</span>
 				</a>

@@ -13,6 +13,7 @@ get_header();
 				<article class="mb-prod">
 					<div class="mb-prod__text">
 						<h2><a href="<?php echo esc_url( home_url( '/' . $slug ) ); ?>"><?php echo esc_html( $p['name'] ); ?></a></h2>
+						<?php if ( $mb_rp = mb_range_price( $slug ) ) : ?><p class="mb-prod__price"><?php echo esc_html( $mb_rp ); ?></p><?php endif; ?>
 						<p><?php echo esc_html( $p['intro'] ); ?></p>
 						<p class="mb-prod__suitable"><?php echo esc_html( $p['suitable'] ); ?></p>
 						<p><a class="mb-btn mb-btn--caps" href="<?php echo esc_url( home_url( '/' . $slug ) ); ?>">Learn more</a></p>

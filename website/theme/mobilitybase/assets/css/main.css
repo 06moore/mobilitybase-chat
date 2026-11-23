@@ -552,3 +552,9 @@ a.mb-card:hover, .mb-card:focus-within { box-shadow: var(--shadow); transform: t
 .mb-trust__rating { color: #f4b400; }
 @media (max-width: 900px) { .mb-reviews__grid { grid-template-columns: 1fr; } }
 .mb-reviews__grid + .mb-center { margin-top: 28px; }
+
+/* v1.3 – "from" prices on product pages */
+.mb-prod__price { font-weight: 700; color: var(--green-dark); font-size: 18px; }
+.mb-rangeprice { text-align: center; margin: -4px auto 18px; max-width: 760px; }
+.mb-rangeprice .mb-pricebadge { margin: 0 0 6px; border-radius: 14px; }
+.mb-rangeprice__note { display: block; font-size: 15px; color: #555; }

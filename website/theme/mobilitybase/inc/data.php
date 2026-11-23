@@ -232,10 +232,10 @@ function mb_prices() {
 		'plan_from'        => 95,   // cheapest warranty & service plan per year
 		'service_oneoff'   => '',   // one-off annual service visit (e.g. 125)
 		'callout'          => '',   // repair call-out fee
-		'straight_from'    => '',   // new straight stairlift, fitted
+		'straight_from'    => 2300, // new straight stairlift, fitted
 		'curved_from'      => '',   // new curved stairlift, fitted
-		'recon_from'       => '',   // reconditioned stairlift, fitted
-		'homelift_from'    => '',   // homelift, fitted
+		'recon_from'       => 1400, // reconditioned straight stairlift, fitted (subject to stock)
+		'homelift_from'    => 18500, // homelift, fitted (new only)
 		'platform_from'    => '',   // platform lift, fitted
 	);
 }
@@ -243,6 +243,32 @@ function mb_prices() {
 function mb_price( $key, $prefix = 'from £' ) {
 	$v = mb_prices()[ $key ] ?? '';
 	return '' === $v ? '' : $prefix . number_format_i18n( (float) $v );
+}
+
+/**
+ * "From" price line for a product range (fitted prices). Empty when we have no price for it.
+ * $short = true gives the compact version used on cards.
+ */
+function mb_range_price( $slug, $short = false ) {
+	$p = mb_prices();
+	$f = fn( $v ) => '£' . number_format_i18n( (float) $v );
+	switch ( $slug ) {
+		case 'straight-stairlift-range':
+			if ( ! $p['straight_from'] ) {
+				return '';
+			}
+			if ( $short ) {
+				return 'New from ' . $f( $p['straight_from'] ) . ( $p['recon_from'] ? "\nReconditioned from " . $f( $p['recon_from'] ) : '' );
+			}
+			return 'New from ' . $f( $p['straight_from'] ) . ' fitted' . ( $p['recon_from'] ? ' · Reconditioned from ' . $f( $p['recon_from'] ) . ' (subject to stock)' : '' );
+		case 'curved-stairlift-range':
+			return $p['curved_from'] ? ( $short ? 'from ' : 'From ' ) . $f( $p['curved_from'] ) . ( $short ? '' : ' fitted' ) : '';
+		case 'homelift-range':
+			return $p['homelift_from'] ? ( $short ? 'from ' : 'From ' ) . $f( $p['homelift_from'] ) . ( $short ? '' : ' fitted' ) : '';
+		case 'platform-lift-range':
+			return $p['platform_from'] ? ( $short ? 'from ' : 'From ' ) . $f( $p['platform_from'] ) . ( $short ? '' : ' fitted' ) : '';
+	}
+	return '';
 }
 
 /** Brands we service (used on home page and servicing sections). */
@@ -278,7 +304,7 @@ function mb_landings() {
 	);
 	$install  = array(
 		'ticks' => array( 'Straight, curved & reconditioned stairlifts', 'Free, no-obligation home survey', 'Installed & serviced by our own engineers' ),
-		'price' => '',
+		'price' => $p['recon_from'] ? sprintf( 'Reconditioned from £%s · New from £%s', number_format( $p['recon_from'] ), number_format( $p['straight_from'] ) ) : '',
 		'form'  => 'fields="name,phone,email,postcode,message" title="Stairlift survey request" options="Straight stairlift|Curved stairlift|Not sure / Need advice" options_label="What type of stairs do you have?" button="Book my free survey"',
 		'form_title' => 'Book a free home survey',
 	);

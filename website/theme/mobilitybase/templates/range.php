@@ -11,6 +11,9 @@ $cat   = mb_products()[ $slug ]['name'] ?? '';
 <section class="mb-section mb-section--top">
 	<div class="mb-wrap">
 		<h1 class="mb-pagetitle"><?php echo esc_html( $range['h1'] ); ?></h1>
+		<?php if ( $mb_rp = mb_range_price( $slug ) ) : ?>
+			<p class="mb-rangeprice"><span class="mb-pricebadge"><?php echo esc_html( $mb_rp ); ?></span> <span class="mb-rangeprice__note">Your exact price is confirmed in writing after a free, no-obligation home survey.</span></p>
+		<?php endif; ?>
 		<p class="mb-section__intro"><?php echo esc_html( $range['intro'] ); ?></p>
 		<div class="mb-models">
 			<?php foreach ( $range['models'] as $m ) : ?>
