@@ -227,7 +227,7 @@ if ( $latest->have_posts() ) :
 			<ul class="mb-ticks">
 				<li>Free, no-obligation home surveys</li>
 				<li>Clear prices — no hidden costs</li>
-				<li>Servicing &amp; repairs for all makes</li>
+				<li>Servicing &amp; repairs for all major makes</li>
 			</ul>
 			<p class="mb-lochero__call">Prefer to talk? Call <?php echo mb_tel(); // phpcs:ignore ?></p>
 		</div>

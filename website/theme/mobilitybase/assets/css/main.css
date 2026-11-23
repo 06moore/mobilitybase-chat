@@ -628,3 +628,9 @@ h1, h2, h3, h4 { letter-spacing: -.01em; }
 	.mb-steps span, .mb-path__text, .mb-review blockquote { font-size: 16px; }
 }
 @media (max-width: 640px) { .mb-about__facts strong { font-size: 19px; } }
+.mb-compare { margin: 56px auto 8px; max-width: 900px; }
+.mb-compare__grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:16px; }
+.mb-compare__col { background:#fff; border:1px solid #e6eae8; border-radius:14px; padding:22px 24px; box-shadow:var(--shadow); }
+.mb-compare__col h3 { margin:0 0 4px; font-size:1.25rem; }
+.mb-compare__price { color:var(--green-dark); font-weight:700; margin:0 0 12px; }
+@media (max-width: 700px) { .mb-compare__grid { grid-template-columns:1fr; } }

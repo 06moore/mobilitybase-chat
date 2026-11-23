@@ -63,6 +63,14 @@ function mb_ranges() {
 					'With a low-maintenance design and simple controls, it offers a safe and reliable way to move comfortably around your home.',
 				) ),
 			),
+			'compare' => array(
+				'title' => 'New or reconditioned: which is right for you?',
+				'cols'  => array(
+					array( 'New stairlift', 'From £2,300 + VAT, fully fitted', array( 'A brand-new lift and rail', 'Choose from our current models', 'Minimum 1-year guarantee', 'Optional service plans afterwards' ) ),
+					array( 'Reconditioned stairlift', 'From £1,400 + VAT, fully fitted', array( 'A quality used lift, checked and reconditioned', 'Fitted by our own engineers', 'Minimum 1-year guarantee', 'Subject to stock: we’ll tell you at your survey if one will suit your stairs' ) ),
+				),
+				'note'  => 'Reconditioned is a sensible choice when budget matters or the lift may only be needed for a while. Either way, you get the same survey, installation and aftercare.',
+			),
 			'cross'  => array( 'If your staircase has turns or landings, you may need a curved stairlift', '/curved-stairlift-range' ),
 			'survey' => $survey,
 		),
@@ -312,7 +320,7 @@ function mb_landings() {
 	$service_form = 'fields="name,phone,email,postcode,message" title="%s" options="Stairlift|Homelift / through-floor lift|Platform lift|Ceiling hoist" options_label="What type of lift is it?" button="%s"';
 	return array(
 		'lift-servicing-kent' => array(
-			'ticks' => array( 'All makes & models serviced', 'Clear price before any extra work', 'Annual plans with 24/7 breakdown cover' ),
+			'ticks' => array( 'All major makes serviced', 'Clear price before any extra work', 'Annual plans with 24/7 breakdown cover' ),
 			'price' => $p['plan_from'] ? 'Stairlift service £' . $p['service_oneoff'] . ' + VAT · plans from £' . $p['plan_from'] . ' a year' : '',
 			'form'  => sprintf( $service_form, 'Service booking', 'Book my service' ),
 			'form_title' => 'Book a service',
@@ -325,7 +333,7 @@ function mb_landings() {
 			'urgent' => true,
 		),
 		'loler-examinations' => array(
-			'ticks' => array( 'Thorough examinations with certification', 'Care homes, landlords & commercial sites', 'Lifts and hoists of all makes' ),
+			'ticks' => array( 'Thorough examinations with certification', 'Care homes, landlords & commercial sites', 'Lifts and hoists of all major makes' ),
 			'price' => '',
 			'form'  => 'fields="name,phone,email,postcode,message" title="LOLER enquiry" button="Request a LOLER quote"',
 			'form_title' => 'Request a LOLER quote',

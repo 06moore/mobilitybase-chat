@@ -19,7 +19,7 @@ if ( 'removal' === $type ) {
 <section class="mb-section mb-section--grey mb-areas">
 	<div class="mb-wrap">
 		<h2 class="mb-title">Areas we cover</h2>
-		<p class="mb-section__intro">Our engineers work across Kent, London and the South East. Here are some of the towns we cover — if yours isn’t listed, we almost certainly still cover it.</p>
+		<p class="mb-section__intro">We’re based in East Peckham, near Tonbridge, and our engineers carry out installations, servicing, repairs and removals across Kent, London and the South East. If your town isn’t listed, we almost certainly still cover it.</p>
 		<?php foreach ( $groups as $g ) : ?>
 			<h3 class="mb-areas__title"><?php echo esc_html( $g[0] ); ?></h3>
 			<ul class="mb-areas__list">

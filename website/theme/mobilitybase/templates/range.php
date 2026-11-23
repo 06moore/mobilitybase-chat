@@ -38,6 +38,23 @@ $cat   = mb_products()[ $slug ]['name'] ?? '';
 				</article>
 			<?php endforeach; ?>
 		</div>
+		<?php if ( ! empty( $range['compare'] ) ) : $cmp = $range['compare']; ?>
+			<div class="mb-compare">
+				<h2 class="mb-title"><?php echo esc_html( $cmp['title'] ); ?></h2>
+				<div class="mb-compare__grid">
+					<?php foreach ( $cmp['cols'] as $col ) : ?>
+						<div class="mb-compare__col">
+							<h3><?php echo esc_html( $col[0] ); ?></h3>
+							<p class="mb-compare__price"><?php echo esc_html( $col[1] ); ?></p>
+							<ul class="mb-plan__list">
+								<?php foreach ( $col[2] as $item ) : ?><li><?php echo mb_icon( 'check' ); // phpcs:ignore ?><?php echo esc_html( $item ); ?></li><?php endforeach; ?>
+							</ul>
+						</div>
+					<?php endforeach; ?>
+				</div>
+				<p class="mb-section__intro"><?php echo esc_html( $cmp['note'] ); ?></p>
+			</div>
+		<?php endif; ?>
 		<?php if ( ! empty( $range['cross'] ) ) : ?>
 			<p class="mb-crosslink"><a href="<?php echo esc_url( home_url( $range['cross'][1] ) ); ?>"><?php echo esc_html( $range['cross'][0] ); ?> <?php echo mb_icon( 'arrow' ); // phpcs:ignore ?></a></p>
 		<?php endif; ?>
