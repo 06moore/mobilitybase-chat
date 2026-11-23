@@ -667,3 +667,11 @@ h1, h2, h3, h4 { letter-spacing: -.01em; }
 .mb-slider__dots button[aria-current] { background: #fff; width: 24px; border-radius: 6px; }
 @media (max-width: 640px) { .mb-slider__btn { width: 38px; height: 38px; font-size: 24px; } .mb-slider__dots { bottom: 18px; right: 14px; } }
 @media (prefers-reduced-motion: reduce) { .mb-slide { transition: none; } }
+/* Phones/tablets: show the whole hero photo (photos are portrait, about 3:4) */
+@media (max-width: 900px) {
+	.mb-hero__media.mb-slider { max-height: none; aspect-ratio: 3 / 4; max-width: 100%; }
+	.mb-slider .mb-slide img { object-position: 50% 50%; }
+}
+@media (max-width: 900px) and (min-width: 560px) {
+	.mb-hero__media.mb-slider { aspect-ratio: 4 / 3; }
+}
