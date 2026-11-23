@@ -595,7 +595,7 @@ h1, h2, h3, h4 { letter-spacing: -.01em; }
 .mb-hero__titlesub { display: block; margin-top: .35em; font-size: .62em; line-height: 1.25; font-weight: 600; letter-spacing: -.01em; color: var(--green-dark); }
 .mb-model__body h2 { font-weight: 700; letter-spacing: -.015em; }
 .mb-included { margin-bottom: 40px; }
-.mb-prose .mb-icongrid { list-style:none; padding:0; display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); margin:16px 0 8px; }
+.mb-prose .mb-icongrid { list-style:none; padding:0; display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); margin:16px 0 8px; }
 .mb-prose .mb-icongrid li { background:#fff; border:1px solid #e6eae8; border-radius:14px; padding:16px 18px; box-shadow:var(--shadow); margin:0; }
 .mb-prose .mb-icongrid li strong { display:block; color:var(--heading); margin-bottom:2px; }
 .mb-pricepair { display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); margin:16px 0; }

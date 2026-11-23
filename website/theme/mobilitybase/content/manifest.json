@@ -669,6 +669,26 @@
    "seo_desc": "Mobilitybase provides stairlift and home lift surveys across Kent and London. Our engineers assess your staircase or property and recommend the best lift solution.",
    "template": "content",
    "schema": []
+  },
+  {
+   "slug": "stairlift-repairs-kent",
+   "file": "stairlift-repairs-kent.html",
+   "title": "Stairlift Repairs Kent",
+   "h1": "Stairlift Repairs Across Kent",
+   "seo_title": "Stairlift Repairs Kent | All Major Makes | Mobilitybase",
+   "seo_desc": "Stairlift stopped working or beeping? Mobilitybase repairs stairlifts across Kent, including lifts fitted by other companies. Call-out from £140 + VAT. Call 0208 936 3060.",
+   "template": "content",
+   "schema": []
+  },
+  {
+   "slug": "stairlift-servicing-kent",
+   "file": "stairlift-servicing-kent.html",
+   "title": "Stairlift Servicing Kent",
+   "h1": "Stairlift Servicing Across Kent",
+   "seo_title": "Stairlift Servicing Kent | From £95 + VAT | Mobilitybase",
+   "seo_desc": "Stairlift servicing across Kent from £95 + VAT, or an annual plan for the same price. All major makes, including lifts fitted by other companies.",
+   "template": "content",
+   "schema": []
   }
  ],
  "posts": [

@@ -37,7 +37,9 @@ function mb_default_menu() {
 		array( 'Servicing & Warranty', '/aftercare-warranty', array(
 			array( 'Warranty & service plans', '/aftercare-warranty' ),
 			array( 'Lift servicing & maintenance', '/lift-servicing-kent' ),
+			array( 'Stairlift servicing', '/stairlift-servicing-kent' ),
 			array( 'Repairs & breakdowns', '/lift-repairs-kent' ),
+			array( 'Stairlift repairs', '/stairlift-repairs-kent' ),
 			array( 'LOLER examinations', '/loler-examinations' ),
 		) ),
 		array( 'Removals', '/stairlift-removal-kent', array(
@@ -55,6 +57,8 @@ function mb_footer_services() {
 	return array(
 		array( 'Lift Servicing & Maintenance', '/lift-servicing-kent' ),
 		array( 'Lift Repairs & Emergency Callouts', '/lift-repairs-kent' ),
+		array( 'Stairlift Repairs', '/stairlift-repairs-kent' ),
+		array( 'Stairlift Servicing', '/stairlift-servicing-kent' ),
 		array( 'Warranty & Service Plans', '/aftercare-warranty' ),
 		array( 'Stairlifts', '/straight-stairlift-range' ),
 		array( 'Home lifts & Through-Floor Lifts', '/homelift-range' ),
