@@ -9,6 +9,7 @@ $w = mb_warranties()[ mb_slug() ];
 	<div class="mb-wrap">
 		<h1 class="mb-pagetitle"><?php echo esc_html( ucwords( strtolower( $w['h1'] ) ) ); ?></h1>
 		<p class="mb-section__intro"><?php echo esc_html( $w['intro'] ); ?></p>
+		<p class="mb-switchnote"><?php echo mb_icon( 'shield' ); // phpcs:ignore ?> <span><strong>Lift installed by another company?</strong> You can still join — we’ll carry out an initial service and safety check first. <a href="<?php echo esc_url( home_url( '/aftercare-warranty#join' ) ); ?>">How it works</a></span></p>
 		<div class="mb-plans">
 			<?php foreach ( $w['plans'] as $key => $p ) : ?>
 				<article class="mb-plan mb-plan--<?php echo esc_attr( $key ); ?><?php echo $p['best'] ? ' mb-plan--best' : ''; ?>">
@@ -44,7 +45,7 @@ $w = mb_warranties()[ mb_slug() ];
 			<h2>Enquire about a plan</h2>
 			<?php
 			echo do_shortcode( sprintf(
-				'[mb_form id="plan-form" fields="name,phone,email,postcode,message" title="%s warranty plan enquiry" options="Bronze|Silver|Gold|Not sure yet" options_label="Which plan are you interested in?"]',
+				'[mb_form id="plan-form" fields="name,phone,email,postcode,lift_details,message" title="%s warranty plan enquiry" options="Bronze|Silver|Gold|Not sure yet" options_label="Which plan are you interested in?"]',
 				esc_attr( $w['label'] )
 			) );
 			?>

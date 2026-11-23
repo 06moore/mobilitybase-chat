@@ -22,16 +22,10 @@ add_action( 'after_setup_theme', function () {
 
 /**
  * Default header menu, used until a menu is assigned in Appearance → Menus.
- * Ordered by what makes the business money: servicing, lift sales, removals.
+ * Ordered for private customers: buying a lift, covering an existing lift, removals.
  */
 function mb_default_menu() {
 	return array(
-		array( 'Servicing & Repairs', '/lift-servicing-kent', array(
-			array( 'Lift servicing & maintenance', '/lift-servicing-kent' ),
-			array( 'Repairs & breakdowns', '/lift-repairs-kent' ),
-			array( 'Warranty & service plans', '/aftercare-warranty' ),
-			array( 'LOLER examinations', '/loler-examinations' ),
-		) ),
 		array( 'Stairlifts & Lifts', '/products', array(
 			array( 'Straight stairlifts', '/straight-stairlift-range' ),
 			array( 'Curved stairlifts', '/curved-stairlift-range' ),
@@ -39,6 +33,12 @@ function mb_default_menu() {
 			array( 'Platform lifts', '/platform-lift-range' ),
 			array( 'Ceiling hoists', '/ceiling-hoist-range' ),
 			array( 'Free home survey', '/survey-advice' ),
+		) ),
+		array( 'Servicing & Warranty', '/aftercare-warranty', array(
+			array( 'Warranty & service plans', '/aftercare-warranty' ),
+			array( 'Lift servicing & maintenance', '/lift-servicing-kent' ),
+			array( 'Repairs & breakdowns', '/lift-repairs-kent' ),
+			array( 'LOLER examinations', '/loler-examinations' ),
 		) ),
 		array( 'Removals', '/stairlift-removal-kent', array(
 			array( 'Stairlift removal', '/stairlift-removal-kent' ),

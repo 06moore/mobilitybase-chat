@@ -529,3 +529,10 @@ a.mb-card:hover, .mb-card:focus-within { box-shadow: var(--shadow); transform: t
 }
 .mb-prose .mb-figure--icon { margin: 1em 0; }
 .mb-prose .mb-figure--icon img { width: 96px; height: auto; margin: 0; border-radius: 0; }
+/* v1.2 private-customer focus */
+.mb-lead { font-size: 19px; }
+.mb-paths__urgent { text-align: center; color: var(--white); margin: 28px 0 0; font-size: 17px; }
+.mb-paths__urgent a { color: var(--white); font-weight: 700; }
+.mb-switchnote { display: flex; gap: 12px; align-items: flex-start; max-width: 860px; margin: -24px auto 40px; background: var(--green-tint); border: 1px solid var(--green); border-radius: 8px; padding: 14px 18px; }
+.mb-switchnote .mb-icon { color: var(--green-dark); flex: none; margin-top: 2px; }
+.mb-twocol--top { margin-top: 40px; }

@@ -25,6 +25,7 @@ function mb_form_fields() {
 		'email'      => array( 'Email address', 'email', 'email', true ),
 		'postcode'   => array( 'Postcode', 'text', 'postal-code', true ),
 		'subject'    => array( 'Subject', 'text', 'off', true ),
+		'lift_details' => array( 'Make of lift, who installed it and roughly when (if known)', 'text', 'off', false ),
 		'message'    => array( 'Message', 'textarea', 'off', false ),
 	);
 }
@@ -171,7 +172,7 @@ function mb_form_render( $atts = array() ) {
 			<?php foreach ( $fields as $f ) :
 				list( $label, $type, $ac, $req ) = $defs[ $f ];
 				$id   = $fid . '-' . $f;
-				$wide = in_array( $f, array( 'message', 'subject' ), true ) ? ' mb-field--wide' : '';
+				$wide = in_array( $f, array( 'message', 'subject', 'lift_details' ), true ) ? ' mb-field--wide' : '';
 				?>
 				<?php if ( 'message' === $f && $a['options'] ) : ?>
 					<fieldset class="mb-field mb-field--wide mb-field--radios">

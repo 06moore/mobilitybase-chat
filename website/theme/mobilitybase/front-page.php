@@ -8,11 +8,11 @@ $prices = mb_prices();
 ?>
 <section class="mb-hero">
 	<div class="mb-hero__text">
-		<h1 class="mb-hero__title">Stairlifts &amp; Home Lifts —<br>Supplied, Serviced &amp; Repaired Across Kent &amp; London</h1>
-		<p class="mb-hero__lead">Honest advice, professional installation and reliable aftercare from a family-run team of engineers based in Kent. We service and repair <strong>all makes</strong> — not just the lifts we install — with no hidden costs.</p>
+		<h1 class="mb-hero__title">Stairlifts &amp; Home Lifts Across Kent &amp; London —<br>Supplied, Installed &amp; Looked After</h1>
+		<p class="mb-hero__lead">Honest advice, professional installation and reliable aftercare from a family-run team of engineers based in Kent. Already have a lift? We can take over its servicing and warranty cover — <strong>even if another company installed it</strong>.</p>
 		<p class="mb-hero__ctas">
 			<a class="mb-btn" href="<?php echo esc_url( home_url( '/book-your-visit' ) ); ?>">Get a Free Quote</a>
-			<a class="mb-btn mb-btn--grey" href="<?php echo esc_url( home_url( '/lift-servicing-kent#quote' ) ); ?>">Book a Service or Repair</a>
+			<a class="mb-btn mb-btn--grey" href="<?php echo esc_url( home_url( '/aftercare-warranty#join' ) ); ?>">Cover My Existing Lift</a>
 		</p>
 		<p class="mb-hero__call">Or call us today on <?php echo mb_tel(); // phpcs:ignore ?></p>
 	</div>
@@ -27,14 +27,6 @@ $prices = mb_prices();
 	<div class="mb-wrap">
 		<h2 class="mb-title" id="mb-paths-title">How can we help?</h2>
 		<div class="mb-paths__grid">
-			<a class="mb-path" href="<?php echo esc_url( home_url( '/lift-servicing-kent' ) ); ?>">
-				<span class="mb-path__icon"><?php echo mb_icon( 'wrench' ); // phpcs:ignore ?></span>
-				<span class="mb-path__kicker">Already have a lift?</span>
-				<span class="mb-path__title">Servicing, repairs &amp; breakdowns</span>
-				<span class="mb-path__text">Annual servicing, fault finding and repairs for stairlifts, homelifts, platform lifts and hoists — any make.</span>
-				<?php if ( $prices['plan_from'] ) : ?><span class="mb-path__price">Service plans from £<?php echo esc_html( $prices['plan_from'] ); ?> a year</span><?php endif; ?>
-				<span class="mb-path__btn">Book a service</span>
-			</a>
 			<a class="mb-path" href="<?php echo esc_url( home_url( '/products' ) ); ?>">
 				<span class="mb-path__icon"><?php echo mb_icon( 'star' ); // phpcs:ignore ?></span>
 				<span class="mb-path__kicker">Need a lift?</span>
@@ -42,6 +34,14 @@ $prices = mb_prices();
 				<span class="mb-path__text">Straight, curved and reconditioned stairlifts, through-floor homelifts, platform lifts and ceiling hoists.</span>
 				<span class="mb-path__price"><?php echo esc_html( mb_price( 'straight_from', 'Straight stairlifts from £' ) ?: 'Free, no-obligation home survey' ); ?></span>
 				<span class="mb-path__btn">See our lifts</span>
+			</a>
+			<a class="mb-path" href="<?php echo esc_url( home_url( '/aftercare-warranty' ) ); ?>">
+				<span class="mb-path__icon"><?php echo mb_icon( 'shield' ); // phpcs:ignore ?></span>
+				<span class="mb-path__kicker">Already have a lift?</span>
+				<span class="mb-path__title">Warranty &amp; service plans</span>
+				<span class="mb-path__text">Annual servicing and breakdown cover for stairlifts, homelifts and hoists — including lifts fitted by other companies.</span>
+				<?php if ( $prices['plan_from'] ) : ?><span class="mb-path__price">Plans from £<?php echo esc_html( $prices['plan_from'] ); ?> a year</span><?php endif; ?>
+				<span class="mb-path__btn">Cover my lift</span>
 			</a>
 			<a class="mb-path" href="<?php echo esc_url( home_url( '/stairlift-removal-kent' ) ); ?>">
 				<span class="mb-path__icon"><?php echo mb_icon( 'arrow' ); // phpcs:ignore ?></span>
@@ -52,37 +52,7 @@ $prices = mb_prices();
 				<span class="mb-path__btn">Get a removal quote</span>
 			</a>
 		</div>
-	</div>
-</section>
-
-<section class="mb-section mb-spot">
-	<div class="mb-wrap mb-spot__inner">
-		<div class="mb-spot__media">
-			<?php echo mb_img( '2186e1e35a254577.webp', 'Mobilitybase engineer servicing a stairlift' ); // phpcs:ignore ?>
-		</div>
-		<div class="mb-spot__text">
-			<p class="mb-eyebrow">Servicing &amp; maintenance</p>
-			<h2>Keep your lift safe, reliable and running</h2>
-			<p>A serviced lift is far less likely to break down — and many manufacturer warranties need an annual service. Our engineers test every safety circuit, battery, motor and moving part, and always give you a clear price before any extra work.</p>
-			<p class="mb-spot__brands"><strong>We service all major makes, including:</strong> <?php echo esc_html( implode( ', ', mb_serviced_brands() ) ); ?>.</p>
-			<?php
-			$plans = mb_warranties()['straight-stairlift-warranty']['plans'];
-			?>
-			<ul class="mb-miniplans" aria-label="Stairlift service plans">
-				<?php foreach ( $plans as $key => $p ) : ?>
-					<li class="mb-miniplan mb-miniplan--<?php echo esc_attr( $key ); ?>">
-						<span class="mb-miniplan__name"><?php echo esc_html( $p['name'] ); ?></span>
-						<span class="mb-miniplan__price">£<?php echo esc_html( $p['price'] ); ?><small>/yr</small></span>
-						<span class="mb-miniplan__note"><?php echo esc_html( 'gold' === $key ? 'Parts & labour included' : ( 'silver' === $key ? '24/7 priority breakdowns' : 'Annual service' ) ); ?></span>
-					</li>
-				<?php endforeach; ?>
-			</ul>
-			<p class="mb-small">Straight stairlift prices shown. <a href="<?php echo esc_url( home_url( '/aftercare-warranty' ) ); ?>">See plans for curved stairlifts, homelifts and hoists</a>.</p>
-			<p class="mb-btnrow">
-				<a class="mb-btn" href="<?php echo esc_url( home_url( '/lift-servicing-kent#quote' ) ); ?>">Book a service</a>
-				<a class="mb-btn mb-btn--outline" href="<?php echo esc_url( home_url( '/lift-repairs-kent' ) ); ?>">Report a breakdown</a>
-			</p>
-		</div>
+		<p class="mb-paths__urgent">Lift broken down? Call <?php echo mb_tel(); // phpcs:ignore ?> or <a href="<?php echo esc_url( home_url( '/lift-repairs-kent#quote' ) ); ?>">report a fault online</a>.</p>
 	</div>
 </section>
 
@@ -112,6 +82,37 @@ $prices = mb_prices();
 			<li><strong>Installation &amp; aftercare</strong><span>Fitted by our own engineers, then serviced and supported for years to come.</span></li>
 		</ol>
 		<p class="mb-center"><a class="mb-btn" href="<?php echo esc_url( home_url( '/book-your-visit' ) ); ?>">Book your free survey</a></p>
+	</div>
+</section>
+
+<section class="mb-section mb-spot">
+	<div class="mb-wrap mb-spot__inner">
+		<div class="mb-spot__media">
+			<?php echo mb_img( '2186e1e35a254577.webp', 'Mobilitybase engineer servicing a stairlift' ); // phpcs:ignore ?>
+		</div>
+		<div class="mb-spot__text">
+			<p class="mb-eyebrow">Warranty &amp; service plans</p>
+			<h2>Already have a lift? Let us look after it</h2>
+			<p>Whether we installed your lift or another company did, you can move its servicing and warranty cover to us. After an initial service and safety check, choose the plan that suits you — from an annual service to full parts-and-labour cover with 24/7 breakdown support.</p>
+			<p class="mb-spot__brands"><strong>We service all major makes, including:</strong> <?php echo esc_html( implode( ', ', mb_serviced_brands() ) ); ?>.</p>
+			<?php
+			$plans = mb_warranties()['straight-stairlift-warranty']['plans'];
+			?>
+			<ul class="mb-miniplans" aria-label="Stairlift service plans">
+				<?php foreach ( $plans as $key => $p ) : ?>
+					<li class="mb-miniplan mb-miniplan--<?php echo esc_attr( $key ); ?>">
+						<span class="mb-miniplan__name"><?php echo esc_html( $p['name'] ); ?></span>
+						<span class="mb-miniplan__price">£<?php echo esc_html( $p['price'] ); ?><small>/yr</small></span>
+						<span class="mb-miniplan__note"><?php echo esc_html( 'gold' === $key ? 'Parts & labour included' : ( 'silver' === $key ? '24/7 priority breakdowns' : 'Annual service' ) ); ?></span>
+					</li>
+				<?php endforeach; ?>
+			</ul>
+			<p class="mb-small">Straight stairlift prices shown. <a href="<?php echo esc_url( home_url( '/aftercare-warranty' ) ); ?>">See plans for curved stairlifts, homelifts and hoists</a>.</p>
+			<p class="mb-btnrow">
+				<a class="mb-btn" href="<?php echo esc_url( home_url( '/aftercare-warranty#join' ) ); ?>">Cover my lift</a>
+				<a class="mb-btn mb-btn--outline" href="<?php echo esc_url( home_url( '/lift-servicing-kent#quote' ) ); ?>">Book a one-off service</a>
+			</p>
+		</div>
 	</div>
 </section>
 
@@ -210,7 +211,7 @@ if ( $latest->have_posts() ) :
 			<p class="mb-lochero__call">Prefer to talk? Call <?php echo mb_tel(); // phpcs:ignore ?></p>
 		</div>
 		<div class="mb-panel">
-			<?php echo do_shortcode( '[mb_form id="home-form" fields="name,phone,email,postcode,message" title="Home page enquiry" options="A new stairlift or lift|Servicing or a service plan|A repair or breakdown|Removing a stairlift or lift|Something else" options_label="What can we help with?" button="Send my enquiry"]' ); ?>
+			<?php echo do_shortcode( '[mb_form id="home-form" fields="name,phone,email,postcode,message" title="Home page enquiry" options="A new stairlift or lift|A warranty or service plan for my lift|A one-off service or repair|Removing a stairlift or lift|Something else" options_label="What can we help with?" button="Send my enquiry"]' ); ?>
 		</div>
 	</div>
 </section>
