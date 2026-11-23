@@ -24,7 +24,7 @@ Please act as a senior web designer and conversion expert and be blunt.
 
 Rules (these are fixed, please work within them):
 - Reviews are real Google reviews, copied word for word. We can't add or invent any.
-- Staff don't want photos of themselves online. We can get real photos of installed lifts and our van, but we don't have them yet.
+- Staff don't want photos of themselves online. We can get real photos of installed lifts, but we don't have them yet. Our vans are not sign-written.
 - Prices are set by us. We only want headline "from" prices on the site, not a full price list. Prices exclude VAT because most customers qualify for VAT relief.
 - Only claims we can prove: family-run since 2016, DBS-checked and fully insured engineers, a minimum 1-year guarantee on every lift, a free no-obligation survey and a written quote, 5.0 from 28 Google reviews.
 - No live chat.
