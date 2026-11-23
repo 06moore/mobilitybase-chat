@@ -149,7 +149,7 @@ function mb_warranty_products() {
 		array( 'Curved Stairlifts', '/curved-stairlift-warranty', 'Our curved stairlift warranty and service packages are designed to support the more complex nature of curved systems. Cover options are available to help maintain safe operation, reduce unexpected repair costs, and provide ongoing support.', 'Suitable for curved stairlifts installed in domestic properties.', 'c0b7ddee9ede4a0b.webp', 'from £95' ),
 		array( 'Homelifts', '/homelift-warranty', 'Our homelift warranty and service packages are designed to support safe, reliable day-to-day use. Cover options are available to help with ongoing maintenance, servicing, and repairs, depending on the level of protection you choose.', 'Suitable for homelifts installed in domestic properties.', '8d0f92577e83468f.webp', 'from £145' ),
 		array( 'Ceiling Hoists', '/ceiling-hoist-warranty', 'Our ceiling hoist warranty and service packages are designed to support safe and reliable lifting for daily use. Cover options are available to help with ongoing servicing, maintenance, and repairs, depending on the level of cover selected.', 'Suitable for ceiling hoists installed in domestic properties.', '40120e0ddc6d498b.webp', 'from £95' ),
-		array( 'Platform Lifts', '', 'We already look after platform lifts for homes, care homes and businesses on annual service contracts. Each contract is quoted to suit the lift and how much it’s used, covering regular servicing, safety checks and breakdown support.', 'Suitable for platform lifts installed in domestic and commercial properties.', 'edfa82ec3845483e.webp', 'Contracts from £365' ),
+		array( 'Platform Lifts', '', 'We already look after platform lifts for homes, care homes and businesses on annual service contracts. Each contract is quoted to suit the lift and how much it’s used, covering regular servicing, safety checks and breakdown support.', 'Suitable for platform lifts installed in domestic and commercial properties.', 'edfa82ec3845483e.webp', 'Service contracts' ),
 	);
 }
 
@@ -351,65 +351,6 @@ function mb_landings() {
 		'_removal' => $removal,
 		'_install' => $install,
 	);
-}
-
-/**
- * Price tables shown on the servicing, repairs and removal pages (2026 private price list, ex VAT).
- * Each table: title, column headings (first is the row label), rows, optional note.
- */
-function mb_price_tables( $slug ) {
-	$lift_cols = array( '', 'Stairlifts & hoists', 'Homelifts', 'Platform lifts' );
-	$service   = array(
-		'title' => 'Servicing & call-out prices',
-		'cols'  => $lift_cols,
-		'rows'  => array(
-			array( 'Service visit', 95, 145, 185 ),
-			array( 'Call-out (office hours)', 140, 185, 225 ),
-			array( 'Additional time / travel (per hour)', 65, 85, 85 ),
-		),
-		'note'  => 'An annual service plan costs the same as a one-off stairlift service and adds breakdown support. <a href="/aftercare-warranty">Compare plans</a>.',
-	);
-	$batteries = array(
-		'title' => 'Replacement batteries',
-		'cols'  => array( '', 'Price' ),
-		'rows'  => array(
-			array( 'Stairlift batteries (set)', 70 ),
-			array( '2 × 12V 18–22Ah batteries', 115 ),
-		),
-		'note'  => 'Fitted on a service or call-out visit.',
-	);
-	$stair_removal = array(
-		'title' => 'Stairlift & hoist removal prices',
-		'cols'  => array( '', 'Removal', 'Removal to refit', 'Refit', 'Removal + refit' ),
-		'rows'  => array(
-			array( 'Straight stairlift', 174, 145, 254, 399 ),
-			array( 'Curved stairlift', 270, 225, 360, 585 ),
-			array( 'Ceiling hoist (2 engineers)', 360, 300, 420, 720 ),
-		),
-		'note'  => 'Moving house? We can take your lift out, store it (£24 a week including VAT) and fit it in your new home.',
-	);
-	$lift_removal = array(
-		'title' => 'Homelift & step lift removal prices',
-		'cols'  => array( '', 'Price' ),
-		'rows'  => array(
-			array( 'Homelift removal, ceiling hole boarded over (not structural)', 1100 ),
-			array( 'Homelift removal, ceiling hole filled ready for decorating', 1800 ),
-			array( 'Step lift removal, no building work', 1100 ),
-		),
-	);
-	if ( 'lift-servicing-kent' === $slug ) {
-		return array( $service );
-	}
-	if ( 'lift-repairs-kent' === $slug ) {
-		return array( $service, $batteries );
-	}
-	if ( 'lift-removals' === $slug ) {
-		return array( $stair_removal, $lift_removal );
-	}
-	if ( str_starts_with( $slug, 'stairlift-removal-' ) ) {
-		return array( $stair_removal );
-	}
-	return array();
 }
 
 /** VAT wording used under prices. */

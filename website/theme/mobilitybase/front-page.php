@@ -128,7 +128,7 @@ $prices = mb_prices();
 					<p><span>Straight stairlift</span><strong>from £<?php echo esc_html( $prices['removal_straight'] ); ?></strong></p>
 					<p><span>Curved stairlift</span><strong>from £<?php echo esc_html( $prices['removal_curved'] ); ?></strong></p>
 				</div>
-				<p class="mb-small">Prices exclude VAT. Final price depends on access, type and location. Homelift removals from £1,100 + VAT; platform lifts quoted individually.</p>
+				<p class="mb-small">Prices exclude VAT. Final price depends on access, type and location. Homelift and platform lift removals quoted individually.</p>
 			<?php endif; ?>
 			<p class="mb-btnrow">
 				<a class="mb-btn" href="<?php echo esc_url( home_url( '/stairlift-removal-kent#quote' ) ); ?>">Get a removal quote</a>
