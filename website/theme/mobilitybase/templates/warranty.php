@@ -30,7 +30,7 @@ $w = mb_warranties()[ mb_slug() ];
 	</div>
 </section>
 
-<?php get_template_part( 'template-parts/reviews', null, array( 'limit' => 3 ) ); ?>
+<?php get_template_part( 'template-parts/reviews', null, array( 'limit' => 3, 'topic' => 'service' ) ); ?>
 
 <section class="mb-section mb-section--grey" id="plan-enquiry">
 	<div class="mb-wrap mb-twocol">

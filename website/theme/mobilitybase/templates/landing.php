@@ -67,7 +67,7 @@ while ( have_posts() ) :
 		</div>
 	</section>
 	<?php get_template_part( 'template-parts/trust' ); ?>
-	<?php get_template_part( 'template-parts/reviews', null, array( 'limit' => 3 ) ); ?>
+	<?php get_template_part( 'template-parts/reviews', null, array( 'limit' => 3, 'topic' => mb_review_topic( mb_slug() ) ) ); ?>
 	<article class="mb-page">
 		<div class="mb-wrap mb-prose mb-prose--location">
 			<?php echo $html; // phpcs:ignore — post content ?>

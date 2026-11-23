@@ -2,12 +2,18 @@
 /**
  * Google reviews strip. Renders nothing until reviews are added in inc/data.php.
  * $args['limit'] – how many to show (default 3). $args['grey'] – grey background.
+ * $args['topic'] – install|service|repair|removal: matching reviews are shown first.
  */
 $reviews = mb_reviews();
 if ( ! $reviews ) {
 	return;
 }
 $limit   = (int) ( $args['limit'] ?? 3 );
+$topic   = $args['topic'] ?? '';
+if ( $topic ) {
+	$match   = array_filter( $reviews, fn( $r ) => in_array( $topic, $r[5] ?? array(), true ) );
+	$reviews = array_merge( $match, array_diff_key( $reviews, $match ) );
+}
 $summary = mb_review_summary();
 $stars   = function ( $n ) {
 	$n = max( 0, min( 5, (int) round( (float) $n ) ) );

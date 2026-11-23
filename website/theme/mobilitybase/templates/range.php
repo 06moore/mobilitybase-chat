@@ -32,7 +32,7 @@ $cat   = mb_products()[ $slug ]['name'] ?? '';
 	</div>
 </section>
 
-<?php get_template_part( 'template-parts/reviews', null, array( 'limit' => 3 ) ); ?>
+<?php get_template_part( 'template-parts/reviews', null, array( 'limit' => 3, 'topic' => 'install' ) ); ?>
 
 <section class="mb-section mb-section--grey" id="survey">
 	<div class="mb-wrap mb-survey">

@@ -349,12 +349,28 @@ function mb_landing( $slug ) {
 function mb_reviews() {
 	return apply_filters( 'mb_reviews', array(
 		// Copied word for word from Google. Texts ending in … are Google's shortened preview –
-		// replace with the full review text when available.
-		array( 'Wendi Austin-Joseph', 5, 'Excellent Customer Service & Care Always!! I highly recommend this company.', 'August 2026', '' ),
-		array( 'Craig Matthews', 5, 'Mobilitybase service 2 hoists and a lift for us. The team of people from office staff to engineers are professional and…', 'August 2026', 'Hoist & lift servicing' ),
-		array( 'Adrian Hanstock', 5, 'We recently needed extensive diagnostic and repair work to resolve a fault, and Tom at Mobility Base was exceptional…', 'June 2026', 'Lift repair' ),
-		array( 'Janet', 5, 'I cannot tell you how impressed we were with service wehad from your technician that can out on Sunday evening to…', 'August 2026', 'Out-of-hours call-out' ),
+		// replace with the full review text when available. Last value = topics, used to
+		// show the most relevant reviews first on each page (install, service, repair, removal).
+		array( 'Mus Mustafa', 5, 'Tom and the team at Mobility Base are outstanding. They recently installed a stairlift for my mum and also maintain our son’s through-floor lift. Their service is consistently 5-star — responsive, professional, reliable, and very competitively priced. It’s rare to find a company that genuinely cares and delivers this level of quality. I highly recommend them without hesitation.', 'May 2026', 'Stairlift installation & homelift servicing', array( 'install', 'service' ) ),
+		array( 'Sybylla Scarlett', 5, 'New through floor lift installed by Tom and his team last week. All work was carried out professionally and within timeframe allocated. Carpets were protected throughout and rooms were thoroughly vacuumed before the men left. Handover given. I’m very pleased with the lift and wholeheartedly recommend Mobilitybase to anyone in the south-east who is looking for help to get upstairs. Tom and his team are really good people.', 'January 2026', 'Through-floor lift installation', array( 'install' ) ),
+		array( 'Judith Anderson', 5, 'Removed my Mum’s stair lift after her death. Very easy to deal with, polite operative and good notification re time of arrival. Would definitely recommend. This is a company who say “YES, when can we help?”.', 'March 2026', 'Stairlift removal', array( 'removal' ) ),
+		array( 'Robert Clarke', 5, 'Great service and good advice. They even promised to remind when the next service is due and what needs doing.', 'May 2026', 'Servicing', array( 'service' ) ),
+		array( 'Adrian Hanstock', 5, 'We recently needed extensive diagnostic and repair work to resolve a fault, and Tom at Mobility Base was exceptional…', 'June 2026', 'Lift repair', array( 'repair' ) ),
+		array( 'Craig Matthews', 5, 'Mobilitybase service 2 hoists and a lift for us. The team of people from office staff to engineers are professional and…', 'August 2026', 'Hoist & lift servicing', array( 'service' ) ),
+		array( 'Wendi Austin-Joseph', 5, 'Excellent Customer Service & Care Always!! I highly recommend this company.', 'August 2026', '', array() ),
+		array( 'Janet', 5, 'I cannot tell you how impressed we were with service wehad from your technician that can out on Sunday evening to…', 'August 2026', 'Out-of-hours call-out', array( 'repair' ) ),
+		array( 'Maureen Kelly', 5, 'I’m so pleased with the service I received from MobilityBase. The team were kind, knowledgeable, and incredibly…', 'May 2026', '', array() ),
 	) );
+}
+
+/** Which reviews to show first on a landing/town page. */
+function mb_review_topic( $slug ) {
+	foreach ( array( 'removal' => 'removal', 'repair' => 'repair', 'servicing' => 'service', 'loler' => 'service', 'install' => 'install', 'survey' => 'install' ) as $needle => $topic ) {
+		if ( str_contains( $slug, $needle ) ) {
+			return $topic;
+		}
+	}
+	return '';
 }
 
 /** Overall Google rating. Leave 'rating' empty to hide the summary. */
