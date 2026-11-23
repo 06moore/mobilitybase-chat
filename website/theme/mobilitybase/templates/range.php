@@ -24,6 +24,12 @@ $cat   = mb_products()[ $slug ]['name'] ?? '';
 				<li><?php echo mb_icon( 'shield' ); // phpcs:ignore ?><span><strong>Minimum 1-year guarantee</strong> Then optional service plans to keep it running.</span></li>
 			</ul>
 		</div>
+		<?php if ( ! empty( $range['install'] ) ) : ?>
+			<figure class="mb-recent">
+				<?php echo mb_img( $range['install'][0], $range['install'][1] ); // phpcs:ignore ?>
+				<figcaption><strong>A recent installation</strong><?php echo esc_html( $range['install'][2] ); ?></figcaption>
+			</figure>
+		<?php endif; ?>
 		<div class="mb-models">
 			<?php foreach ( $range['models'] as $m ) : ?>
 				<article class="mb-model">

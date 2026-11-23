@@ -98,6 +98,7 @@ function mb_ranges() {
 		'homelift-range'           => array(
 			'h1'     => 'Home Lifts Supplied & Installed',
 			'intro'  => 'Select the home lift you’re interested in below and send us your enquiry. One of our team will review the information and contact you to discuss your requirements, answer any questions, or arrange a survey if needed.',
+			'install' => array( 'install-homelift-crawley.webp', 'Through-floor home lift installed by Mobilitybase in Crawley, Sussex', 'Through-floor home lift fitted by our engineers in a home in Crawley, Sussex.' ),
 			'models' => array(
 				array( 'Pollock Residential', '12382f7f0c994f6c.webp', 'Pollock home lift installed in living room', array(
 					'The Pollock Residential Lift provides a safe and convenient way to travel between floors in your home. Designed with comfort and reliability in mind, it offers smooth and quiet operation while blending neatly into your living space.',

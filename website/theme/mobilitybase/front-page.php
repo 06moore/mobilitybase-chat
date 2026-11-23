@@ -17,7 +17,8 @@ $prices = mb_prices();
 		<p class="mb-hero__call">Or call us today on <?php echo mb_tel(); // phpcs:ignore ?></p>
 	</div>
 	<div class="mb-hero__media">
-		<?php echo mb_img( '32a1699136194f51.webp', 'Home lift installed in a bright living room', array( 'loading' => false, 'fetchpriority' => 'high' ) ); // phpcs:ignore ?>
+		<?php echo mb_img( 'install-homelift-crawley.webp', 'Through-floor home lift installed by Mobilitybase in a home in Crawley, Sussex', array( 'loading' => false, 'fetchpriority' => 'high' ) ); // phpcs:ignore ?>
+		<p class="mb-hero__tag"><?php echo mb_icon( 'check' ); // phpcs:ignore ?> Installed by Mobilitybase · Crawley, Sussex</p>
 	</div>
 </section>
 

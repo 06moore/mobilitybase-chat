@@ -643,3 +643,12 @@ h1, h2, h3, h4 { letter-spacing: -.01em; }
 	.mb-towns { grid-template-columns: 1fr 1fr; }
 	.mb-footmain__inner > div:nth-child(3) { display:none; } /* town list already shown in the page */
 }
+.mb-hero__media { position: relative; }
+.mb-hero__media img { object-position: 50% 62%; }
+.mb-hero__tag { position:absolute; left:20px; bottom:20px; margin:0; display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,.94); color:var(--heading); font-weight:700; font-size:14px; padding:8px 14px; border-radius:999px; box-shadow:0 4px 16px rgba(0,0,0,.12); }
+.mb-hero__tag svg { width:18px; height:18px; color:var(--green); }
+.mb-recent { max-width:900px; margin:0 auto 40px; display:grid; grid-template-columns: 300px 1fr; gap:24px; align-items:center; background:#fff; border:1px solid #e6eae8; border-radius:14px; overflow:hidden; box-shadow:var(--shadow); }
+.mb-recent img { width:100%; height:100%; max-height:380px; object-fit:cover; display:block; }
+.mb-recent figcaption { padding:20px 24px 20px 0; font-size:1.05rem; color:#33404a; }
+.mb-recent figcaption strong { display:block; color:var(--green-dark); font-size:.85rem; letter-spacing:.1em; text-transform:uppercase; margin-bottom:6px; }
+@media (max-width: 640px) { .mb-recent { grid-template-columns:1fr; } .mb-recent figcaption { padding:0 20px 20px; } .mb-hero__tag { left:12px; bottom:12px; font-size:13px; } }
