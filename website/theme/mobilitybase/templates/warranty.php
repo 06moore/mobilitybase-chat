@@ -9,7 +9,7 @@ $w = mb_warranties()[ mb_slug() ];
 	<div class="mb-wrap">
 		<h1 class="mb-pagetitle"><?php echo esc_html( ucwords( strtolower( $w['h1'] ) ) ); ?></h1>
 		<p class="mb-section__intro"><?php echo esc_html( $w['intro'] ); ?></p>
-		<p class="mb-switchnote"><?php echo mb_icon( 'shield' ); // phpcs:ignore ?> <span><strong>Lift installed by another company?</strong> You can still join — we’ll carry out an initial service and safety check first. <a href="<?php echo esc_url( home_url( '/aftercare-warranty#join' ) ); ?>">How it works</a></span></p>
+		<p class="mb-switchnote"><?php echo mb_icon( 'shield' ); // phpcs:ignore ?> <span><strong>Lift installed by another company?</strong> You can still join. We’ll carry out an initial service and safety check first, charged as a standard service visit from £<?php echo esc_html( mb_prices()['service_oneoff'] ); ?> + VAT, before your plan starts. <a href="<?php echo esc_url( home_url( '/aftercare-warranty#join' ) ); ?>">How it works</a></span></p>
 		<div class="mb-plans">
 			<?php foreach ( $w['plans'] as $key => $p ) : ?>
 				<article class="mb-plan mb-plan--<?php echo esc_attr( $key ); ?><?php echo $p['best'] ? ' mb-plan--best' : ''; ?>">

@@ -9,9 +9,9 @@ $prices = mb_prices();
 <section class="mb-hero">
 	<div class="mb-hero__text">
 		<h1 class="mb-hero__title">Stairlifts &amp; Home Lifts Across Kent &amp; London <span class="mb-hero__titlesub">Supplied, installed &amp; looked after</span></h1>
-		<p class="mb-hero__lead">Family-run engineers based in Kent. Already have a lift? We can look after it — <strong>even if another company installed it</strong>.</p>
+		<p class="mb-hero__lead">Expert advice, professional installation and ongoing support from your local family-run team. Every new lift starts with a <strong>free home survey and a written quote</strong>, and if you already have a lift, we can look after it even if another company installed it.</p>
 		<p class="mb-hero__ctas">
-			<a class="mb-btn" href="<?php echo esc_url( home_url( '/book-your-visit' ) ); ?>">Get a Free Quote</a>
+			<a class="mb-btn" href="<?php echo esc_url( home_url( '/book-your-visit' ) ); ?>">Book a Free Home Survey</a>
 			<a class="mb-btn mb-btn--outline" href="<?php echo esc_url( home_url( '/aftercare-warranty#join' ) ); ?>">Cover My Existing Lift</a>
 		</p>
 		<p class="mb-hero__call">Or call us today on <?php echo mb_tel(); // phpcs:ignore ?></p>
@@ -176,6 +176,26 @@ $prices = mb_prices();
 	</div>
 </section>
 
+<?php
+?>
+<section class="mb-section mb-about">
+	<div class="mb-wrap mb-about__inner">
+		<div>
+			<p class="mb-eyebrow">About Mobilitybase</p>
+			<h2>A family-run lift company you can rely on</h2>
+			<p>Mobilitybase was set up in <?php echo esc_html( mb_biz( 'founded' ) ); ?> and supplies, installs, services and removes stairlifts, home lifts, platform lifts and ceiling hoists across Kent, London and the South East.</p>
+			<p>We’re an independent team of engineers who look after the whole job, from your free home survey through to installation and years of servicing afterwards.</p>
+			<p class="mb-btnrow"><a class="mb-btn" href="<?php echo esc_url( home_url( '/book-your-visit' ) ); ?>">Book a free home survey</a> <a class="mb-btn mb-btn--outline" href="<?php echo esc_url( home_url( '/about-us' ) ); ?>">More about us</a></p>
+		</div>
+		<ul class="mb-about__facts">
+			<li><strong>Since <?php echo esc_html( mb_biz( 'founded' ) ); ?></strong><span>Family-run</span></li>
+			<li><strong>5.0 ★</strong><span>From <?php echo esc_html( mb_review_summary()['count'] ); ?> Google reviews</span></li>
+			<li><strong>DBS-checked</strong><span>Fully insured engineers</span></li>
+			<li><strong>1 year+</strong><span>Guarantee on every lift</span></li>
+			<li class="mb-about__addr"><strong>Where we’re based</strong><span><?php echo esc_html( mb_biz( 'street' ) . ', ' . mb_biz( 'locality' ) . ', ' . mb_biz( 'town' ) . ' ' . mb_biz( 'postcode' ) ); ?></span></li>
+		</ul>
+	</div>
+</section>
 <?php
 $latest = new WP_Query( array( 'posts_per_page' => 3, 'ignore_sticky_posts' => true, 'no_found_rows' => true ) );
 if ( $latest->have_posts() ) :
