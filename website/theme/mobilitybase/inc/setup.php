@@ -20,27 +20,47 @@ add_action( 'after_setup_theme', function () {
 	add_image_size( 'mb-card', 640, 400, true );
 } );
 
-/** Default header menu, used until a menu is assigned in Appearance → Menus. */
+/**
+ * Default header menu, used until a menu is assigned in Appearance → Menus.
+ * Ordered by what makes the business money: servicing, lift sales, removals.
+ */
 function mb_default_menu() {
 	return array(
+		array( 'Servicing & Repairs', '/lift-servicing-kent', array(
+			array( 'Lift servicing & maintenance', '/lift-servicing-kent' ),
+			array( 'Repairs & breakdowns', '/lift-repairs-kent' ),
+			array( 'Warranty & service plans', '/aftercare-warranty' ),
+			array( 'LOLER examinations', '/loler-examinations' ),
+		) ),
+		array( 'Stairlifts & Lifts', '/products', array(
+			array( 'Straight stairlifts', '/straight-stairlift-range' ),
+			array( 'Curved stairlifts', '/curved-stairlift-range' ),
+			array( 'Homelifts', '/homelift-range' ),
+			array( 'Platform lifts', '/platform-lift-range' ),
+			array( 'Ceiling hoists', '/ceiling-hoist-range' ),
+			array( 'Free home survey', '/survey-advice' ),
+		) ),
+		array( 'Removals', '/stairlift-removal-kent', array(
+			array( 'Stairlift removal', '/stairlift-removal-kent' ),
+			array( 'Homelift & platform lift removal', '/lift-removals' ),
+		) ),
 		array( 'About us', '/about-us' ),
-		array( 'Services', '/services' ),
-		array( 'Aftercare & Warranty', '/aftercare-warranty' ),
-		array( 'Products', '/products' ),
-		array( 'Contact', '/contact' ),
 		array( 'Articles', '/blog' ),
+		array( 'Contact', '/contact' ),
 	);
 }
 
 /** Default footer service links. */
 function mb_footer_services() {
 	return array(
+		array( 'Lift Servicing & Maintenance', '/lift-servicing-kent' ),
+		array( 'Lift Repairs & Emergency Callouts', '/lift-repairs-kent' ),
+		array( 'Warranty & Service Plans', '/aftercare-warranty' ),
 		array( 'Stairlifts', '/straight-stairlift-range' ),
 		array( 'Home lifts & Through-Floor Lifts', '/homelift-range' ),
-		array( 'Platform Lift', '/platform-lift-range' ),
-		array( 'Lift Servicing & Maintenance', '/lift-servicing-kent' ),
-		array( 'Lift Repairs & Fault Finding', '/lift-repairs-kent' ),
-		array( 'Emergency Callouts', '/lift-repairs-kent' ),
+		array( 'Platform Lifts', '/platform-lift-range' ),
+		array( 'Stairlift Removal', '/stairlift-removal-kent' ),
+		array( 'LOLER Examinations', '/loler-examinations' ),
 	);
 }
 
@@ -56,15 +76,26 @@ function mb_menu( $location, $fallback, $class ) {
 	}
 	$current = '/' . trim( (string) wp_parse_url( $_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH ), '/' );
 	echo '<ul class="' . esc_attr( $class ) . '">';
-	foreach ( $fallback as $item ) {
-		$active = ( $current === $item[1] || ( '/blog' === $item[1] && is_singular( 'post' ) ) );
-		printf(
-			'<li%s><a href="%s"%s>%s</a></li>',
-			$active ? ' class="current-menu-item"' : '',
-			esc_url( home_url( $item[1] ) ),
-			$active ? ' aria-current="page"' : '',
-			esc_html( $item[0] )
-		);
+	foreach ( $fallback as $i => $item ) {
+		$children = $item[2] ?? array();
+		$paths    = array_merge( array( $item[1] ), array_column( $children, 1 ) );
+		$active   = in_array( $current, $paths, true ) || ( '/blog' === $item[1] && is_singular( 'post' ) );
+		$classes  = array();
+		if ( $active ) {
+			$classes[] = 'current-menu-item';
+		}
+		if ( $children ) {
+			$classes[] = 'menu-item-has-children';
+		}
+		printf( '<li%s><a href="%s"%s>%s</a>', $classes ? ' class="' . esc_attr( implode( ' ', $classes ) ) . '"' : '', esc_url( home_url( $item[1] ) ), $current === $item[1] ? ' aria-current="page"' : '', esc_html( $item[0] ) );
+		if ( $children ) {
+			printf( '<button class="mb-subtoggle" type="button" aria-expanded="false" aria-controls="mb-sub-%1$d"><span class="mb-sr">Show %2$s menu</span></button><ul class="sub-menu" id="mb-sub-%1$d">', (int) $i, esc_html( $item[0] ) );
+			foreach ( $children as $c ) {
+				printf( '<li><a href="%s"%s>%s</a></li>', esc_url( home_url( $c[1] ) ), $current === $c[1] ? ' aria-current="page"' : '', esc_html( $c[0] ) );
+			}
+			echo '</ul>';
+		}
+		echo '</li>';
 	}
 	echo '</ul>';
 }
@@ -105,8 +136,8 @@ add_filter( 'template_include', function ( $template ) {
 	if ( isset( mb_warranties()[ $slug ] ) ) {
 		return MB_DIR . '/templates/warranty.php';
 	}
-	if ( 'location' === get_post_meta( get_queried_object_id(), '_mb_template', true ) ) {
-		return MB_DIR . '/templates/location.php';
+	if ( mb_landing( $slug ) ) {
+		return MB_DIR . '/templates/landing.php';
 	}
 	return $template;
 } );

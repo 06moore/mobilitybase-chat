@@ -201,10 +201,10 @@ function mb_warranties() {
 /** Services page cards. */
 function mb_services() {
 	return array(
+		array( 'Servicing & Maintenance', '/lift-servicing-kent', 'shield', 'Regular servicing helps keep your lift running safely and reliably. We carry out routine inspections, testing and adjustments to reduce the risk of breakdowns and extend the life of your equipment.', 'Suitable for residential and commercial lifts.' ),
 		array( 'Call-Out & Repairs', '/lift-repairs-kent', 'wrench', 'If your lift has stopped working or isn’t operating as it should, we can attend to diagnose and carry out repairs. This service is suitable for breakdowns, faults, and urgent issues that need investigating on site.', 'Available for stairlifts, platform lifts, homelifts and ceiling hoists' ),
 		array( 'New Installations', '/lift-installations', 'star', 'We supply and install a range of mobility equipment, including stairlifts, platform lifts and homelifts. Following an initial survey, we’ll recommend the most suitable solution for your property and needs.', 'Honest advice, professional installation and full aftercare.' ),
-		array( 'Servicing & Maintenance', '/lift-servicing-kent', 'shield', 'Regular servicing helps keep your lift running safely and reliably. We carry out routine inspections, testing and adjustments to reduce the risk of breakdowns and extend the life of your equipment.', 'Suitable for residential and commercial lifts.' ),
-		array( 'Lift Removal', '/lift-removals', 'arrow', 'If a lift is no longer required, we can safely remove it and dispose of the equipment where appropriate. This service is commonly used following house sales, property changes or end-of-life equipment.', 'Available for all lift types.' ),
+		array( 'Stairlift & Lift Removal', '/stairlift-removal-kent', 'arrow', 'If a lift is no longer required, we can safely remove it and dispose of the equipment where appropriate. This service is commonly used following house sales, property changes or end-of-life equipment.', 'Available for all lift types.' ),
 		array( 'LOLER Examinations', '/loler-examinations', 'check', 'A LOLER examination is a thorough, independent safety inspection required for many lifting devices. We carry out detailed examinations and provide the necessary certification for compliance.', 'Ideal for care homes, landlords and commercial premises.' ),
 		array( 'Surveys & Advice', '/survey-advice', 'pin', 'Not sure what you need? We offer site surveys and practical advice to help you understand your options. This is ideal if you’re planning future works or need guidance before committing.', 'No obligation, clear and honest recommendations.' ),
 	);
@@ -218,4 +218,125 @@ function mb_brands() {
 		array( '4fa8ffc0fb584eb8.webp', 'Handicare stairlift logo' ),
 		array( 'a8d0ac9a27114044.webp', 'Chiltern Invadex logo' ),
 	);
+}
+
+/**
+ * Prices shown on the site. Leave a value empty ('') to hide it everywhere.
+ * Removal prices are the ones already published on the old site.
+ * New-lift "from" prices are empty until confirmed.
+ */
+function mb_prices() {
+	return array(
+		'removal_straight' => 174,
+		'removal_curved'   => 270,
+		'plan_from'        => 95,   // cheapest warranty & service plan per year
+		'service_oneoff'   => '',   // one-off annual service visit (e.g. 125)
+		'callout'          => '',   // repair call-out fee
+		'straight_from'    => '',   // new straight stairlift, fitted
+		'curved_from'      => '',   // new curved stairlift, fitted
+		'recon_from'       => '',   // reconditioned stairlift, fitted
+		'homelift_from'    => '',   // homelift, fitted
+		'platform_from'    => '',   // platform lift, fitted
+	);
+}
+
+function mb_price( $key, $prefix = 'from £' ) {
+	$v = mb_prices()[ $key ] ?? '';
+	return '' === $v ? '' : $prefix . number_format_i18n( (float) $v );
+}
+
+/** Brands we service (used on home page and servicing sections). */
+function mb_serviced_brands() {
+	return array( 'Stannah', 'Acorn', 'Brooks', 'Handicare / Minivator', 'Otolift', 'Thyssen / Flow', 'Platinum', 'Stiltz', 'Pollock', 'Terry', 'Wessex', 'Chiltern Invadex' );
+}
+
+/** Towns with their own pages. */
+function mb_towns() {
+	return array(
+		'maidstone' => 'Maidstone', 'tonbridge' => 'Tonbridge', 'tunbridge-wells' => 'Tunbridge Wells', 'sevenoaks' => 'Sevenoaks',
+		'paddock-wood' => 'Paddock Wood', 'kings-hill' => 'Kings Hill', 'west-malling' => 'West Malling', 'aylesford' => 'Aylesford',
+		'east-peckham' => 'East Peckham', 'edenbridge' => 'Edenbridge', 'crowborough' => 'Crowborough', 'cranbrook' => 'Cranbrook',
+		'staplehurst' => 'Staplehurst', 'tenterden' => 'Tenterden', 'marden' => 'Marden',
+	);
+}
+
+/**
+ * Hero + form settings for the "money" pages. Each gets a headline area with
+ * selling points, an optional price badge and an enquiry form above the fold.
+ *   ticks   – three short selling points
+ *   price   – badge text (empty to hide)
+ *   form    – [mb_form] attributes
+ *   cross   – related links shown under the hero
+ */
+function mb_landings() {
+	$p        = mb_prices();
+	$removal  = array(
+		'ticks' => array( 'Straight, curved & outdoor stairlifts removed', 'Staircase left clean, tidy and safe', 'Any make — even if it no longer works' ),
+		'price' => $p['removal_straight'] ? sprintf( 'Straight from £%s · Curved from £%s', $p['removal_straight'], $p['removal_curved'] ) : '',
+		'form'  => 'fields="name,phone,email,postcode,message" title="Stairlift removal quote" options="Straight stairlift|Curved stairlift|Other / Not sure" options_label="What type of stairlift is it?" button="Get my removal quote"',
+		'form_title' => 'Get a free removal quote',
+	);
+	$install  = array(
+		'ticks' => array( 'Straight, curved & reconditioned stairlifts', 'Free, no-obligation home survey', 'Installed & serviced by our own engineers' ),
+		'price' => '',
+		'form'  => 'fields="name,phone,email,postcode,message" title="Stairlift survey request" options="Straight stairlift|Curved stairlift|Not sure / Need advice" options_label="What type of stairs do you have?" button="Book my free survey"',
+		'form_title' => 'Book a free home survey',
+	);
+	$service_form = 'fields="name,phone,email,postcode,message" title="%s" options="Stairlift|Homelift / through-floor lift|Platform lift|Ceiling hoist" options_label="What type of lift is it?" button="%s"';
+	return array(
+		'lift-servicing-kent' => array(
+			'ticks' => array( 'All makes & models serviced', 'Clear price before any extra work', 'Annual plans with 24/7 breakdown cover' ),
+			'price' => $p['plan_from'] ? 'Service plans from £' . $p['plan_from'] . ' a year' : '',
+			'form'  => sprintf( $service_form, 'Service booking', 'Book my service' ),
+			'form_title' => 'Book a service',
+		),
+		'lift-repairs-kent' => array(
+			'ticks' => array( 'Stairlifts, homelifts, platform lifts & hoists', 'Fault finding on all major makes', 'Gold & Silver plans: 24/7 breakdown line' ),
+			'price' => $p['callout'] ? 'Call-out from £' . $p['callout'] : '',
+			'form'  => sprintf( $service_form, 'Repair request', 'Request a repair' ),
+			'form_title' => 'Report a fault',
+			'urgent' => true,
+		),
+		'loler-examinations' => array(
+			'ticks' => array( 'Thorough examinations with certification', 'Care homes, landlords & commercial sites', 'Lifts and hoists of all makes' ),
+			'price' => '',
+			'form'  => 'fields="name,phone,email,postcode,message" title="LOLER enquiry" button="Request a LOLER quote"',
+			'form_title' => 'Request a LOLER quote',
+		),
+		'lift-installations' => array(
+			'ticks' => array( 'Stairlifts, homelifts, platform lifts & hoists', 'Free, no-obligation home survey', 'Full aftercare from local engineers' ),
+			'price' => '',
+			'form'  => 'fields="name,phone,email,postcode,message" title="Installation enquiry" options="Stairlift|Homelift / through-floor lift|Platform lift|Ceiling hoist|Not sure yet" options_label="What are you interested in?" button="Book my free survey"',
+			'form_title' => 'Book a free home survey',
+		),
+		'survey-advice' => array(
+			'ticks' => array( 'Engineer-led, honest advice', 'No obligation, no pressure', 'Homes, care homes & commercial sites' ),
+			'price' => '',
+			'form'  => 'fields="name,phone,email,postcode,message" title="Survey request" button="Book my survey"',
+			'form_title' => 'Book a survey',
+		),
+		'lift-removals' => array_merge( $removal, array(
+			'ticks' => array( 'Stairlifts, homelifts & platform lifts removed', 'Ideal for house sales & renovations', 'Equipment removed and disposed of properly' ),
+			'form'  => 'fields="name,phone,email,postcode,message" title="Lift removal quote" options="Straight stairlift|Curved stairlift|Homelift / through-floor lift|Platform lift|Other" options_label="What needs removing?" button="Get my removal quote"',
+		) ),
+		'stairlift-removal-kent' => $removal,
+		'stairlift-installation-kent' => $install,
+		'_removal' => $removal,
+		'_install' => $install,
+	);
+}
+
+/** Landing settings for the current page, if it has any. */
+function mb_landing( $slug ) {
+	$l = mb_landings();
+	if ( isset( $l[ $slug ] ) ) {
+		return $l[ $slug ];
+	}
+	if ( str_starts_with( $slug, 'stairlift-removal-' ) ) {
+		return $l['_removal'];
+	}
+	if ( str_starts_with( $slug, 'stairlift-installation-' ) ) {
+		return $l['_install'];
+	}
+	return null;
 }

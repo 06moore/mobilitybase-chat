@@ -110,7 +110,24 @@ def clean(t):
     return t.replace('​', '').replace('\xa0', ' ').strip()
 
 
+def faqs_from_ld(lds):
+    for raw in lds:
+        try:
+            j = json.loads(raw)
+        except Exception:
+            continue
+        if isinstance(j, dict) and j.get('@type') == 'FAQPage':
+            return [(q['name'], q['acceptedAnswer']['text']) for q in j.get('mainEntity', [])]
+    return []
+
+
+def faq_html(faqs):
+    items = ''.join(f'<details class="mb-faq"><summary>{esc(q)}</summary><p>{esc(a)}</p></details>' for q, a in faqs)
+    return f'<div class="mb-faqs">{items}</div>'
+
+
 def convert(slug, d):
+    faqs = faqs_from_ld(d.get('ld', []))
     blocks = [b for b in d['blocks'] if key(b) not in COMMON]
     anchors = [b for b in blocks if b['t'] == 'a' and b.get('text')]
     texts = [clean(b.get('text', '')) for b in blocks if b['t'] not in ('a', 'img')]
@@ -132,6 +149,8 @@ def convert(slug, d):
     last_heading = h1
     for b in blocks:
         t = b['t']
+        if t == 'button' and form_pending is None:
+            continue  # accordion toggles (FAQ questions) — answers come from the FAQ schema below
         if t in ('label', 'input', 'textarea', 'select', 'button'):
             if form_pending is None:
                 form_pending = {'fields': [], 'options': [], 'title': last_heading}
@@ -163,7 +182,7 @@ def convert(slug, d):
             alt = b.get('alt') or ''
             if BAD_ALT.search(alt):
                 alt = h1
-            tag = img_tag(b['src'], alt)
+            tag = img_tag(b['src'], alt, 'mb-figure mb-figure--icon' if b['w'] <= 200 else 'mb-figure')
             if tag and tag not in seen:
                 flush_form()
                 seen.add(tag)
@@ -198,6 +217,9 @@ def convert(slug, d):
                 out.append('<ul class="mb-ticks">' + ''.join(f'<li>{esc(l)}</li>' for l in lines) + '</ul>')
                 continue
             out.append(f'<h2>{esc(" ".join(lines))}</h2>')
+            if 'FAQ' in txt and faqs:
+                out.append(faq_html(faqs))
+                faqs.clear()
             last_heading = txt
             continue
         if t in ('h3', 'h4', 'h5', 'h6') or (t == 'p' and size >= 18 and len(txt) < 70 and not txt.endswith('.') and '\n' not in txt and not txt.startswith('•')):

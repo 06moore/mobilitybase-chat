@@ -32,6 +32,14 @@
 				<?php mb_menu( 'footer', mb_footer_services(), 'mb-foot__list' ); ?>
 			</div>
 			<div>
+				<h2 class="mb-foot__title">Areas we cover</h2>
+				<ul class="mb-foot__list mb-foot__list--cols">
+					<?php foreach ( array_slice( mb_towns(), 0, 10, true ) as $town_slug => $town ) : ?>
+						<li><a href="<?php echo esc_url( home_url( '/stairlift-installation-' . $town_slug ) ); ?>"><?php echo esc_html( $town ); ?></a></li>
+					<?php endforeach; ?>
+				</ul>
+			</div>
+			<div>
 				<h2 class="mb-foot__title">Where we’re based</h2>
 				<address>
 					<?php echo esc_html( 'Unit 29, Branbridges Industrial Estate' ); ?><br>

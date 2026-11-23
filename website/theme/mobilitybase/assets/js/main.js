@@ -20,6 +20,15 @@
 		});
 	}
 
+	// Sub-menu toggles (needed on touch screens and for keyboard users).
+	document.querySelectorAll('.mb-subtoggle').forEach(function (btn) {
+		btn.addEventListener('click', function () {
+			var li = btn.parentElement;
+			var open = li.classList.toggle('is-open');
+			btn.setAttribute('aria-expanded', String(open));
+		});
+	});
+
 	// "Enquire about X" buttons fill in the form below with the chosen product / plan.
 	document.addEventListener('click', function (e) {
 		var link = e.target.closest('[data-mb-enquire]');

@@ -19,10 +19,20 @@ while ( have_posts() ) :
 			<?php the_content(); ?>
 		</div>
 		<aside class="mb-wrap mb-wrap--narrow">
+			<?php
+			$slug = get_post_field( 'post_name' );
+			if ( preg_match( '/removal/', $slug ) ) {
+				$cta = array( 'Need a stairlift removed?', 'We remove straight and curved stairlifts of any make across Kent and the South East' . ( mb_prices()['removal_straight'] ? ' — from £' . mb_prices()['removal_straight'] : '' ) . '.', 'Get a removal quote', '/stairlift-removal-kent#quote' );
+			} elseif ( preg_match( '/fault|beep|charging|codes|error/', $slug ) ) {
+				$cta = array( 'Still not working?', 'Our engineers repair stairlifts and homelifts of all makes across Kent, London and the South East. Our Silver and Gold service plans include priority breakdown cover.', 'Book a repair', '/lift-repairs-kent#quote' );
+			} else {
+				$cta = array( 'Thinking about a stairlift or home lift?', 'Book a free, no-obligation home survey with one of our Kent-based engineers.', 'Book a free survey', '/book-your-visit' );
+			}
+			?>
 			<div class="mb-articlecta">
-				<h2>Need help with your lift?</h2>
-				<p>Our Kent-based engineers install, service and repair stairlifts, homelifts and platform lifts of all makes.</p>
-				<p><a class="mb-btn" href="<?php echo esc_url( home_url( '/book-your-visit' ) ); ?>">Book a visit</a> <?php echo mb_tel( 'Call ' . mb_biz( 'phone' ), 'mb-btn mb-btn--outline' ); // phpcs:ignore ?></p>
+				<h2><?php echo esc_html( $cta[0] ); ?></h2>
+				<p><?php echo esc_html( $cta[1] ); ?></p>
+				<p><a class="mb-btn" href="<?php echo esc_url( home_url( $cta[3] ) ); ?>"><?php echo esc_html( $cta[2] ); ?></a> <?php echo mb_tel( 'Call ' . mb_biz( 'phone' ), 'mb-btn mb-btn--outline' ); // phpcs:ignore ?></p>
 			</div>
 		</aside>
 	</article>
