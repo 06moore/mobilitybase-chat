@@ -358,7 +358,7 @@ function mb_reviews() {
 		array( 'Adrian Hanstock', 5, 'We recently needed extensive diagnostic and repair work to resolve a fault, and Tom at Mobility Base was exceptional…', 'June 2026', 'Lift repair', array( 'repair' ) ),
 		array( 'Craig Matthews', 5, 'Mobilitybase service 2 hoists and a lift for us. The team of people from office staff to engineers are professional and…', 'August 2026', 'Hoist & lift servicing', array( 'service' ) ),
 		array( 'Wendi Austin-Joseph', 5, 'Excellent Customer Service & Care Always!! I highly recommend this company.', 'August 2026', '', array() ),
-		array( 'Janet', 5, 'I cannot tell you how impressed we were with service wehad from your technician that can out on Sunday evening to…', 'August 2026', 'Out-of-hours call-out', array( 'repair' ) ),
+		array( 'Janet', 5, 'I cannot tell you how impressed we were with service wehad from your technician that can out on Sunday evening to repair a 93 year old neighbours chair lift. His name was Tom. There was no hesitation about coming out on a weekend. He was polite and so patient with our neighbour who may I add is deaf. The service was excellent we would recommend the company 100%.', 'August 2026', 'Out-of-hours call-out', array( 'repair' ) ),
 		array( 'Maureen Kelly', 5, 'I’m so pleased with the service I received from MobilityBase. The team were kind, knowledgeable, and incredibly…', 'May 2026', '', array() ),
 	) );
 }
@@ -378,7 +378,7 @@ function mb_review_summary() {
 	return apply_filters( 'mb_review_summary', array(
 		'rating' => '5.0',
 		'count'  => '28',
-		'url'    => 'https://www.google.com/maps/search/?api=1&query=Mobilitybase+Ltd+East+Peckham',   // link to the Google reviews, e.g. https://g.page/r/XXXX
+		'url'    => 'https://share.google/gGAWaCYnCdwy9BHJo',   // link to the Google reviews, e.g. https://g.page/r/XXXX
 		'write'  => '',   // "write a review" link to text to customers, e.g. https://g.page/r/XXXX/review
 	) );
 }
