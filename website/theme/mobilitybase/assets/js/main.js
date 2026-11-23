@@ -142,3 +142,12 @@
 		});
 	});
 })();
+
+// Reviews: expand long reviews.
+document.querySelectorAll('.mb-review__more').forEach(function (btn) {
+	btn.addEventListener('click', function () {
+		var q = btn.previousElementSibling, open = q.classList.toggle('is-open');
+		btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+		btn.textContent = open ? 'Show less' : 'Read more';
+	});
+});

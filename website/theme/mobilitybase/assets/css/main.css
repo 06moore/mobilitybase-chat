@@ -545,7 +545,13 @@ a.mb-card:hover, .mb-card:focus-within { box-shadow: var(--shadow); transform: t
 .mb-review { margin: 0; background: var(--white); border: 1px solid #e0e0e0; border-radius: 8px; padding: 22px 24px; display: flex; flex-direction: column; gap: 10px; }
 .mb-review blockquote { margin: 0; flex: 1; }
 .mb-review blockquote p { margin: 0; font-size: 16px; }
-.mb-review figcaption { font-size: 15px; }
+.mb-review blockquote p + p { margin-top: 10px; }
+.mb-review blockquote.is-long { flex: 0 0 auto; max-height: 13.2em; overflow: hidden; position: relative; }
+.mb-review blockquote.is-long::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3em; background: linear-gradient(rgba(255,255,255,0), var(--white)); }
+.mb-review blockquote.is-open { max-height: none; }
+.mb-review blockquote.is-open::after { display: none; }
+.mb-review__more { align-self: flex-start; background: none; border: 0; padding: 0; color: var(--green-dark, #0e8a47); font: inherit; font-size: 15px; font-weight: 700; text-decoration: underline; cursor: pointer; }
+.mb-review figcaption { font-size: 15px; margin-top: auto; }
 .mb-review figcaption span { color: #777; font-size: 13px; }
 .mb-trust__rating { color: #f4b400; }
 @media (max-width: 900px) { .mb-reviews__grid { grid-template-columns: 1fr; } }
