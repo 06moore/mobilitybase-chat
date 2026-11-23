@@ -234,7 +234,7 @@ function mb_prices() {
 		'service_oneoff'   => 95,   // one-off stairlift / hoist service
 		'callout'          => 140,  // stairlift / hoist call-out, office hours
 		'straight_from'    => 2300, // new straight stairlift, fitted
-		'curved_from'      => '',   // new curved stairlift, fitted
+		'curved_from'      => 4500,   // new curved stairlift, fitted
 		'recon_from'       => 1400, // reconditioned straight stairlift, fitted (subject to stock)
 		'homelift_from'    => 18500, // homelift, fitted (new only)
 		'platform_from'    => '',   // platform lift, fitted
@@ -410,6 +410,6 @@ function mb_review_summary() {
 		'rating' => '5.0',
 		'count'  => '28',
 		'url'    => 'https://share.google/gGAWaCYnCdwy9BHJo',   // link to the Google reviews, e.g. https://g.page/r/XXXX
-		'write'  => '',   // "write a review" link to text to customers, e.g. https://g.page/r/XXXX/review
+		'write'  => 'https://g.page/r/Cdg6xKzOXrn6EAE/review',   // "write a review" link to text to customers, e.g. https://g.page/r/XXXX/review
 	) );
 }

@@ -48,8 +48,11 @@ $stars   = function ( $n ) {
 				</figure>
 			<?php endforeach; ?>
 		</div>
-		<?php if ( $summary['url'] ) : ?>
-			<p class="mb-center"><a class="mb-textlink" href="<?php echo esc_url( $summary['url'] ); ?>" rel="noopener" target="_blank">Read all our reviews on Google <?php echo mb_icon( 'arrow' ); // phpcs:ignore ?></a></p>
+		<?php if ( $summary['url'] || $summary['write'] ) : ?>
+			<p class="mb-center mb-reviews__links">
+				<?php if ( $summary['url'] ) : ?><a class="mb-textlink" href="<?php echo esc_url( $summary['url'] ); ?>" rel="noopener" target="_blank">Read all our reviews on Google <?php echo mb_icon( 'arrow' ); // phpcs:ignore ?></a><?php endif; ?>
+				<?php if ( $summary['write'] ) : ?><a class="mb-btn mb-btn--outline mb-btn--sm" href="<?php echo esc_url( $summary['write'] ); ?>" rel="noopener" target="_blank">Had work done by us? Leave a review</a><?php endif; ?>
+			</p>
 		<?php endif; ?>
 	</div>
 </section>

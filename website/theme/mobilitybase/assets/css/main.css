@@ -559,3 +559,6 @@ a.mb-card:hover, .mb-card:focus-within { box-shadow: var(--shadow); transform: t
 .mb-rangeprice .mb-pricebadge { margin: 0 0 6px; border-radius: 14px; }
 .mb-rangeprice__note { display: block; font-size: 15px; color: #555; }
 
+
+/* v1.4 — review links */
+.mb-reviews__links { display:flex; flex-wrap:wrap; gap:12px 24px; justify-content:center; align-items:center; }
