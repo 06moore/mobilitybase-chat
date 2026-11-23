@@ -32,6 +32,8 @@ $cat   = mb_products()[ $slug ]['name'] ?? '';
 	</div>
 </section>
 
+<?php get_template_part( 'template-parts/reviews', null, array( 'limit' => 3 ) ); ?>
+
 <section class="mb-section mb-section--grey" id="survey">
 	<div class="mb-wrap mb-survey">
 		<div class="mb-survey__form mb-panel">

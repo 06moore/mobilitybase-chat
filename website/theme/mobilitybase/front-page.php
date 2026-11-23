@@ -56,6 +56,8 @@ $prices = mb_prices();
 	</div>
 </section>
 
+<?php get_template_part( 'template-parts/reviews', null, array( 'limit' => 3 ) ); ?>
+
 <section class="mb-section mb-section--grey">
 	<div class="mb-wrap">
 		<h2 class="mb-title">Lifts we supply &amp; install</h2>

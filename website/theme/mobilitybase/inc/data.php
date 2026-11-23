@@ -340,3 +340,24 @@ function mb_landing( $slug ) {
 	}
 	return null;
 }
+
+/**
+ * Customer reviews, copied word-for-word from the Google Business Profile.
+ * The reviews section stays hidden until at least one review is added here.
+ * Format: array( 'Name as shown on Google', stars 1-5, 'Review text', 'Month Year', 'what we did (optional)' ),
+ */
+function mb_reviews() {
+	return apply_filters( 'mb_reviews', array(
+		// array( 'Jane S.', 5, 'Review text exactly as written on Google.', 'March 2026', 'Curved stairlift installation' ),
+	) );
+}
+
+/** Overall Google rating. Leave 'rating' empty to hide the summary. */
+function mb_review_summary() {
+	return apply_filters( 'mb_review_summary', array(
+		'rating' => '',   // e.g. 4.9
+		'count'  => '',   // e.g. 37
+		'url'    => '',   // link to the Google reviews, e.g. https://g.page/r/XXXX
+		'write'  => '',   // "write a review" link to text to customers, e.g. https://g.page/r/XXXX/review
+	) );
+}

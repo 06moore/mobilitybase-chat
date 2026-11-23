@@ -27,6 +27,7 @@ $from = mb_prices()['plan_from'];
 	</div>
 </section>
 <?php get_template_part( 'template-parts/trust' ); ?>
+<?php get_template_part( 'template-parts/reviews', null, array( 'limit' => 3 ) ); ?>
 
 <section class="mb-section">
 	<div class="mb-wrap">

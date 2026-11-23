@@ -413,7 +413,7 @@ a.mb-card:hover, .mb-card:focus-within { box-shadow: var(--shadow); transform: t
 .mb-hero__call a:hover { color: var(--green); }
 
 .mb-trust { background: #2e2e2e; color: var(--white); }
-.mb-trust__list { list-style: none; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px 24px; padding-top: 16px; padding-bottom: 16px; font-size: 15px; }
+.mb-trust__list { list-style: none; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px 24px; padding-top: 16px; padding-bottom: 16px; font-size: 15px; }
 .mb-trust__list li { display: flex; align-items: center; gap: 10px; }
 .mb-trust .mb-icon { color: #5fd394; width: 22px; height: 22px; }
 
@@ -536,3 +536,17 @@ a.mb-card:hover, .mb-card:focus-within { box-shadow: var(--shadow); transform: t
 .mb-switchnote { display: flex; gap: 12px; align-items: flex-start; max-width: 860px; margin: -24px auto 40px; background: var(--green-tint); border: 1px solid var(--green); border-radius: 8px; padding: 14px 18px; }
 .mb-switchnote .mb-icon { color: var(--green-dark); flex: none; margin-top: 2px; }
 .mb-twocol--top { margin-top: 40px; }
+/* Reviews */
+.mb-stars { color: #f4b400; letter-spacing: 2px; font-size: 18px; }
+.mb-stars__off { color: #d5d5d5; }
+.mb-reviews__summary { display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap; margin: -8px 0 32px; font-size: 17px; }
+.mb-reviews__summary .mb-stars { font-size: 24px; }
+.mb-reviews__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.mb-review { margin: 0; background: var(--white); border: 1px solid #e0e0e0; border-radius: 8px; padding: 22px 24px; display: flex; flex-direction: column; gap: 10px; }
+.mb-review blockquote { margin: 0; flex: 1; }
+.mb-review blockquote p { margin: 0; font-size: 16px; }
+.mb-review figcaption { font-size: 15px; }
+.mb-review figcaption span { color: #777; font-size: 13px; }
+.mb-trust__rating { color: #f4b400; }
+@media (max-width: 900px) { .mb-reviews__grid { grid-template-columns: 1fr; } }
+.mb-reviews__grid + .mb-center { margin-top: 28px; }
