@@ -19,8 +19,8 @@
 	<div class="mb-footmain">
 		<div class="mb-wrap mb-footmain__inner">
 			<div>
-				<h2 class="mb-foot__title">Experience that matters</h2>
-				<p>Experienced engineers providing reliable lift installations, servicing and ongoing support.</p>
+				<h2 class="mb-foot__title">Mobilitybase</h2>
+				<p>Family-run since <?php echo esc_html( mb_biz( 'founded' ) ); ?>. Stairlifts, homelifts, platform lifts and ceiling hoists supplied, installed, serviced and removed by our own DBS-checked, fully insured engineers.</p>
 				<ul class="mb-social" aria-label="Mobilitybase on social media">
 					<?php foreach ( mb_biz( 'social' ) as $net => $url ) : ?>
 						<li><a href="<?php echo esc_url( $url ); ?>" rel="noopener" target="_blank" aria-label="<?php echo esc_attr( ucfirst( $net ) ); ?>"><?php echo mb_social_icon( $net ); // phpcs:ignore ?></a></li>

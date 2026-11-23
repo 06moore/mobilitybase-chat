@@ -595,3 +595,16 @@ h1, h2, h3, h4 { letter-spacing: -.01em; }
 .mb-hero__titlesub { display: block; margin-top: .35em; font-size: .62em; line-height: 1.25; font-weight: 600; letter-spacing: -.01em; color: var(--green-dark); }
 .mb-model__body h2 { font-weight: 700; letter-spacing: -.015em; }
 .mb-included { margin-bottom: 40px; }
+.mb-prose .mb-icongrid { list-style:none; padding:0; display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); margin:16px 0 8px; }
+.mb-prose .mb-icongrid li { background:#fff; border:1px solid #e6eae8; border-radius:14px; padding:16px 18px; box-shadow:var(--shadow); margin:0; }
+.mb-prose .mb-icongrid li strong { display:block; color:var(--heading); margin-bottom:2px; }
+.mb-pricepair { display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); margin:16px 0; }
+.mb-pricepair p { margin:0; background:var(--green-tint); border-radius:14px; padding:18px 20px; display:flex; flex-direction:column; }
+.mb-pricepair span { font-size:.95rem; color:#4b5560; }
+.mb-pricepair strong { font:700 30px/1.2 var(--font-head); color:var(--green-dark); letter-spacing:-.02em; }
+.mb-pricepair small { color:#4b5560; }
+.mb-form__reassure { margin:10px 0 4px; font-size:.95rem; color:#33404a; text-align:center; }
+.mb-form__reassure a { font-weight:700; }
+.mb-survey { align-items: start; }
+.mb-survey__what h2 { font-size: 1.35rem; margin-bottom: 18px; }
+.mb-steps--stack { grid-template-columns: 1fr !important; margin: 0 0 20px; gap: 20px; }

@@ -211,6 +211,7 @@ function mb_form_render( $atts = array() ) {
 		<p class="mb-form__foot">
 			<button type="submit" class="mb-btn mb-btn--block"><?php echo esc_html( $a['button'] ); ?></button>
 		</p>
+		<p class="mb-form__reassure">A member of our Kent team will call you back at your chosen time. Rather talk now? Call <?php echo mb_tel(); // phpcs:ignore ?></p>
 		<p class="mb-form__privacy">We’ll only use your details to respond to this enquiry. See our <a href="<?php echo esc_url( home_url( '/privacy-policy' ) ); ?>">privacy policy</a>.</p>
 	</form>
 	<?php

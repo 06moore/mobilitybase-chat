@@ -58,8 +58,13 @@ $cat   = mb_products()[ $slug ]['name'] ?? '';
 			) );
 			?>
 		</div>
-		<div class="mb-survey__media">
-			<?php echo mb_img( '13b4ad69e4514301.webp', 'Couple discussing ' . strtolower( $cat ) . ' options' ); // phpcs:ignore ?>
+		<div class="mb-survey__media mb-survey__what">
+			<h2>What happens at your free survey</h2>
+			<ol class="mb-steps mb-steps--stack">
+				<li><strong>We visit at a time that suits you</strong><span>One of our engineers comes to your home. Family members are welcome to join.</span></li>
+				<li><strong>We measure up and listen</strong><span>We look at your stairs or space and talk through how the lift will be used day to day.</span></li>
+				<li><strong>You get a written quote</strong><span>A clear price in writing, with no pressure and no obligation to go ahead.</span></li>
+			</ol>
 			<p class="mb-survey__call">Prefer to talk it through? Call <?php echo mb_tel(); // phpcs:ignore ?></p>
 		</div>
 	</div>
