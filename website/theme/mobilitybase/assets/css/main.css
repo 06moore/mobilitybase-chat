@@ -562,3 +562,12 @@ a.mb-card:hover, .mb-card:focus-within { box-shadow: var(--shadow); transform: t
 
 /* v1.4 — review links */
 .mb-reviews__links { display:flex; flex-wrap:wrap; gap:12px 24px; justify-content:center; align-items:center; }
+
+/* v1.4 — "every installation includes" box on range pages */
+.mb-included { max-width:900px; margin:28px auto 8px; padding:22px 24px; background:#f3f8f5; border:1px solid #d6eadd; border-radius:12px; }
+.mb-included__title { font-size:1.1rem; margin:0 0 14px; text-align:center; }
+.mb-included__list { list-style:none; margin:0; padding:0; display:grid; gap:14px 24px; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); }
+.mb-included__list li { display:flex; gap:10px; align-items:flex-start; font-size:.9rem; line-height:1.45; }
+.mb-included__list svg { flex:0 0 22px; width:22px; height:22px; color:#14a95a; margin-top:2px; }
+.mb-included__list strong { display:block; font-size:.95rem; }
+.mb-card__price--quote { color:#5b6670 !important; font-weight:600; }

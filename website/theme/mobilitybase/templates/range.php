@@ -12,9 +12,18 @@ $cat   = mb_products()[ $slug ]['name'] ?? '';
 	<div class="mb-wrap">
 		<h1 class="mb-pagetitle"><?php echo esc_html( $range['h1'] ); ?></h1>
 		<?php if ( $mb_rp = mb_range_price( $slug ) ) : ?>
-			<p class="mb-rangeprice"><span class="mb-pricebadge"><?php echo esc_html( $mb_rp ); ?></span> <span class="mb-rangeprice__note">Fully fitted with a 1-year guarantee. Your exact price is confirmed in writing after a free, no-obligation home survey. VAT relief may apply if the lift is for someone with a long-term illness or disability.</span></p>
+			<p class="mb-rangeprice"><span class="mb-pricebadge"><?php echo esc_html( $mb_rp ); ?></span> <span class="mb-rangeprice__note">Fully fitted with a minimum 1-year guarantee. Your exact price is confirmed in writing after a free, no-obligation home survey. VAT relief may apply if the lift is for someone with a long-term illness or disability.</span></p>
 		<?php endif; ?>
 		<p class="mb-section__intro"><?php echo esc_html( $range['intro'] ); ?></p>
+		<div class="mb-included">
+			<h2 class="mb-included__title">Every installation includes</h2>
+			<ul class="mb-included__list">
+				<li><?php echo mb_icon( 'pin' ); // phpcs:ignore ?><span><strong>Free home survey</strong> No obligation — we measure up and talk you through the options.</span></li>
+				<li><?php echo mb_icon( 'pound' ); // phpcs:ignore ?><span><strong>Written quote</strong> Your price in writing before anything is ordered.</span></li>
+				<li><?php echo mb_icon( 'wrench' ); // phpcs:ignore ?><span><strong>Fitted by our own engineers</strong> DBS-checked and fully insured.</span></li>
+				<li><?php echo mb_icon( 'shield' ); // phpcs:ignore ?><span><strong>Minimum 1-year guarantee</strong> Then optional service plans to keep it running.</span></li>
+			</ul>
+		</div>
 		<div class="mb-models">
 			<?php foreach ( $range['models'] as $m ) : ?>
 				<article class="mb-model">

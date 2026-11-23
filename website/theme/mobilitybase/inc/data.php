@@ -224,7 +224,7 @@ function mb_brands() {
 /**
  * Prices shown on the site. Leave a value empty ('') to hide it everywhere.
  * All prices exclude VAT (2026 private price list). New lifts are fully fitted
- * with a 1-year guarantee.
+ * with a minimum 1-year guarantee.
  */
 function mb_prices() {
 	return array(
@@ -304,7 +304,7 @@ function mb_landings() {
 		'form_title' => 'Get a free removal quote',
 	);
 	$install  = array(
-		'ticks' => array( 'Straight, curved & reconditioned stairlifts', 'Free, no-obligation home survey', 'Fully fitted with a 1-year guarantee', 'Installed & serviced by our own engineers' ),
+		'ticks' => array( 'Straight, curved & reconditioned stairlifts', 'Free, no-obligation home survey', 'Minimum 1-year guarantee on every lift', 'Installed by our own DBS-checked engineers' ),
 		'price' => $p['recon_from'] ? sprintf( 'Reconditioned from £%s · New from £%s (+ VAT)', number_format( $p['recon_from'] ), number_format( $p['straight_from'] ) ) : '',
 		'form'  => 'fields="name,phone,email,postcode,message" title="Stairlift survey request" options="Straight stairlift|Curved stairlift|Not sure / Need advice" options_label="What type of stairs do you have?" button="Book my free survey"',
 		'form_title' => 'Book a free home survey',
@@ -331,7 +331,7 @@ function mb_landings() {
 			'form_title' => 'Request a LOLER quote',
 		),
 		'lift-installations' => array(
-			'ticks' => array( 'Stairlifts, homelifts, platform lifts & hoists', 'Free, no-obligation home survey', 'Full aftercare from local engineers' ),
+			'ticks' => array( 'Stairlifts, homelifts, platform lifts & hoists', 'Free, no-obligation home survey', 'Minimum 1-year guarantee on every lift', 'Full aftercare from local engineers' ),
 			'price' => '',
 			'form'  => 'fields="name,phone,email,postcode,message" title="Installation enquiry" options="Stairlift|Homelift / through-floor lift|Platform lift|Ceiling hoist|Not sure yet" options_label="What are you interested in?" button="Book my free survey"',
 			'form_title' => 'Book a free home survey',

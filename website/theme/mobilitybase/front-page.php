@@ -71,7 +71,7 @@ $prices = mb_prices();
 					<span class="mb-card__img"><?php echo mb_img( $p['gallery'][0], $p['name'] ); // phpcs:ignore ?></span>
 					<span class="mb-card__body">
 						<span class="mb-card__title"><?php echo esc_html( $p['name'] ); ?></span>
-						<?php if ( $price ) : ?><span class="mb-card__price"><?php echo nl2br( esc_html( $price ) ); // phpcs:ignore ?></span><?php endif; ?>
+						<span class="mb-card__price<?php echo $price ? '' : ' mb-card__price--quote'; ?>"><?php echo $price ? nl2br( esc_html( $price ) ) : 'Priced after a free survey'; // phpcs:ignore ?></span>
 						<span class="mb-card__link">View range <?php echo mb_icon( 'arrow' ); // phpcs:ignore ?></span>
 					</span>
 				</a>
@@ -80,7 +80,7 @@ $prices = mb_prices();
 		<ol class="mb-steps">
 			<li><strong>Free home survey</strong><span>An engineer measures up, listens to what you need and talks you through the options.</span></li>
 			<li><strong>Clear quote</strong><span>A written quote that explains your options, with no hidden costs.</span></li>
-			<li><strong>Installation &amp; aftercare</strong><span>Fitted by our own engineers, then serviced and supported for years to come.</span></li>
+			<li><strong>Installation &amp; aftercare</strong><span>Fitted by our own DBS-checked engineers with a minimum 1-year guarantee, then serviced and supported for years to come.</span></li>
 		</ol>
 		<p class="mb-center"><a class="mb-btn" href="<?php echo esc_url( home_url( '/book-your-visit' ) ); ?>">Book your free survey</a></p>
 	</div>

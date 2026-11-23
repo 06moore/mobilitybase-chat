@@ -7,8 +7,8 @@
 			<li><span class="mb-trust__rating" aria-hidden="true">★</span> <?php echo esc_html( $mb_rs['rating'] ); ?>/5 on Google<?php echo $mb_rs['count'] ? ' (' . esc_html( $mb_rs['count'] ) . ' reviews)' : ''; ?></li>
 		<?php endif; ?>
 		<li><?php echo mb_icon( 'shield' ); // phpcs:ignore ?> Family-run since <?php echo esc_html( mb_biz( 'founded' ) ); ?></li>
-		<li><?php echo mb_icon( 'pin' ); // phpcs:ignore ?> Engineers based in Kent</li>
-		<li><?php echo mb_icon( 'wrench' ); // phpcs:ignore ?> All makes serviced &amp; repaired</li>
-		<li><?php echo mb_icon( 'pound' ); // phpcs:ignore ?> Clear prices, no hidden costs</li>
+		<li><?php echo mb_icon( 'pin' ); // phpcs:ignore ?> DBS-checked engineers based in Kent</li>
+		<li><?php echo mb_icon( 'check' ); // phpcs:ignore ?> Fully insured</li>
+		<li><?php echo mb_icon( 'star' ); // phpcs:ignore ?> Every lift guaranteed for at least 1 year</li>
 	</ul>
 </div>
