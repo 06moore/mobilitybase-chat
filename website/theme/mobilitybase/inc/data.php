@@ -49,7 +49,7 @@ function mb_ranges() {
 		'straight-stairlift-range' => array(
 			'h1'     => 'Straight Stairlifts Supplied & Installed',
 			'intro'  => 'Select the straight stairlift you’re interested in below and send us your enquiry. One of our team will review the information and contact you to arrange a survey or answer any questions.',
-			'install' => array( 'install-stairlift-dartford.webp', 'Straight stairlift installed by Mobilitybase in Dartford, Kent', 'Straight stairlift fitted by our engineers in a home in Dartford, Kent.' ),
+			'install' => array( 'install-stairlift-kent.webp', 'Straight stairlift installed by Mobilitybase in Kent', 'Straight stairlift fitted by our engineers in a home in Kent.' ),
 			'models' => array(
 				array( 'HomeGlide', 'd0215bb86f4a4021.webp', 'Access HomeGlide straight stairlift', array(
 					'The Access HomeGlide is a compact, easy-to-use straight stairlift that fits neatly onto your staircase. It provides a smooth and secure ride, helping you move safely and confidently around your home.',
@@ -99,7 +99,7 @@ function mb_ranges() {
 		'homelift-range'           => array(
 			'h1'     => 'Home Lifts Supplied & Installed',
 			'intro'  => 'Select the home lift you’re interested in below and send us your enquiry. One of our team will review the information and contact you to discuss your requirements, answer any questions, or arrange a survey if needed.',
-			'install' => array( 'install-homelift-crawley.webp', 'Through-floor home lift installed by Mobilitybase in Crawley, Sussex', 'Through-floor home lift fitted by our engineers in a home in Crawley, Sussex.' ),
+			'install' => array( 'install-homelift-sussex.webp', 'Through-floor home lift installed by Mobilitybase in Sussex', 'Through-floor home lift fitted by our engineers in a home in Sussex.' ),
 			'models' => array(
 				array( 'Pollock Residential', '12382f7f0c994f6c.webp', 'Pollock home lift installed in living room', array(
 					'The Pollock Residential Lift provides a safe and convenient way to travel between floors in your home. Designed with comfort and reliability in mind, it offers smooth and quiet operation while blending neatly into your living space.',
@@ -443,8 +443,8 @@ function mb_review_summary() {
  */
 function mb_hero_slides() {
 	return array(
-		array( 'install-stairlift-dartford.webp', 'Straight stairlift installed by Mobilitybase in a home in Dartford, Kent', 'Installed by Mobilitybase · Dartford, Kent' ),
-		array( 'install-homelift-crawley.webp', 'Through-floor home lift installed by Mobilitybase in a home in Crawley, Sussex', 'Installed by Mobilitybase · Crawley, Sussex' ),
+		array( 'install-stairlift-kent.webp', 'Straight stairlift installed by Mobilitybase in a home in Kent', 'Installed by Mobilitybase · Kent' ),
+		array( 'install-homelift-sussex.webp', 'Through-floor home lift installed by Mobilitybase in a home in Sussex', 'Installed by Mobilitybase · Sussex' ),
 		array( 'install-homelift-london.webp', 'Through-floor home lift with fold-down seat installed by Mobilitybase in London', 'Installed by Mobilitybase · London' ),
 	);
 }
