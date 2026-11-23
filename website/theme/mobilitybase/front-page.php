@@ -32,7 +32,7 @@ $prices = mb_prices();
 				<span class="mb-path__kicker">Need a lift?</span>
 				<span class="mb-path__title">New stairlifts, homelifts &amp; platform lifts</span>
 				<span class="mb-path__text">Straight, curved and reconditioned stairlifts, through-floor homelifts, platform lifts and ceiling hoists.</span>
-				<span class="mb-path__price"><?php echo esc_html( mb_price( 'straight_from', 'Straight stairlifts from £' ) ?: 'Free, no-obligation home survey' ); ?></span>
+				<span class="mb-path__price"><?php echo esc_html( ( mb_price( 'straight_from', 'Straight stairlifts from £' ) ? mb_price( 'straight_from', 'Straight stairlifts from £' ) . ' + VAT' : 'Free, no-obligation home survey' ) ); ?></span>
 				<span class="mb-path__btn">See our lifts</span>
 			</a>
 			<a class="mb-path" href="<?php echo esc_url( home_url( '/aftercare-warranty' ) ); ?>">
@@ -40,7 +40,7 @@ $prices = mb_prices();
 				<span class="mb-path__kicker">Already have a lift?</span>
 				<span class="mb-path__title">Warranty &amp; service plans</span>
 				<span class="mb-path__text">Annual servicing and breakdown cover for stairlifts, homelifts and hoists — including lifts fitted by other companies.</span>
-				<?php if ( $prices['plan_from'] ) : ?><span class="mb-path__price">Plans from £<?php echo esc_html( $prices['plan_from'] ); ?> a year</span><?php endif; ?>
+				<?php if ( $prices['plan_from'] ) : ?><span class="mb-path__price">Plans from £<?php echo esc_html( $prices['plan_from'] ); ?> a year + VAT</span><?php endif; ?>
 				<span class="mb-path__btn">Cover my lift</span>
 			</a>
 			<a class="mb-path" href="<?php echo esc_url( home_url( '/stairlift-removal-kent' ) ); ?>">
@@ -48,7 +48,7 @@ $prices = mb_prices();
 				<span class="mb-path__kicker">Lift no longer needed?</span>
 				<span class="mb-path__title">Stairlift &amp; lift removals</span>
 				<span class="mb-path__text">Quick, tidy removal of straight and curved stairlifts, homelifts and platform lifts — ideal before a house sale.</span>
-				<?php if ( $prices['removal_straight'] ) : ?><span class="mb-path__price">Stairlift removal from £<?php echo esc_html( $prices['removal_straight'] ); ?></span><?php endif; ?>
+				<?php if ( $prices['removal_straight'] ) : ?><span class="mb-path__price">Stairlift removal from £<?php echo esc_html( $prices['removal_straight'] ); ?> + VAT</span><?php endif; ?>
 				<span class="mb-path__btn">Get a removal quote</span>
 			</a>
 		</div>
@@ -108,7 +108,7 @@ $prices = mb_prices();
 					</li>
 				<?php endforeach; ?>
 			</ul>
-			<p class="mb-small">Straight stairlift prices shown. <a href="<?php echo esc_url( home_url( '/aftercare-warranty' ) ); ?>">See plans for curved stairlifts, homelifts and hoists</a>.</p>
+			<p class="mb-small">Straight stairlift prices shown, excluding VAT. <a href="<?php echo esc_url( home_url( '/aftercare-warranty' ) ); ?>">See plans for curved stairlifts, homelifts and hoists</a>.</p>
 			<p class="mb-btnrow">
 				<a class="mb-btn" href="<?php echo esc_url( home_url( '/aftercare-warranty#join' ) ); ?>">Cover my lift</a>
 				<a class="mb-btn mb-btn--outline" href="<?php echo esc_url( home_url( '/lift-servicing-kent#quote' ) ); ?>">Book a one-off service</a>
@@ -128,7 +128,7 @@ $prices = mb_prices();
 					<p><span>Straight stairlift</span><strong>from £<?php echo esc_html( $prices['removal_straight'] ); ?></strong></p>
 					<p><span>Curved stairlift</span><strong>from £<?php echo esc_html( $prices['removal_curved'] ); ?></strong></p>
 				</div>
-				<p class="mb-small">Final price depends on access, type and location. Homelift and platform lift removals quoted individually.</p>
+				<p class="mb-small">Prices exclude VAT. Final price depends on access, type and location. Homelift removals from £1,100 + VAT; platform lifts quoted individually.</p>
 			<?php endif; ?>
 			<p class="mb-btnrow">
 				<a class="mb-btn" href="<?php echo esc_url( home_url( '/stairlift-removal-kent#quote' ) ); ?>">Get a removal quote</a>

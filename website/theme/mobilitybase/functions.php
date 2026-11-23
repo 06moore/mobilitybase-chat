@@ -13,7 +13,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'MB_VERSION', '1.3.0' );
+define( 'MB_VERSION', '1.4.0' );
 define( 'MB_DIR', get_template_directory() );
 define( 'MB_URI', get_template_directory_uri() );
 

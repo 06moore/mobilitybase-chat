@@ -558,3 +558,24 @@ a.mb-card:hover, .mb-card:focus-within { box-shadow: var(--shadow); transform: t
 .mb-rangeprice { text-align: center; margin: -4px auto 18px; max-width: 760px; }
 .mb-rangeprice .mb-pricebadge { margin: 0 0 6px; border-radius: 14px; }
 .mb-rangeprice__note { display: block; font-size: 15px; color: #555; }
+
+/* v1.4 — price tables */
+.mb-prices__grid { display:grid; gap:24px; }
+@media (min-width: 900px) { .mb-prices__grid:has(> :nth-child(2)) { grid-template-columns: 3fr 2fr; } }
+.mb-prices__table h3 { margin:0 0 10px; }
+.mb-prices__scroll { overflow-x:auto; }
+.mb-prices table { width:100%; border-collapse:collapse; background:#fff; border:1px solid #dfe5e8; border-radius:10px; overflow:hidden; font-size:.95rem; }
+.mb-prices th, .mb-prices td { padding:10px 12px; text-align:left; border-bottom:1px solid #e8edef; vertical-align:top; }
+.mb-prices thead th { background:#f3f7f8; font-weight:700; font-size:.85rem; white-space:nowrap; }
+.mb-prices td { white-space:nowrap; font-weight:700; }
+.mb-prices tbody th { font-weight:400; }
+.mb-prices tr:last-child > * { border-bottom:0; }
+.mb-prices__vat { margin-top:16px; }
+@media (max-width: 640px) {
+	.mb-prices thead { position:absolute; left:-9999px; }
+	.mb-prices tbody tr { display:block; border-bottom:1px solid #e8edef; padding:6px 0; }
+	.mb-prices tbody th { display:block; border:0; padding-bottom:2px; font-weight:700; }
+	.mb-prices td { display:flex; justify-content:space-between; border:0; padding:3px 12px; font-weight:400; }
+	.mb-prices td::before { content: attr(data-label); color:#555; }
+	.mb-prices td { font-variant-numeric: tabular-nums; }
+}

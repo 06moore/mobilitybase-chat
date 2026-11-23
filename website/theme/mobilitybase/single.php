@@ -22,7 +22,7 @@ while ( have_posts() ) :
 			<?php
 			$slug = get_post_field( 'post_name' );
 			if ( preg_match( '/removal/', $slug ) ) {
-				$cta = array( 'Need a stairlift removed?', 'We remove straight and curved stairlifts of any make across Kent and the South East' . ( mb_prices()['removal_straight'] ? ' — from £' . mb_prices()['removal_straight'] : '' ) . '.', 'Get a removal quote', '/stairlift-removal-kent#quote' );
+				$cta = array( 'Need a stairlift removed?', 'We remove straight and curved stairlifts of any make across Kent and the South East' . ( mb_prices()['removal_straight'] ? ' — from £' . mb_prices()['removal_straight'] . ' + VAT' : '' ) . '.', 'Get a removal quote', '/stairlift-removal-kent#quote' );
 			} elseif ( preg_match( '/fault|beep|charging|codes|error/', $slug ) ) {
 				$cta = array( 'Still not working?', 'Our engineers repair stairlifts and homelifts of all makes across Kent, London and the South East. Our Silver and Gold service plans include priority breakdown cover.', 'Book a repair', '/lift-repairs-kent#quote' );
 			} else {

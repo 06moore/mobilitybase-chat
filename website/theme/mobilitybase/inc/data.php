@@ -149,7 +149,7 @@ function mb_warranty_products() {
 		array( 'Curved Stairlifts', '/curved-stairlift-warranty', 'Our curved stairlift warranty and service packages are designed to support the more complex nature of curved systems. Cover options are available to help maintain safe operation, reduce unexpected repair costs, and provide ongoing support.', 'Suitable for curved stairlifts installed in domestic properties.', 'c0b7ddee9ede4a0b.webp', 'from £95' ),
 		array( 'Homelifts', '/homelift-warranty', 'Our homelift warranty and service packages are designed to support safe, reliable day-to-day use. Cover options are available to help with ongoing maintenance, servicing, and repairs, depending on the level of protection you choose.', 'Suitable for homelifts installed in domestic properties.', '8d0f92577e83468f.webp', 'from £145' ),
 		array( 'Ceiling Hoists', '/ceiling-hoist-warranty', 'Our ceiling hoist warranty and service packages are designed to support safe and reliable lifting for daily use. Cover options are available to help with ongoing servicing, maintenance, and repairs, depending on the level of cover selected.', 'Suitable for ceiling hoists installed in domestic properties.', '40120e0ddc6d498b.webp', 'from £95' ),
-		array( 'Platform Lifts', '', 'We already look after platform lifts for homes, care homes and businesses on annual service contracts. Each contract is quoted to suit the lift and how much it’s used, covering regular servicing, safety checks and breakdown support.', 'Suitable for platform lifts installed in domestic and commercial properties.', 'edfa82ec3845483e.webp', 'Service contracts' ),
+		array( 'Platform Lifts', '', 'We already look after platform lifts for homes, care homes and businesses on annual service contracts. Each contract is quoted to suit the lift and how much it’s used, covering regular servicing, safety checks and breakdown support.', 'Suitable for platform lifts installed in domestic and commercial properties.', 'edfa82ec3845483e.webp', 'Contracts from £365' ),
 	);
 }
 
@@ -169,6 +169,7 @@ function mb_warranties() {
 		'Main component failures on lifts over 3 years old (such as the main drive motor or main controller PCB) may be considered uneconomical to repair.',
 		'Gold cover includes unlimited call-outs and all standard parts.',
 		'All accounts are payable in advance.',
+		'Prices exclude VAT. If the lift is for someone with a long-term illness or disability, VAT relief may apply.',
 	);
 	$make = function ( $label, $lower, $prices ) use ( $base, $notes ) {
 		$plans = array();
@@ -222,16 +223,16 @@ function mb_brands() {
 
 /**
  * Prices shown on the site. Leave a value empty ('') to hide it everywhere.
- * Removal prices are the ones already published on the old site.
- * New-lift "from" prices are empty until confirmed.
+ * All prices exclude VAT (2026 private price list). New lifts are fully fitted
+ * with a 1-year guarantee.
  */
 function mb_prices() {
 	return array(
 		'removal_straight' => 174,
 		'removal_curved'   => 270,
 		'plan_from'        => 95,   // cheapest warranty & service plan per year
-		'service_oneoff'   => '',   // one-off annual service visit (e.g. 125)
-		'callout'          => '',   // repair call-out fee
+		'service_oneoff'   => 95,   // one-off stairlift / hoist service
+		'callout'          => 140,  // stairlift / hoist call-out, office hours
 		'straight_from'    => 2300, // new straight stairlift, fitted
 		'curved_from'      => '',   // new curved stairlift, fitted
 		'recon_from'       => 1400, // reconditioned straight stairlift, fitted (subject to stock)
@@ -258,15 +259,15 @@ function mb_range_price( $slug, $short = false ) {
 				return '';
 			}
 			if ( $short ) {
-				return 'New from ' . $f( $p['straight_from'] ) . ( $p['recon_from'] ? "\nReconditioned from " . $f( $p['recon_from'] ) : '' );
+				return 'New from ' . $f( $p['straight_from'] ) . ' + VAT' . ( $p['recon_from'] ? "\nReconditioned from " . $f( $p['recon_from'] ) . ' + VAT' : '' );
 			}
-			return 'New from ' . $f( $p['straight_from'] ) . ' fitted' . ( $p['recon_from'] ? ' · Reconditioned from ' . $f( $p['recon_from'] ) . ' (subject to stock)' : '' );
+			return 'New from ' . $f( $p['straight_from'] ) . ' fitted' . ( $p['recon_from'] ? ' · Reconditioned from ' . $f( $p['recon_from'] ) . ' (subject to stock)' : '' ) . ' · ex VAT';
 		case 'curved-stairlift-range':
-			return $p['curved_from'] ? ( $short ? 'from ' : 'From ' ) . $f( $p['curved_from'] ) . ( $short ? '' : ' fitted' ) : '';
+			return $p['curved_from'] ? ( $short ? 'from ' : 'From ' ) . $f( $p['curved_from'] ) . ( $short ? ' + VAT' : ' fitted + VAT' ) : '';
 		case 'homelift-range':
-			return $p['homelift_from'] ? ( $short ? 'from ' : 'From ' ) . $f( $p['homelift_from'] ) . ( $short ? '' : ' fitted' ) : '';
+			return $p['homelift_from'] ? ( $short ? 'from ' : 'From ' ) . $f( $p['homelift_from'] ) . ( $short ? ' + VAT' : ' fitted + VAT' ) : '';
 		case 'platform-lift-range':
-			return $p['platform_from'] ? ( $short ? 'from ' : 'From ' ) . $f( $p['platform_from'] ) . ( $short ? '' : ' fitted' ) : '';
+			return $p['platform_from'] ? ( $short ? 'from ' : 'From ' ) . $f( $p['platform_from'] ) . ( $short ? ' + VAT' : ' fitted + VAT' ) : '';
 	}
 	return '';
 }
@@ -298,13 +299,13 @@ function mb_landings() {
 	$p        = mb_prices();
 	$removal  = array(
 		'ticks' => array( 'Straight, curved & outdoor stairlifts removed', 'Staircase left clean, tidy and safe', 'Any make — even if it no longer works' ),
-		'price' => $p['removal_straight'] ? sprintf( 'Straight from £%s · Curved from £%s', $p['removal_straight'], $p['removal_curved'] ) : '',
+		'price' => $p['removal_straight'] ? sprintf( 'Straight from £%s · Curved from £%s (+ VAT)', $p['removal_straight'], $p['removal_curved'] ) : '',
 		'form'  => 'fields="name,phone,email,postcode,message" title="Stairlift removal quote" options="Straight stairlift|Curved stairlift|Other / Not sure" options_label="What type of stairlift is it?" button="Get my removal quote"',
 		'form_title' => 'Get a free removal quote',
 	);
 	$install  = array(
-		'ticks' => array( 'Straight, curved & reconditioned stairlifts', 'Free, no-obligation home survey', 'Installed & serviced by our own engineers' ),
-		'price' => $p['recon_from'] ? sprintf( 'Reconditioned from £%s · New from £%s', number_format( $p['recon_from'] ), number_format( $p['straight_from'] ) ) : '',
+		'ticks' => array( 'Straight, curved & reconditioned stairlifts', 'Free, no-obligation home survey', 'Fully fitted with a 1-year guarantee', 'Installed & serviced by our own engineers' ),
+		'price' => $p['recon_from'] ? sprintf( 'Reconditioned from £%s · New from £%s (+ VAT)', number_format( $p['recon_from'] ), number_format( $p['straight_from'] ) ) : '',
 		'form'  => 'fields="name,phone,email,postcode,message" title="Stairlift survey request" options="Straight stairlift|Curved stairlift|Not sure / Need advice" options_label="What type of stairs do you have?" button="Book my free survey"',
 		'form_title' => 'Book a free home survey',
 	);
@@ -312,13 +313,13 @@ function mb_landings() {
 	return array(
 		'lift-servicing-kent' => array(
 			'ticks' => array( 'All makes & models serviced', 'Clear price before any extra work', 'Annual plans with 24/7 breakdown cover' ),
-			'price' => $p['plan_from'] ? 'Service plans from £' . $p['plan_from'] . ' a year' : '',
+			'price' => $p['plan_from'] ? 'Stairlift service £' . $p['service_oneoff'] . ' + VAT · plans from £' . $p['plan_from'] . ' a year' : '',
 			'form'  => sprintf( $service_form, 'Service booking', 'Book my service' ),
 			'form_title' => 'Book a service',
 		),
 		'lift-repairs-kent' => array(
 			'ticks' => array( 'Stairlifts, homelifts, platform lifts & hoists', 'Fault finding on all major makes', 'Gold & Silver plans: 24/7 breakdown line' ),
-			'price' => $p['callout'] ? 'Call-out from £' . $p['callout'] : '',
+			'price' => $p['callout'] ? 'Call-out from £' . $p['callout'] . ' + VAT' : '',
 			'form'  => sprintf( $service_form, 'Repair request', 'Request a repair' ),
 			'form_title' => 'Report a fault',
 			'urgent' => true,
@@ -350,6 +351,70 @@ function mb_landings() {
 		'_removal' => $removal,
 		'_install' => $install,
 	);
+}
+
+/**
+ * Price tables shown on the servicing, repairs and removal pages (2026 private price list, ex VAT).
+ * Each table: title, column headings (first is the row label), rows, optional note.
+ */
+function mb_price_tables( $slug ) {
+	$lift_cols = array( '', 'Stairlifts & hoists', 'Homelifts', 'Platform lifts' );
+	$service   = array(
+		'title' => 'Servicing & call-out prices',
+		'cols'  => $lift_cols,
+		'rows'  => array(
+			array( 'Service visit', 95, 145, 185 ),
+			array( 'Call-out (office hours)', 140, 185, 225 ),
+			array( 'Additional time / travel (per hour)', 65, 85, 85 ),
+		),
+		'note'  => 'An annual service plan costs the same as a one-off stairlift service and adds breakdown support. <a href="/aftercare-warranty">Compare plans</a>.',
+	);
+	$batteries = array(
+		'title' => 'Replacement batteries',
+		'cols'  => array( '', 'Price' ),
+		'rows'  => array(
+			array( 'Stairlift batteries (set)', 70 ),
+			array( '2 × 12V 18–22Ah batteries', 115 ),
+		),
+		'note'  => 'Fitted on a service or call-out visit.',
+	);
+	$stair_removal = array(
+		'title' => 'Stairlift & hoist removal prices',
+		'cols'  => array( '', 'Removal', 'Removal to refit', 'Refit', 'Removal + refit' ),
+		'rows'  => array(
+			array( 'Straight stairlift', 174, 145, 254, 399 ),
+			array( 'Curved stairlift', 270, 225, 360, 585 ),
+			array( 'Ceiling hoist (2 engineers)', 360, 300, 420, 720 ),
+		),
+		'note'  => 'Moving house? We can take your lift out, store it (£24 a week including VAT) and fit it in your new home.',
+	);
+	$lift_removal = array(
+		'title' => 'Homelift & step lift removal prices',
+		'cols'  => array( '', 'Price' ),
+		'rows'  => array(
+			array( 'Homelift removal, ceiling hole boarded over (not structural)', 1100 ),
+			array( 'Homelift removal, ceiling hole filled ready for decorating', 1800 ),
+			array( 'Step lift removal, no building work', 1100 ),
+		),
+	);
+	if ( 'lift-servicing-kent' === $slug ) {
+		return array( $service );
+	}
+	if ( 'lift-repairs-kent' === $slug ) {
+		return array( $service, $batteries );
+	}
+	if ( 'lift-removals' === $slug ) {
+		return array( $stair_removal, $lift_removal );
+	}
+	if ( str_starts_with( $slug, 'stairlift-removal-' ) ) {
+		return array( $stair_removal );
+	}
+	return array();
+}
+
+/** VAT wording used under prices. */
+function mb_vat_note() {
+	return 'All prices exclude VAT. If the equipment is for someone with a long-term illness or disability, VAT relief may apply, meaning no VAT to pay.';
 }
 
 /** Landing settings for the current page, if it has any. */

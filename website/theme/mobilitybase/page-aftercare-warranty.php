@@ -9,7 +9,7 @@ $from = mb_prices()['plan_from'];
 <section class="mb-lochero">
 	<div class="mb-wrap mb-lochero__inner">
 		<div class="mb-lochero__text">
-			<?php if ( $from ) : ?><p class="mb-pricebadge">Plans from £<?php echo esc_html( $from ); ?> a year</p><?php endif; ?>
+			<?php if ( $from ) : ?><p class="mb-pricebadge">Plans from £<?php echo esc_html( $from ); ?> a year + VAT</p><?php endif; ?>
 			<h1>Warranty &amp; Service Plans for Your Lift</h1>
 			<p class="mb-lead">Stairlifts, homelifts and ceiling hoists across Kent, London and the South East — <strong>including lifts installed by other companies</strong>.</p>
 			<ul class="mb-ticks">
@@ -39,7 +39,7 @@ $from = mb_prices()['plan_from'];
 					<div class="mb-card__img"><?php echo mb_img( $w[4], $w[0] ); // phpcs:ignore ?></div>
 					<div class="mb-card__body">
 						<h3 class="mb-card__title"><?php echo $w[1] ? '<a href="' . esc_url( home_url( $w[1] ) ) . '">' . esc_html( $w[0] ) . '</a>' : esc_html( $w[0] ); ?></h3>
-						<p class="mb-card__price"><?php echo esc_html( $w[5] ); ?><?php echo $w[1] ? ' <small>per year</small>' : ''; ?></p>
+						<p class="mb-card__price"><?php echo esc_html( $w[5] ); ?><small> per year + VAT</small></p>
 						<p><?php echo esc_html( $w[2] ); ?></p>
 						<p class="mb-card__note"><?php echo esc_html( $w[3] ); ?></p>
 						<?php if ( $w[1] ) : ?>
@@ -60,7 +60,7 @@ $from = mb_prices()['plan_from'];
 		<p class="mb-section__intro">If your original installer has stopped servicing your lift, gone out of business or is simply too far away, you can move your cover to a local team. Here’s how it works.</p>
 		<ol class="mb-steps">
 			<li><strong>Tell us about your lift</strong><span>The make, roughly when it was installed and who fitted it. Call us or use the form above.</span></li>
-			<li><strong>Initial service &amp; safety check</strong><span>An engineer services the lift and checks it’s in safe working order. Any parts it needs first are quoted before we do anything.</span></li>
+			<li><strong>Initial service &amp; safety check</strong><span>An engineer services the lift and checks it’s in safe working order. Any parts it needs first are quoted before we do anything. This is charged as a standard service visit: £<?php echo esc_html( mb_prices()['service_oneoff'] ); ?> + VAT for a stairlift or hoist, £145 + VAT for a homelift.</span></li>
 			<li><strong>Choose your plan</strong><span>Pick Bronze, Silver or Gold. From then on we look after your annual service and breakdowns.</span></li>
 		</ol>
 		<div class="mb-twocol mb-twocol--top">
@@ -73,6 +73,7 @@ $from = mb_prices()['plan_from'];
 					<li>Where parts are obsolete, suitable second-hand parts may be used where possible.</li>
 				</ul>
 				<p>Full details are in our <a href="<?php echo esc_url( home_url( '/service-agreement-terms' ) ); ?>">service agreement terms</a>.</p>
+				<p class="mb-small"><?php echo esc_html( mb_vat_note() ); ?></p>
 			</div>
 			<div class="mb-prose">
 				<h3>Makes we regularly look after</h3>
